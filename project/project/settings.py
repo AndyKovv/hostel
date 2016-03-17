@@ -12,6 +12,7 @@ https://docs.djangoproject.com/en/1.9/ref/settings/
 
 import os
 
+
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
@@ -52,6 +53,7 @@ MIDDLEWARE_CLASSES = [
 ]
 
 ROOT_URLCONF = 'project.urls'
+
 
 TEMPLATES = [
     {
@@ -141,4 +143,4 @@ STATICFILES_DIRS = (
 
     #'/var/www/hostel.te.ua/hostelproject/media/mainimage/',
 )
-MEDIA_ROOT = '/var/www/hostel.te.ua/project/media/'
+MEDIA_ROOT = '/var/www/hostel.te.ua/project/media/roomimage/'

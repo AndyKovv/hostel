@@ -38,7 +38,7 @@ class Migration(migrations.Migration):
                 ('date_in', models.DateField()),
                 ('date_out', models.DateField()),
                 ('order_time_in', models.DateTimeField(auto_now_add=True)),
-                ('order_time_out', models.DateTimeField(auto_now_add=True)),
+                ('order_time_out', models.DateTimeField()),
                 ('is_booking', models.BooleanField(default=True)),
                 ('pament', models.BooleanField(default=False)),
                 ('room', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='hostel.HostelRoom')),

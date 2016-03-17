@@ -34,35 +34,25 @@ class UserAdmin(UserAdmin):
       filter_horizontal = ()
 
 class HostelRoomAdmin(admin.ModelAdmin):
-      list_display = [
+   pass
 
-                    'name_room', 'price_room', 
-      ]
-      list_filter = ('id',)
 
-      
+class ImageRoomAdmin(admin.ModelAdmin):
+  list_display = [
 
-      add_fields = (
-                 (None, {'classes': ('wide',),
-                 'fields' :( 'name_room',
-                             'price_room',
-                             'description_full',
-                             'description_short',
-                             'places_in_room',
-                             'rating',
-                             'free_places',
-                             'date_create',
-                           )}
-                 ),
-      )
-      search_fields = ('date_create',)
-      ordering =('date_create',)
-      filter_horizontal = ()
+          'room','image_main',
+  ]
+
+
+class OrderRoom(admin.ModelAdmin):
+  list_display = [
+      'room', 'person_firstname', 'person_lastname', 'person_middlename', 'date_in', 'date_out', 'is_booking', 'payment',
+  ]
 
 admin.site.register(ExtUser, UserAdmin)
 admin.site.unregister(Group)
 admin.site.register(HostelRoom, HostelRoomAdmin)
 admin.site.register(User)
-admin.site.register(RoomImage)
-admin.site.register(Order)
+admin.site.register(RoomImage, ImageRoomAdmin)
+admin.site.register(Order, OrderRoom)
 
