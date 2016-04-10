@@ -8,8 +8,14 @@ body {
     margin-top: -20px;
 }
 
+.carousel-detail {
+height: 50%;
+
+
+}
 .navbar {
     z-index: 10;
+    
 }
 
 .carousel-inner,
@@ -62,4 +68,131 @@ line-height: 25px;
 footer.page-footer a {
 color: #fff;
 font-size: 15px;
+}
+.modal-body {
+    position:relative;
+    padding:10px;
+    padding-top:25px;
+}
+.carousel-thumbnails .carousel-indicators img {
+    max-width:53px;
+    max-height:100px;
+    overflow:hidden
+}
+.top-nav-collapse{
+    background-color:#405C84}
+.top-nav-collapse .nav li a{
+    color:#fff}
+.top-nav-collapse .nav li a:focus,
+.top-nav-collapse .nav li a:hover{color:#fff;background-color:#0E274D}
+
+.alert-danger-login {
+    color: #f90905;
+}
+.carousel-gallery .carousel-indicators{
+    overflow-y: auto;
+    width: 100%;
+    max-height: 16.3em;
+    margin-top: 0px;
+    margin-right: 0.4em;
+    margin-bottom: 0px;
+    margin-left: 0.4em;
+    overflow-x: hidden;
+    position: static;
+    
+}
+.carousel-indicators li {
+    display: inline-block;
+    
+    text-indent: -999px;
+   
+    border-radius: 10px;
+    cursor: pointer;
+    margin-top: 0px;
+    margin-right: 0px;
+    margin-bottom: 0px;
+    margin-left: 0px;
+    background-color: rgba(0,0,0,0);
+}
+
+.modal-body {
+    position: relative;
+    padding: 10px;
+    padding-top: 3px;
+}
+
+.angular-google-map-container { 
+     height: 12em; 
+ }
+
+.animate-if.ng-enter, .animate-if.ng-leave {
+    -webkit-transition:all cubic-bezier(0.250, 0.460, 0.450, 0.940) 0.2s;
+    -moz-transition:all cubic-bezier(0.250, 0.460, 0.450, 0.940) 0.2s;
+    -o-transition:all cubic-bezier(0.250, 0.460, 0.450, 0.940) 0.2s;
+    transition:all cubic-bezier(0.250, 0.460, 0.450, 0.940) 0.2s;
+}
+
+ .animate-if.ng-enter {
+   
+    opacity:0;
+}
+
+ .animate-if.ng-enter.ng-enter-active {
+   
+    opacity:0;
+}
+
+ .animate-if.ng-leave {
+    
+    opacity:1;
+}
+ .animate-if.ng-leave.ng-leave-active {
+
+    opacity:1;
+}
+
+
+
+h6 { width:100%; text-align:center; border-bottom: 2px solid #eee; line-height:0.1em; margin:10px 0 20px; } 
+h6 span { background:#fff; padding:0 10px; }
+
+.col-center-block {
+    float: none;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.order-info{
+    color: #666;
+
+}
+
+.custom-error-text{
+    color:#ff0033;
+}
+
+
+
+.horizontal-listing .row {
+    border-top: 1px solid #e0e0e0;
+    padding-top: 0px;
+    padding-bottom: 0px;
+}
+
+.comments-section img {
+    padding: 0.7rem;
+        padding-top: 0.7rem;
+        padding-right: 0.7rem;
+        padding-bottom: 0.7rem;
+        padding-left: 0.7rem;
+}
+
+.container-fluid-additionalroom {
+    margin-right: auto;
+    margin-left: auto;
+    padding-left: 15px;
+    padding-right: 15px;
+    overflow: scroll;
+    height: 25em;
 }

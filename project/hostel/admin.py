@@ -1,19 +1,26 @@
 from django.contrib import admin
+from django import forms
+from django.http import HttpResponse, HttpResponseRedirect
+from django.core.urlresolvers import reverse
+from django.contrib import messages
+from django.shortcuts import redirect
 from django.contrib.auth.admin import UserAdmin
 from django.contrib.auth.models import Group
 from django.contrib.auth.models import User  
 from .models import ExtUser, HostelRoom, RoomImage, Order
+from django.core.exceptions import ValidationError
+
 
 class UserAdmin(UserAdmin):
       list_display = [
 
-                    'email', 'person_firstname', 'person_lastname', 'date_of_birth','is_admin', 
+                    'email', 'user_firstname', 'user_lastname','is_admin',
       ]
       list_filter = ('is_admin',)
 
       fieldsets = (
                 (None, {'fields':('email','password',)}),
-                ('personal info', {'fields':('date_of_birth', 'person_firstname', 'person_lastname', 'person_middlename',)}),
+                ('personal info', {'fields':( 'user_firstname', 'user_lastname', 'user_middlename',)}),
                 ('Permissions', {'fields' : ('is_admin','groups',)}),
                 ('Important dates', {'fields' : ('last_login',)}),
       )
@@ -22,7 +29,7 @@ class UserAdmin(UserAdmin):
                  (None, {'classes': ('wide',),
                  'fields' :( 
                              
-                             'date_of_birth',
+
                              'email',
                              'password1'
                              'password2'
@@ -34,7 +41,9 @@ class UserAdmin(UserAdmin):
       filter_horizontal = ()
 
 class HostelRoomAdmin(admin.ModelAdmin):
-   pass
+   list_display = [
+    'name_room', 'position',
+   ]
 
 
 class ImageRoomAdmin(admin.ModelAdmin):
@@ -43,6 +52,7 @@ class ImageRoomAdmin(admin.ModelAdmin):
           'room','image_main',
   ]
 
+ 
 
 class OrderRoom(admin.ModelAdmin):
   list_display = [

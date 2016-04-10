@@ -1,0 +1,280 @@
+{% load staticfiles %}
+
+<!DOCTYPE html>
+<html lang="en"  >
+
+<head>
+<base href="/">
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Hostel.te.ua</title>
+
+
+  <!-- Material Design Icons -->
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
+
+  <!-- Bootstrap core CSS -->
+  
+  <link href="{% static "mainpage/css/bootstrap.min.css" %}" rel="stylesheet">
+ 
+
+  <!-- Material Design Bootstrap -->
+  <link href="{% static "mainpage/css/mdb2.min.css" %}" rel="stylesheet">
+  <link href="{% static "bower_components/angular-material/angular-material.css" %}" rel="stylesheet">
+  <link href="{% static "bower_components/angular-ui-bootstrap/dist/ui-bootstrap-csp.css" %}" rel="stylesheet">
+  <link href="{% static "bower_components/ngQuickDate/dist/ng-quick-date-plus-default-theme.css" %}" rel="stylesheet">
+
+  <!-- Template style -->
+  <link href="{% static "mainpage/css/style.css" %}" rel="stylesheet">
+<!-- SCRIPTS -->
+
+  <!-- JQuery -->
+  <script type="text/javascript" src="{% static "bower_components/jquery/dist/jquery.min.js" %}"></script>
+  
+  <!-- ANGULAR SCRIPTS -->
+  <script type="text/javascript" src="{% static "bower_components/angular/angular.min.js" %}"></script> 
+  <script type="text/javascript" src="{% static "bower_components/angular-ui-router/release/angular-ui-router.min.js" %}"></script>
+  <script type="text/javascript" src="{% static "bower_components/angular-resource/angular-resource.min.js" %}"></script>
+  <script type="text/javascript" src="{% static "bower_components/angular-animate/angular-animate.min.js" %}"></script>
+  <script type="text/javascript" src="{% static "bower_components/angular-aria/angular-aria.min.js" %}"></script>
+  <script type="text/javascript" src="{% static "bower_components/angular-cookies/angular-cookies.min.js" %}"></script>
+  <script type="text/javascript" src="{% static "bower_components/angular-messages/angular-messages.min.js" %}"></script>
+  <script type="text/javascript" src="{% static "bower_components/angular-sanitize/angular-sanitize.min.js" %}"></script>
+  <script type="text/javascript" src="{% static "bower_components/angular-material/angular-material.min.js" %}"></script>
+
+  <!--/. Ui-bootstrap /-->
+  <script type="text/javascript" src="{% static "bower_components/angular-ui-bootstrap/dist/ui-bootstrap.js" %}"></script>
+  <script type="text/javascript" src="{% static "bower_components/angular-ui-bootstrap/dist/ui-bootstrap-tpls.js" %}"></script>
+   
+  <!--/. Google Maps Directive /-->
+  <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyD7gca_XV2K1bT5Rb5mWlBpfjYTetkPpMI&callback"
+  type="text/javascript"></script>
+  <script type="text/javascript" src="{% static "bower_components/lodash/dist/lodash.min.js" %}"></script>
+  <script type="text/javascript" src="{% static "bower_components/angular-simple-logger/dist/angular-simple-logger.min.js" %}"></script>
+  <script type="text/javascript" src="{% static "bower_components/angular-google-maps/dist/angular-google-maps.min.js" %}"></script>
+  
+  <!---/. DatePicker  /-->
+  <script type="text/javascript" src="{% static "bower_components/ngQuickDate/dist/ng-quick-date.js" %}"></script>
+  <script type="text/javascript" src="{% static "bower_components/angular-ui-mask/dist/mask.min.js" %}"></script>
+
+  <!-- ANGULAR CORE -->
+   <script src="{% static "app.js" %}"></script>
+   <script src="{% static "main/mainCtrl.js" %}"></script>
+   <script src="{% static "main/mainServices.js" %}"></script>   
+   <script src="{% static "roomdetail/roomdetailCtrl.js" %}"></script>   
+   <script src="{% static "registration-auth/login/loginCtrl.js" %}"></script>   
+   <script src="{% static "registration-auth/login/LogoutCtrl.js" %}"></script>   
+   <script src="{% static "registration-auth/authService.js" %}"></script>   
+   <script src="{% static "registration-auth/MasterCtrl.js" %}"></script> 
+   <script src="{% static "registration-auth/Validation.js" %}"></script> 
+   <script src="{% static "order/OrderRoomCtrl.js" %}"></script> 
+   <script src="{% static "order/OrderRoomServices.js" %}"></script>
+
+
+  <script src="{% static "registration-auth/registration/RegistrationCtrl.js" %}"></script> 
+   <!--/. Directive /--> 
+   <script src="{% static "directive/dateFormater.js" %}"></script>
+  
+
+  <!-- Bootstrap core JavaScript -->
+  <script type="text/javascript" src="{% static "mainpage/js/bootstrap.min.js" %}"></script>
+
+  <!-- Material Design Bootstrap -->
+  <script type="text/javascript" src="{% static "mainpage/js/mdb.js" %}"></script>
+ 
+  
+     <script>
+              new WOW().init();
+              </script>
+              
+</head>
+
+<body ng-app="hostelApp" ng-controller="MasterCtrl">
+
+    <!--/.Navigation-->
+  <!-- Navigation  -->
+  <nav class="navbar z-depth-2 info-color" role="navigation">
+    <div class="container ">
+       <div class="navbar-header">
+                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+
+            </div>
+            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                <ul class="nav navbar-nav">
+                    <li><a href="#sec-home" class="waves-effect waves-light">Home <i class="fa fa-home left"></i></a></li>
+                    <li><a href="#sec-best-features" class="waves-effect waves-light">About</a></li>
+                    <li><a href="#sec-details" class="waves-effect waves-light">Details</a></li>
+                    <li><a href="#sec-testimonials" class="waves-effect waves-light">Testimonials</a></li>
+                    <li><a href="#sec-pricing" class="waves-effect waves-light">Pricing</a></li>
+                    <li><a href="#sec-contact" class="waves-effect waves-light">Contact</a></li>
+                    <li><a href="#sec-footer" class="waves-effect waves-light"><span ng-bind="user.email"></span></a></li>
+
+                </ul>
+              <form class="navbar-form navbar-right">
+          <div class="form-group">
+             <a class="btn-floating info-color waves-effect waves-light" ui-sref="mainpage.login" ng-hide="authenticated"><i class="fa fa-sign-in"></i>
+             <br></a> 
+             <a class="btn-floating info-color waves-effect waves-light" ui-sref="logout" ng-hide="!authenticated"><i class="fa fa-sign-out"></i>
+             <br></a>  
+          </div>
+        </form>
+            </div>
+    </div>
+  </nav>
+     
+
+  <!-- carousel -->
+  <div id="carousel-example-generic" class="carousel slide carousel-fade">
+
+    <!-- Indicators -->
+    <ol class="carousel-indicators">
+      <li data-target="#carousel-example-generic" data-slide-to="0" class="active">
+      </li>
+      <li data-target="#carousel-example-generic" data-slide-to="1"></li>
+      <li data-target="#carousel-example-generic" data-slide-to="2"></li>
+    </ol>
+
+    <!-- Wrapper for slides -->
+    <div class="carousel-inner" role="listbox">
+
+      <!-- First slide -->
+      <div class="item active">
+        <div class="carousel-caption">
+          <div data-animation="animated fadeInRightBig">
+            <h2 class="h2-responsive">This is the caption for slide 1</h2>
+            <h4 class="h4-responsive">This is the caption for slide 1</h4>
+          </div>
+        </div>
+      </div>
+      <!-- /.item -->
+
+      <!-- Second slide -->
+      <div class="item">
+        <div class="carousel-caption">
+          <div data-animation="animated fadeInDownBig">
+            <h2 class="h2-responsive">This is the caption for slide 1</h2>
+            <h4 class="h4-responsive">This is the caption for slide 1</h4>
+          </div>
+        </div>
+      </div>
+      <!-- /.item -->
+
+      <!-- Third slide -->
+      <div class="item">
+        <div class="carousel-caption">
+          <div data-animation="animated fadeInLeftBig">
+            <h2 class="h2-responsive">This is the caption for slide 1</h2>
+            <h4 class="h4-responsive">This is the caption for slide 1</h4>
+          </div>
+        </div>
+      </div>
+      <!-- /.item -->
+
+    </div>
+    <!-- /.carousel-inner -->
+
+    <!-- Controls -->
+    <a class="left carousel-control new-control" href="#carousel-example-generic" role="button" data-slide="prev">
+      <span class="fa fa fa-angle-left waves-effect waves-light"></span>
+      <span class="sr-only">Previous</span>
+    </a>
+    <a class="right carousel-control new-control" href="#carousel-example-generic" role="button" data-slide="next">
+      <span class="fa fa fa-angle-right waves-effect waves-light"></span>
+      <span class="sr-only">Previous</span>
+    </a>
+
+  </div>
+  <!-- /.carousel -->
+
+  <!-- Page content -->
+  <div class="container page-content">
+
+  
+
+    <!-- Content Row -->
+    <div class="row" >
+  
+    <!-- /.row -->
+    <div ui-view></div>
+  
+  <!--/. NGVIEW -->
+  </div>  
+  <!-- /.container -->
+  </div>
+  
+  <!--/. Page content -->
+
+
+
+
+  <!-- Footer -->
+  <footer class="page-footer info-color darken-1 " if="footer">
+    <div class="container ">
+      <div class="row">
+        <div class="col-md-3 col-md-offset-1">
+          <p class="white-text center-on-small-only">GET STARTED</p>
+          <p class="white-text center-on-small-only">Register for free and start to create amazing things.</p>
+          <a href="http://mdbootstrap.com/getting-started/" class="btn btn-danger waves-effect waves-light">Get started!</a>
+
+        </div>
+        <hr class="hidden-lg hidden-md">
+
+        <div class="col-md-2">
+          <p class="white-text center-on-small-only">USEFUL LINKS</p>
+          <ul>
+            <li><a href="#" data-toggle="modal" data-target="#myModal" class="grey-text text-lighten-3" href="#!">Contact us</a>
+            </li>
+            <li><a class="grey-text text-lighten-3" href="http://mdbootstrap.com/material-design-for-bootstrap/" target="_blank">About MDB</a>
+            </li>
+            <li><a class="grey-text text-lighten-3" href="http://mdbootstrap.com/forums/forum/support/" target="_blank">Support</a>
+            </li>
+            <li><a class="grey-text text-lighten-3" href="http://mdbootstrap.com/forums/forum/bugs/" target="_blank">Bug report</a>
+            </li>
+
+
+          </ul>
+        </div>
+        <hr class="hidden-lg hidden-md">
+
+        <div class="col-md-3 text-center">
+          <p class="white-text text-center"> SOCIAL MEDIA</p>
+          <a target="_blank" href="https://www.facebook.com/mdbootstrap" class="btn-floating btn-large fb-bg waves-effect waves-light"><i class="fa fa-facebook"> </i></a>
+          <a target="_blank" href="https://twitter.com/MDBootstrap" class="btn-floating btn-large tw-bg waves-effect waves-light"><i class="fa fa-twitter"> </i></a>
+          <a target="_blank" href="https://plus.google.com/u/0/b/107863090883699620484/107863090883699620484/posts" class="btn-floating btn-large gplus-bg waves-effect waves-light"><i class="fa fa-google-plus"> </i></a>
+        </div>
+      </div>
+    </div>
+    <div class="footer-copyright">
+      <div class="container">
+        <div class="col-md-10 col-md-offset-1"> © 2015 Copyright <a href="http://www.MDBootstrap.com">MDBootstrap.com </a>
+        </div>
+      </div>
+    </div>
+  </footer>
+  <div class="fixed-action-btn" style="bottom: 45px; right: 24px;">
+    <a class="btn-floating btn-large info-color">
+      <i class="fa fa-filter"></i>
+    </a>
+    
+    <ul>
+      <li><a class="btn-floating red"><i class="material-icons">insert_chart</i></a></li>
+      <li><a class="btn-floating yellow darken-1"><i class="material-icons">format_quote</i></a></li>
+      <li><a class="btn-floating green"><i class="material-icons">publish</i></a></li>
+      <li><a class="btn-floating blue"><i class="material-icons">attach_file</i></a></li>
+    </ul>
+</div>
+  <script>
+        $('.carousel').carousel();
+    </script>
+</body>
+
+</html>

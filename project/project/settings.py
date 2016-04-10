@@ -38,7 +38,16 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'django.contrib.sites',
+    'allauth',
+    'allauth.account',
+    'allauth.socialaccount',
+    'allauth.socialaccount.providers.google',
+    'rest_framework',
+    'rest_framework.authtoken',
     'hostel',
+    'geoposition',
+
 ]
 
 MIDDLEWARE_CLASSES = [
@@ -52,6 +61,11 @@ MIDDLEWARE_CLASSES = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
+AUTHENTICATION_BACKENDS = (
+    'django.contrib.auth.backends.ModelBackend',
+    'allauth.account.auth_backends.AuthenticationBackend',
+    )
+
 ROOT_URLCONF = 'project.urls'
 
 
@@ -59,7 +73,7 @@ TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
         'DIRS': [
-                '/var/www/hostel.te.ua/project/hostel/templates/hostel/',
+                '/var/www/hostel.te.ua/project/front/src/',
         ],
         'APP_DIRS': True,
         'OPTIONS': {
@@ -82,14 +96,12 @@ WSGI_APPLICATION = 'project.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'hostels',
+        'NAME': 'hostel',
         'USER': 'root',
         'PASSWORD': 'root',
         'HOST': 'localhost',
         'PORT': '3306',
-        'OPTIONS': {
-              "init_command": "SET foreign_key_checks = 0;",
-    },
+        
     }
 }
 
@@ -136,11 +148,33 @@ STATIC_URL = '/static/'
 STATICFILES_DIRS = (
     os.path.join(BASE_DIR, "static"),
     '/var/www/hostel.te.ua/project/static/',
-    '/var/www/hostel.te.ua/project/static/bower_components/',
-    '/var/www/hostel.te.ua/project/static/angularcore/',
+    '/var/www/hostel.te.ua/project/front/',
+    '/var/www/hostel.te.ua/project/front/src/app/',
+    '/var/www/hostel.te.ua/project/media/roomimage/',
     ('image', '/var/www/hostel.te.ua/project/media/mainimage/'),
-    ('view', '/var/www/hostel.te.ua/project/hostel/templates/hostel/views/'),
+    ('pictures', '/var/www/hostel.te.ua/project/media/roomimage/'),
+    ('view', '/var/www/hostel.te.ua/project/front/src/app/'),
 
     #'/var/www/hostel.te.ua/hostelproject/media/mainimage/',
 )
 MEDIA_ROOT = '/var/www/hostel.te.ua/project/media/roomimage/'
+#MEDIA_URL = '/var/www/hostel.te.ua/project/media/roomimage/'
+
+
+REST_SESSION_LOGIN = True
+EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+SITE_ID = 4
+ACCOUNT_EMAIL_REQUIRED = True
+ACCOUNT_AUTHENTICATION_METHOD = 'email'
+ACCOUNT_EMAIL_VERIFICATION = 'optional'
+ACCOUNT_USER_MODEL_USERNAME_FIELD = None
+ACCOUNT_USERNAME_REQUIRED = False
+LOGIN_REDIRECT_URL = '/'
+
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': (
+        'rest_framework.authentication.SessionAuthentication',
+        'rest_framework.authentication.TokenAuthentication',
+    )
+}
+

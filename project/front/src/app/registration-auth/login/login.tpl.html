@@ -1,0 +1,59 @@
+
+                <div class="modal-header text-center">
+                <button type="button" class="close" data-dismiss="modal" ng-click="close();"style="color:red;">X</button>
+                    <h4><i class="fa fa-user"></i> Login</h4><br>
+                    <a class="btn-floating btn-large gplus-bg waves-effect waves-light" ui-sref="googlelogin"><i class="fa fa-google-plus"> </i></a>
+                    <a class="btn-floating btn-large fb-bg waves-effect waves-light"><i class="fa fa-facebook"> </i></a>
+                    <a class="btn-floating btn-large vk-bg waves-effect waves-light"><i class="fa fa-vk"></i></a>
+
+                </div>
+                <div class="modal-body" style="padding:40px 50px;">
+                <form role="form" ng-submit="login(LoginForm)" name="LoginForm" novalidate>
+                    <div class="row">
+                        <form class="col-md-12">
+                            <div class="row">
+                      
+                                <div class="input-field" >
+                                    <i class="material-icons prefix">email</i>
+                                     <input name="email" id="email" type="email" ng-model="model.email" required ng-pattern="/^.+@.+\..+$/" 
+                                    class="validate">
+                                    <label for="email" >Email</label>  
+                                    </div>
+                                    <div class="text-center">
+                                     <span ng-show="LoginForm.email.$error.pattern" style="color:red;" >Not Email please enter a valid email</span>                             
+                                     </div>                   
+                               
+                                <div class="input-field">
+                                    <i class="material-icons prefix">lock</i>
+                                    <input name="password" id="password" type="password"  ng-model="model.password" class="validate" required>
+                                    <label for="password">Password</label>
+                                </div>
+                               <div class="text-center">
+                                                                
+                                </div>  
+
+                                    <div class="alert alert-danger text-center" ng-repeat="error in errors.non_field_errors" style="align:center;">{{error}}</div>
+                                <div class="text-center">
+                                    <button type="submit" class="btn btn-primary waves-effect waves-light" ng-disabled="LoginForm.$invalid">Login</button>
+
+                                </div>
+                            </div>
+                            </div>
+                        </form>
+                    </div>
+                </form>
+            </div>
+                <!--Footer-->
+                <div class="modal-footer">
+                    <div class="options">
+                    <p>Not a member? <a ui-sref="mainpage.register" ng-click="close()">Sign Up</a></p>
+                    
+                    <p>Forgot <a href="#">Password?</a></p>
+                    </div>
+                </div>
+                <!--/.Footer-->
+          
+            <!-- /.Modal content-->
+      
+ 
+    <!-- Modal -->

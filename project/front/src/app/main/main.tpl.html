@@ -1,0 +1,49 @@
+        <div class="row-4" ng-cloak>
+
+            <!--Card-->
+              <div class="col-xs-6 col-sm-6 col-md-4 col-lg-3" ng-repeat="hostel in hostels">
+              <div class="wow bounceInUp">
+                   <div class="elegant-card z-depth-1 hoverable" >
+                     <!-- Image wrapper -->
+                       
+                     <div class="card-up view overlay hm-white-slight">
+                          <h5 class="card-label"> <span class="label rgba-black-light">Category 1</span></h5>
+                          <div ng-repeat= "main_image in hostel.roomimages | filter: { image_main: 'true' }">
+                             <a ><img ng-src ="{{main_image.image_medium}}" class="img-responsive"></a>
+
+                          <div class="mask waves-effect waves-light"> </div>
+                          </div>
+                      </div>
+
+                    <!-- Button -->
+                   
+
+                        <a class="btn-floating btn-large waves-effect waves-light stylish-color" ui-sref="mainpage.detail({roomId: hostel.id})" id="mpagedet" >
+                            <i class="fa fa-chevron-right"></i>
+                        </a>
+                   
+                   
+                    <!-- Content -->
+                    <div class="card-content">
+                            <h5><span ng-bind="hostel.name_room"></span></h5>
+                                <p><span ng-bind="hostel.description_short"></span></p>
+                    </div>
+
+                    <!-- Footer -->
+                    <div class="card-footer">
+                        <ul class="list-inline">
+                            <li><i class="fa fa-bed"></i><span ng-bind="hostel.places_in_room"></span></li>
+                            <li><a href="#"><i class="fa fa-location-arrow "></i>location</a></li>
+                            <li><a href="#"><i class="fa">&#8372;</i><span ng-bind="hostel.price_room"></span></a></li>
+                            <li><a href="#"><i class="fa fa-twitter"> </i>5</a></li>
+                        </ul>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+        <!--. Go Walking Down There by Chris Isaak  -->
