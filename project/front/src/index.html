@@ -27,10 +27,14 @@
   <link href="{% static "bower_components/angular-material/angular-material.css" %}" rel="stylesheet">
   <link href="{% static "bower_components/angular-ui-bootstrap/dist/ui-bootstrap-csp.css" %}" rel="stylesheet">
   <link href="{% static "bower_components/ngQuickDate/dist/ng-quick-date-plus-default-theme.css" %}" rel="stylesheet">
-
-  <!-- Template style -->
+  
+  <!-- Toast Css -->
+  <link href="{% static "bower_components/angular-toastr/dist/angular-toastr.min.css" %}" rel="stylesheet">
+  
+   <!-- Template style -->
   <link href="{% static "mainpage/css/style.css" %}" rel="stylesheet">
-<!-- SCRIPTS -->
+  
+  <!-- SCRIPTS -->
 
   <!-- JQuery -->
   <script type="text/javascript" src="{% static "bower_components/jquery/dist/jquery.min.js" %}"></script>
@@ -49,6 +53,7 @@
   <!--/. Ui-bootstrap /-->
   <script type="text/javascript" src="{% static "bower_components/angular-ui-bootstrap/dist/ui-bootstrap.js" %}"></script>
   <script type="text/javascript" src="{% static "bower_components/angular-ui-bootstrap/dist/ui-bootstrap-tpls.js" %}"></script>
+  <script type="text/javascript" src="{% static "bower_components/angular-ui-bootstrap/dist/ui-bootstrap-tpls.js" %}"></script>
    
   <!--/. Google Maps Directive /-->
   <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyD7gca_XV2K1bT5Rb5mWlBpfjYTetkPpMI&callback"
@@ -60,6 +65,8 @@
   <!---/. DatePicker  /-->
   <script type="text/javascript" src="{% static "bower_components/ngQuickDate/dist/ng-quick-date.js" %}"></script>
   <script type="text/javascript" src="{% static "bower_components/angular-ui-mask/dist/mask.min.js" %}"></script>
+  <!---/. Toast /-->
+  <script type="text/javascript" src="{% static "bower_components/angular-toastr/dist/angular-toastr.tpls.min.js" %}"></script>
 
   <!-- ANGULAR CORE -->
    <script src="{% static "app.js" %}"></script>
@@ -76,8 +83,13 @@
 
 
   <script src="{% static "registration-auth/registration/RegistrationCtrl.js" %}"></script> 
+  <script src="{% static "registration-auth/registration/VerifyEmailCtrl.js" %}"></script> 
+  <script src="{% static "dry/DryFactory.js" %}"></script> 
    <!--/. Directive /--> 
    <script src="{% static "directive/dateFormater.js" %}"></script>
+   <script src="{% static "directive/pwMatch.js" %}"></script>
+   <script src="{% static "directive/rusEngName.js" %}"></script>
+   <script src="{% static "directive/emailButton.js" %}"></script>
   
 
   <!-- Bootstrap core JavaScript -->
@@ -110,7 +122,7 @@
             </div>
             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                 <ul class="nav navbar-nav">
-                    <li><a href="#sec-home" class="waves-effect waves-light">Home <i class="fa fa-home left"></i></a></li>
+                    <li><a href="#sec-home" class="waves-effect waves-light" ui-sref="verify">Home <i class="fa fa-home left"></i></a></li>
                     <li><a href="#sec-best-features" class="waves-effect waves-light">About</a></li>
                     <li><a href="#sec-details" class="waves-effect waves-light">Details</a></li>
                     <li><a href="#sec-testimonials" class="waves-effect waves-light">Testimonials</a></li>
@@ -120,7 +132,7 @@
 
                 </ul>
               <form class="navbar-form navbar-right">
-          <div class="form-group">
+          <div class="form-group" ng-cloak>
              <a class="btn-floating info-color waves-effect waves-light" ui-sref="mainpage.login" ng-hide="authenticated"><i class="fa fa-sign-in"></i>
              <br></a> 
              <a class="btn-floating info-color waves-effect waves-light" ui-sref="logout" ng-hide="!authenticated"><i class="fa fa-sign-out"></i>

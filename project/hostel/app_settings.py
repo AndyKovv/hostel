@@ -7,7 +7,9 @@ from hostel.serializers import (
     LoginSerializer as DefaultLoginSerializer,
     PasswordResetSerializer as DefaultPasswordResetSerializer,
     PasswordResetConfirmSerializer as DefaultPasswordResetConfirmSerializer,
-    PasswordChangeSerializer as DefaultPasswordChangeSerializer)
+    PasswordChangeSerializer as DefaultPasswordChangeSerializer,
+    RegisterSerializer as DefaultRegisterSerializer)
+
 from .utils import import_callable, default_create_token
 
 create_token = import_callable(
@@ -49,3 +51,5 @@ PasswordChangeSerializer = import_callable(
         DefaultPasswordChangeSerializer
     )
 )
+RegisterSerializer = import_callable(
+    serializers.get('REGISTER_SERIALIZER', DefaultRegisterSerializer))

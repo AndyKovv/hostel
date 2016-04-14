@@ -20,69 +20,64 @@ beforeEach(module('mainPage'));
 beforeEach(module('ui.router'));
 beforeEach(module('OrderRoom'));
 beforeEach(module('registrationAuth'));
+beforeEach(module('uiGmapgoogle-maps'));
 beforeEach(module('ngCookies'));
  
  
- var $scope, $httpBackend, router, ctrl, latitude, longitude, order_room,  stateProvider;
+ var $scope, $httpBackend, router, ctrl, latitude, longitude, $rootScope;
+
+  
+  var date = {
+        order_in :'2016-04-20',
+        order_out : '2016-04-24',
+                    
+        }
 
 
- room1Data = function(){
- 	return {
- 		room: 'firstRoom',
- 		roomimages: ['image1.jpg'],
-        latitude: '123',
-        longitude: '234',
-        id: '1',
+var getRoomMock = {
+    data: 'room1',
+    latitude:'123',
+     longitude:'234',
+     id : 1,
 
- 	};
- };
- 
- 
-   
+}
+ beforeEach(inject(function(_$httpBackend_, _$rootScope_, $controller, _OrderRoomService_){
 
- beforeEach(inject(function(_$httpBackend_, $rootScope, $stateParams, $controller, _getRoom_, _OrderRoomService_, _$stateProvider_, _$router_){
     
-
-
+    $httpBackend = _$httpBackend_;
+    OrderRoomService = _OrderRoomService_;
+    spyOn(OrderRoomService, 'chekFreePlace').and.callThrough();
     $uibModalInstance = jasmine.createSpyObj('$uibModalInstance', ['close', 'dismiss']);
-    
-   stateProvider = _$stateProvider_;
-   router = _$router_;
-    order_room = _OrderRoomService_;
-    
-    spyOn(order_room, 'chekFreePlace').and.callThrough();
-   
- 	$httpBackend = _$httpBackend_;
+ 	$rootScope = _$rootScope_;
+    $scope = _$rootScope_.$new();
+
 
     
- 	$stateParams.roomId = 'room1';
- 	$httpBackend.expectGET('/api/rooms/room1.json').respond(room1Data());
 
- 	$scope = $rootScope.$new();
+    
 
-     
 
  	$ctrl = $controller('DetailPageCtrl', {
-
+        $rootScope : $rootScope,
         $scope: $scope,
-        
-    $uibModalInstance: $uibModalInstance,
-    OrderRoomService : order_room,
-    
-
-    
-    
-    
+        $uibModalInstance: $uibModalInstance,
+        OrderRoomService : OrderRoomService,
+        getRoom : getRoomMock,   
 });
  	
 
- }));  
+ }));
+
+   afterEach(function() {
+     $httpBackend.verifyNoOutstandingExpectation();
+     $httpBackend.verifyNoOutstandingRequest();
+   });
+
+  
 
 it('should fetch room detail', function(){
 
-    expect($scope.room).toEqualData({});
-    $httpBackend.flush();
-    expect($scope.room).toEqualData(room1Data());
+    expect($scope.room.data).toEqualData('room1');
 
 });
 
@@ -93,56 +88,87 @@ it('should test render map function', function(){
 })
 
 it('should test mapShow function', function(){
-    $httpBackend.flush();
+      
     
-    expect($scope.room).toEqualData(room1Data());
     $scope.mapShow.apply();
     
     var latitude = $scope.room.latitude;
     var longitude = $scope.room.longitude;
     expect($scope.render).toBe(true);
-    expect(latitude).toBe('123');
-    expect(longitude).toBe('234');
+    expect(latitude).toEqual('123');
+    expect(longitude).toEqual('234');
 
 })
 
 it('should test close modal window function', function(){
 
     $scope.close.apply();
-    expect($uibModalInstance.close).toBeTruthy();
+    expect($uibModalInstance.close).toHaveBeenCalled();
 });
 
-it('should convert date freePlaceInRoom function', function(){
-    $httpBackend.flush();
-    expect($scope.room).toEqualData(room1Data());
+it('should test chekFreePlace free room ', function(){
 
-    var date = {
-        order_in :'2016-04-20',
-        order_out : '2016-04-24',
-                    
-        }
-
-    $scope.freePlaceInRoom(date);
-   
-    var order_in = date.order_in;
-    var order_out =  date.order_out;
-    var today = '2016-04-20'; 
-  
-    expect(order_in).toBe('2016-04-20');
-    expect(order_out).toBe('2016-04-24');
-  
-    var data = {
-        order_in: order_in,
-        order_out: order_out,
+ $scope.freePlaceInRoom(date);
+ var data = {
+        order_in: '2016-04-20',
+        order_out: '2016-04-24',
         room_id: $scope.room.id,
         }
-  
-  expect(order_room.chekFreePlace).toHaveBeenCalledWith(data);
+ $httpBackend.expectPOST('/api/orders/chek_room/', data).respond(200, {
+    free_place: 1,
+ });
+ expect(OrderRoomService.chekFreePlace).toHaveBeenCalledWith(data);
 
- 
-   
+ $httpBackend.flush();
+
+expect($scope.status_place).toBe('Free');
+expect($scope.additionalrooms).toBe(undefined);
 });
 
+it('should test chekFreePlace occupied room', function(){
+$scope.freePlaceInRoom(date);
+ var data = {
+        order_in: '2016-04-20',
+        order_out: '2016-04-24',
+        room_id: $scope.room.id,
+        }
+expect($rootScope.additional_date_in).toEqual(data.order_in);
+expect($rootScope.additional_date_out).toEqual(data.order_out);
+$httpBackend.expectPOST('/api/orders/chek_room/', data).respond(200, {room: 1,});
 
+$httpBackend.flush();
+expect($scope.status_place).toBe('Occupied');
+expect($scope.additionalrooms).toEqual({room:1});
+
+});
+
+it('it should test chekFreePlace server error', function(){
+$scope.freePlaceInRoom(date);
+ var data = {
+        order_in: '2016-04-20',
+        order_out: '2016-04-24',
+        room_id: $scope.room.id,
+        }
+$httpBackend.expectPOST('/api/orders/chek_room/', data).respond(500);
+$httpBackend.flush();
+expect($scope.server_error).toBe(true);
+});
+
+it('should test freePlaceInRoom algoritm on client side', function(){
+var order_in = date.order_in;
+var order_out = date.order_out;
+var mock_today = '2016-04-20';
+expect(order_in).toEqual('2016-04-20');
+expect(order_out).toEqual('2016-04-24');
+expect(order_in >= mock_today && order_in < order_out).toBeTruthy();
+
+$scope.$apply();
+var order_in = '2016-04-19';
+expect(order_in).toEqual('2016-04-19');
+expect(mock_today).toEqual('2016-04-20');
+expect(order_in >= mock_today && order_in < order_out).toBeFalsy();
+
+
+});
 
 });

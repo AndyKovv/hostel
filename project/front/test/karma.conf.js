@@ -7,6 +7,9 @@ module.exports = function(config) {
   config.set({
     // enable / disable watching file and executing tests whenever any file changes
     autoWatch: true,
+    preprocessors: {
+      'src/app/**/*.html': ['ng-html2js']
+    },
 
     // base path, that will be used to resolve files and exclude
     basePath: '../',
@@ -22,6 +25,7 @@ module.exports = function(config) {
       // bower:js
       'bower_components/angular/angular.js',
       'bower_components/angular-route/angular-route.js',
+      'https://maps.googleapis.com/maps/api/js?sensor=false',
       'bower_components/angular-resource/angular-resource.js',
       'bower_components/angular-animate/angular-animate.js',
       'bower_components/angular-mocks/angular-mocks.js',
@@ -32,15 +36,30 @@ module.exports = function(config) {
       'bower_components/angular-material/angular-material.min.js',
       'bower_components/angular-aria/angular-aria.min.js',
       'bower_components/angular-cookies/angular-cookies.min.js',
+      'bower_components/angular-sanitize/angular-sanitize.min.js',
+      'bower_components/angular-google-maps/dist/angular-google-maps.min.js',
+      'bower_components/angular-simple-logger/dist/angular-simple-logger.min.js',
+      'bower_components/angular-ui-mask/dist/mask.min.js',
+      'bower_components/ngQuickDate/dist/ng-quick-date.js',
+      'bower_components/angular-toastr/dist/angular-toastr.tpls.min.js',
+
+
 
       'https://js.stripe.com/v2',
 
       // endbower
       'src/app/**/*.js',
       //'test/mock/**/*.js',
-      'test/spec/**/*.js'
-
+      'test/spec/**/*.js',
+     '*.html',
+      '*.html.ext',
+      // if you wanna load template files in nested directories, you must use this
+      'src/app/**/*.html'
     ],
+     ngHtml2JsPreprocessor: {
+
+      moduleName: 'templates'
+    },
 
     // web server port
     port: 8080,
@@ -60,7 +79,8 @@ module.exports = function(config) {
     // Which plugins to enable
     plugins: [
       'karma-chrome-launcher',
-      'karma-jasmine'
+      'karma-jasmine',
+      'karma-ng-html2js-preprocessor'
     ],
 
     // Continuous Integration mode

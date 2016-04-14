@@ -8,23 +8,29 @@
  * Controller of the angularApp
  */
 angular.module('mainPage')
-  .controller('MainPageCtrl', [ '$rootScope','$scope', '$uibModal', 'allRooms', function ($rootScope, $scope, $uibModal, allRooms) {
+  .controller('MainPageCtrl', [ '$rootScope','$scope',  '$uibModal', '$timeout', 'allRooms',  'toastr',  
+    function ($rootScope, $scope,  $uibModal, $timeout, allRooms, toastr) {
+    //resolve all room in app.js
     $scope.hostels = allRooms;
+    
+          
+  if($rootScope.authenticated){ 
+                if($rootScope.user.user_firstname === ''){
+                 $timeout(function(){
+                    $rootScope.authenticated ? openModal() : '';
+                   }, 5000);
+              }
+             }
+
+              function openModal(){
+            $uibModal.open({
+                 templateUrl: 'static/view/registration-auth/registration/registration-userinfo-fields.tpl.html',
+                  controller: 'RegistrationCtrl',
+             });
         
-    $scope.test =  'test';
-   var authenticated = $rootScope.authenticated;
-    if(authenticated === true){
-    	var user = $rootScope.user;
-    	if(user.user_firstname === ''){
-    		 $uibModal.open({
-           templateUrl: 'static/view/registration-auth/registration/registration-userinfo-fields.tpl.html',
-              controller: 'RegistrationCtrl',
-
-
-        })
-    	
-    	}
-    }
+         }
+  
    
+  
 
   }]);

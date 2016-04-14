@@ -65,27 +65,23 @@ angular.module('registrationAuth')
             }));
             return deferred.promise;
         },
-        'register': function(username,password1,password2,email,more){
-            var data = {
-                'username':username,
-                'password1':password1,
-                'password2':password2,
-                'email':email
-            }
-            data = angular.extend(data,more);
+        'register': function(data){
             return this.request({
                 'method': "POST",
                 'url': "/registration/",
-                'data' :data
+                'data': data
+            }).then(function(){
+                $rootScope.$broadcast("djangoAuth.register");
+                $rootScope.authenticated = true;
             });
         },
-        'login': function(username,password){
+        'login': function(email,password){
             var djangoAuth = this;
             return this.request({
                 'method': "POST",
                 'url': "/login/",
                 'data':{
-                    'username':username,
+                    'email':email,
                     'password':password
                 }
             }).then(function(data){

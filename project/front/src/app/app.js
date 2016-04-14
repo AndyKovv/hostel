@@ -10,38 +10,27 @@
  */
 angular
   .module('hostelApp', [
-    'ngAnimate',
-    'ngResource', 
-    'ngAria',
-    'ngCookies',
     'ngResource',
+    'ngCookies',
+    'ngAria',
     'ngSanitize',
     'ngMessages',
-    'uiGmapgoogle-maps',
-    'ui.mask',
+    'ngAnimate',
     'ngMaterial',
-    'ui.bootstrap',
     'ui.router',
     'mainPage',
     'registrationAuth',
-    'ngQuickDate',
     'OrderRoom',
     'directive-hostel',
+    'dry'
 
 
-  ]).config( function($stateProvider, $urlRouterProvider, $locationProvider, $httpProvider, ngQuickDateDefaultsProvider){
+  ]).config( function($stateProvider, $urlRouterProvider, $locationProvider, $httpProvider){
 
     $httpProvider.defaults.xsrfCookieName = 'csrftoken';
     $httpProvider.defaults.xsrfHeaderName = 'X-CSRFToken';
     $urlRouterProvider.otherwise("/");
-
-    ngQuickDateDefaultsProvider.set({
-    closeButtonHtml: "<i class='fa fa-times'></i>",
-    buttonIconHtml: "<i class='fa fa-calendar right'></i>",
-    nextLinkHtml: "<i class='fa fa-chevron-right'></i>",
-    prevLinkHtml: "<i class='fa fa-chevron-left'></i>"
-    });
-
+    
     $stateProvider.state('mainpage',{
       url:'/',
       resolve:{
@@ -84,11 +73,11 @@ angular
     })
      .state('mainpage.register',{
       url: 'registration/',
-       onEnter:['$stateParams', '$state', '$uibModal', '$resource', function($stateParams, $state, $uibModal, $resource){
+       onEnter:['$state', '$uibModal', function($state, $uibModal){
         $uibModal.open({
               templateUrl: 'static/view/registration-auth/registration/user-registration.tpl.html',
-              //controller: 'RegistrationCtrl',
-              size: 'lg',
+              controller: 'RegistrationCtrl',
+              size: 'md',
               windowTopClass: 'hoverable'
 
         })
@@ -97,6 +86,7 @@ angular
         });
       }]
     })
+ 
     .state('mainpage.login',{
       url:'login/',
       onEnter:['$uibModal', '$state', function($uibModal, $state){
@@ -123,20 +113,54 @@ angular
       }
       
     })
+    .state('vklogin',{
+      url:'^/accounts/vk/login/',
+      controller: function($window){
+        
+        $window.location.href ="/accounts/vk/login/";
+      }
+      
+    })
     .state('logout', {
       url:'logout/',
       controller:'LogoutCtrl',
 
-    });
+    })    
+    .state('verify', {
+      url: '^/verifyEmail/:emailVerificationToken/',
+      controller: 'VerifyEmailCtrl',
+
+     });
 
     $locationProvider.html5Mode({
   enabled: true,
-  //requireBase: false
+
 });
 
   });
   
- angular.module('mainPage', []);
- angular.module('registrationAuth', []);
+ angular.module('mainPage', ['uiGmapgoogle-maps','ui.mask', 'ui.bootstrap','ngQuickDate', 'toastr'])
+ .config(function(ngQuickDateDefaultsProvider, toastrConfig){
+ ngQuickDateDefaultsProvider.set({
+    closeButtonHtml: "<i class='fa fa-times'></i>",
+    buttonIconHtml: "<i class='fa fa-calendar right'></i>",
+    nextLinkHtml: "<i class='fa fa-chevron-right'></i>",
+    prevLinkHtml: "<i class='fa fa-chevron-left'></i>"
+    });
+
+   angular.extend(toastrConfig, {
+    autoDismiss: false,
+    containerId: 'toast-container',
+    maxOpened: 0,    
+    newestOnTop: true,
+    positionClass: 'toast-bottom-left',
+    preventDuplicates: false,
+    preventOpenDuplicates: false,
+    target: 'body'
+  });
+
+ });
+ angular.module('registrationAuth', ['toastr']);
  angular.module('OrderRoom', []);
  angular.module('directive-hostel', []);
+ angular.module('dry', []);

@@ -2,6 +2,7 @@
 describe('it will test RoomService', function(){
 
 beforeEach(module('mainPage'));
+beforeEach(module('uiGmapgoogle-maps'));
 
 var $httpBackend, $rootScope, Rooms;
 beforeEach(inject(function(_$httpBackend_, _$rootScope_, _Rooms_){
@@ -12,11 +13,4 @@ beforeEach(inject(function(_$httpBackend_, _$rootScope_, _Rooms_){
 
 }))
 
-it('will send a request ', function(){
-$httpBackend.expect('GET', '/api/rooms/').respond(200, 'success');
-
-
-
-
-})
 });

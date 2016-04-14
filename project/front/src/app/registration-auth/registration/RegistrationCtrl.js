@@ -1,10 +1,9 @@
 'use strict';
 
-angular.module('registrationAuth').controller('RegistrationCtrl', [ '$rootScope', '$state', '$scope', 'djangoAuth', '$uibModalInstance', 
-	function($rootScope, $state, $scope, djangoAuth, $uibModalInstance){
+angular.module('registrationAuth').controller('RegistrationCtrl', [ '$rootScope', '$scope', 'djangoAuth', 'dryAuth', '$uibModalInstance', 
+	function($rootScope, $scope, djangoAuth, dryAuth, $uibModalInstance){
 
-$scope.inner_register = false;
-
+//Additional register form
 $scope.additionalRegister = function(userInfoForm){
 
 	if(userInfoForm.$valid){
@@ -17,15 +16,36 @@ $scope.additionalRegister = function(userInfoForm){
 		
 		djangoAuth.updateProfile(data).then(function(){
 				$uibModalInstance.close();
-				djangoAuth.profile().then(function(data){
-					$rootScope.user = data;
-				});
+				//Update profile data
+				dryAuth.userData();
 		}),
 		function(){
 			
 		}
 	}
 
-}
+};
+
+$scope.mainRegister = function(registrationForm){
+	
+	$scope.errors = [];
+	if(registrationForm.$valid){
+	var data = {
+			email : $scope.main_reg.email,
+			password1 : $scope.main_reg.password1,
+			password2 : $scope.main_reg.password2,
+
+		}
+		;
+		djangoAuth.register(data).then(function(response){
+			$scope.registration_success = true;
+			
+			//$uibModalInstance.close();
+			
+		}, function(data){
+			$scope.errors = data.email;
+		});
+	}
+};
 
 }]);

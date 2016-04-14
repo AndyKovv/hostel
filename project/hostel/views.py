@@ -6,25 +6,33 @@ from django.conf import settings
 from django.core.exceptions import ObjectDoesNotExist
 from django.utils.translation import ugettext_lazy as _
 from django.db.models import Count
-
+#from django.views.generic import TemplateView
+from django.views.generic.base import TemplateResponseMixin, View, TemplateView
+from django.shortcuts import redirect  
 from rest_framework import status
 from rest_framework.decorators import detail_route, list_route
 from rest_framework.views import APIView
 from rest_framework.response import Response
-from rest_framework.generics import GenericAPIView
+from rest_framework.generics import GenericAPIView, CreateAPIView
 from rest_framework.permissions import IsAuthenticated, AllowAny
 from rest_framework.generics import RetrieveUpdateAPIView
+
 
 from .app_settings import (
 	TokenSerializer, UserDetailsSerializer, LoginSerializer,
 	PasswordResetSerializer, PasswordResetConfirmSerializer,
-	PasswordChangeSerializer, JWTSerializer, create_token
+	PasswordChangeSerializer, JWTSerializer, create_token, RegisterSerializer
 )
+
+from allauth.account.utils import complete_signup
+from allauth.account.views import ConfirmEmailView
+from allauth.account import app_settings as allauth_settings
 
 from .utils import jwt_encode
 
 from hostel.models import HostelRoom, RoomImage, Order, TokenModel
-from hostel.serializers import HostelRoomSerializer, OrderSerializer, ChekRoomSerializer, FreeRoomSerializer
+from hostel.serializers import (HostelRoomSerializer, OrderSerializer,
+									 ChekRoomSerializer, FreeRoomSerializer, VerifyEmailSerializer)
 
 
 class RoomViewSet(viewsets.ReadOnlyModelViewSet):
@@ -236,3 +244,61 @@ class PasswordChangeView(GenericAPIView):
 		serializer.is_valid(raise_exception=True)
 		serializer.save()
 		return Response({"success": _("New password has been saved.")})
+
+class VerifyEmailView(APIView, ConfirmEmailView):
+
+    permission_classes = (AllowAny,)
+    allowed_methods = ('POST', 'OPTIONS', 'HEAD')
+
+    def get(self, *args, **kwargs):
+        raise MethodNotAllowed('GET')
+
+    def post(self, request, *args, **kwargs):
+        serializer = VerifyEmailSerializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+        self.kwargs['key'] = serializer.validated_data['key']
+        confirmation = self.get_object()
+        confirmation.confirm(self.request)
+        user = confirmation.email_address.user
+        user.is_active = True
+        user.save()
+        return Response({'message': _('ok')}, status=status.HTTP_200_OK)
+
+
+class RegisterView(CreateAPIView):
+    serializer_class = RegisterSerializer
+    permission_classes = (AllowAny, )
+    token_model = TokenModel
+
+    def get_response_data(self, user):
+        if allauth_settings.EMAIL_VERIFICATION == \
+                allauth_settings.EmailVerificationMethod.MANDATORY:
+            return {}
+
+        if getattr(settings, 'REST_USE_JWT', False):
+            data = {
+                'user': user,
+                'token': self.token
+            }
+            return JWTSerializer(data).data
+        else:
+            return TokenSerializer(user.auth_token).data
+
+    def create(self, request, *args, **kwargs):
+        serializer = self.get_serializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+        user = self.perform_create(serializer)
+        headers = self.get_success_headers(serializer.data)
+
+        return Response(self.get_response_data(user), status=status.HTTP_201_CREATED, headers=headers)
+
+    def perform_create(self, serializer):
+        user = serializer.save(self.request)
+        if getattr(settings, 'REST_USE_JWT', False):
+            self.token = jwt_encode(user)
+        else:
+            create_token(self.token_model, user, serializer)
+        complete_signup(self.request._request, user,
+                        allauth_settings.EMAIL_VERIFICATION,
+                        None)
+        return user

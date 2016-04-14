@@ -7,7 +7,7 @@ angular.module('mainPage')
 
 $scope.room = getRoom;
 
-
+//Send Date to redirect page
 $scope.redirect_init_date_in = $rootScope.additional_date_in;
 $scope.redirect_init_date_out = $rootScope.additional_date_out;
 
@@ -70,21 +70,6 @@ $scope.orderadd = true;
 
 $scope.freePlaceInRoom = function(date){
 
-$scope.chekFreeStatus = function(data, status){
-	$scope.status_place = data.free_place > 0 ? 'Free' : 'Occupied';
-		if($scope.status_place === 'Occupied'){
-			$scope.additionalrooms = data;
-
-			
-
-		}
-	
-};
-
-var errormsg = function(data, status){
-	console.log('errormsg');
-};
-
 // Chek if bouth date is enter
 if(date.order_in && date.order_out){
 	var order_in = angular.toJson(date.order_in).slice(1,11);
@@ -92,7 +77,7 @@ if(date.order_in && date.order_out){
 	var today = angular.toJson(new Date()).slice(1,11);
 		$rootScope.additional_date_in = order_in;
 		$rootScope.additional_date_out = order_out;
-
+		
 		// Chek date order in must be less then order out 
 		if(order_in >= today && order_in < order_out ){
 		// Combine data to request	
@@ -104,8 +89,17 @@ if(date.order_in && date.order_out){
 			
 			//Fire the request to api
 			OrderRoomService.chekFreePlace(data)
- 			.success($scope.chekFreeStatus)
- 			.error(errormsg);
+ 			.then(function(response){
+ 						
+ 				$scope.status_place = response.data.free_place > 0 ? 'Free' : 'Occupied';
+						if($scope.status_place === 'Occupied'){
+								$scope.additionalrooms = response.data;
+										}
+											
+ 			},function(response){
+ 				$scope.server_error = true;
+ 				
+ 			});
  		
 
 		}else{
