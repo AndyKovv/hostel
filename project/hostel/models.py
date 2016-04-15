@@ -31,6 +31,7 @@ class UserManager(BaseUserManager):
 						 raise ValueError('Email Must Be email')
 					user = self.model( email = UserManager.normalize_email(email),)
 					user.set_password(password)
+					user.inner_reg = True
 					user.save(using = self._db)
 					return user
 
@@ -48,6 +49,7 @@ class ExtUser(AbstractBaseUser, PermissionsMixin):
 			user_middlename = models.CharField('Middlename', max_length=100, blank=False, null=False)
 			phone_number = models.CharField( 'Phone Number', null=False, blank=False, max_length=16)
 			register_date = models.DateField('Date of register', auto_now_add=True)
+			inner_reg = models.BooleanField('Inner Register', default=False)
 			is_active = models.BooleanField ('Is Active', default=True)
 			is_admin = models.BooleanField('Administrator', default = False)
 
@@ -92,6 +94,7 @@ class HostelRoom(models.Model):
 	location_room = models.CharField(max_length=80)
 	places_in_room = models.IntegerField()
 	rating = models.IntegerField()
+	#thinc about
 	free_places = models.BooleanField(default=True)
 	active = models.BooleanField(default=True)
 	date_create = models.DateTimeField(auto_now_add=True)
@@ -107,7 +110,8 @@ class RoomImage(models.Model):
 	last_folder = max(glob.iglob('/var/www/hostel.te.ua/project/media/roomimage/*/'), key=os.path.getctime)
 	
 	#import pdb
-	#pdb.set_trace()		
+	#pdb.set_trace()
+
 	def path_and_rename(last_folder):
 		
 		def wrapper(instance, filename):

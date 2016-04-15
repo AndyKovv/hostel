@@ -84,6 +84,7 @@
 
   <script src="{% static "registration-auth/registration/RegistrationCtrl.js" %}"></script> 
   <script src="{% static "registration-auth/registration/VerifyEmailCtrl.js" %}"></script> 
+  <script src="{% static "user-account/userAccountCtrl.js" %}"></script>
   <script src="{% static "dry/DryFactory.js" %}"></script> 
    <!--/. Directive /--> 
    <script src="{% static "directive/dateFormater.js" %}"></script>
@@ -121,21 +122,25 @@
 
             </div>
             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-                <ul class="nav navbar-nav">
-                    <li><a href="#sec-home" class="waves-effect waves-light" ui-sref="verify">Home <i class="fa fa-home left"></i></a></li>
-                    <li><a href="#sec-best-features" class="waves-effect waves-light">About</a></li>
-                    <li><a href="#sec-details" class="waves-effect waves-light">Details</a></li>
-                    <li><a href="#sec-testimonials" class="waves-effect waves-light">Testimonials</a></li>
-                    <li><a href="#sec-pricing" class="waves-effect waves-light">Pricing</a></li>
-                    <li><a href="#sec-contact" class="waves-effect waves-light">Contact</a></li>
-                    <li><a href="#sec-footer" class="waves-effect waves-light"><span ng-bind="user.email"></span></a></li>
+                <ul class="nav navbar-nav navbar-fade-in-out"  ng-hide="!authenticated" ng-cloak>
+                 
+                    <li class="navbar-text-main"><a href="#sec-footer" class="waves-effect waves-light" >
+                    <i class="fa fa-user" aria-hidden="true"></i> &nbsp;<span ng-bind="user.email"></span></a></li>
 
+                    <li class="navbar-text-main"><a href="#sec-footer" class="waves-effect waves-light" >
+                    <i class="fa fa-list" aria-hidden="true"></i> &nbsp;<span>My Orders</span></a></li>
+
+                    <li class="navbar-text-main"><a href="#sec-footer" class="waves-effect waves-light">
+                    <i class="fa fa-cogs" aria-hidden="true"></i> &nbsp;<span>My Settings</span></a></li>
+                 
                 </ul>
               <form class="navbar-form navbar-right">
           <div class="form-group" ng-cloak>
-             <a class="btn-floating info-color waves-effect waves-light" ui-sref="mainpage.login" ng-hide="authenticated"><i class="fa fa-sign-in"></i>
+            <span class="navbar-login-header">Sing in</span>
+             <a class="btn-floating info-color waves-effect waves-light navbar-fade-in-out" ui-sref="mainpage.login" 
+                  ng-hide="authenticated"><i class="fa fa-sign-in"></i>
              <br></a> 
-             <a class="btn-floating info-color waves-effect waves-light" ui-sref="logout" ng-hide="!authenticated"><i class="fa fa-sign-out"></i>
+             <a class="btn-floating info-color waves-effect waves-light navbar-fade-in-out" ui-sref="logout" ng-hide="!authenticated"><i class="fa fa-sign-out"></i>
              <br></a>  
           </div>
         </form>

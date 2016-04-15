@@ -105,14 +105,11 @@ angular.module('registrationAuth')
                 $rootScope.$broadcast("djangoAuth.logged_out");
             });
         },
-        'changePassword': function(password1,password2){
+        'changePassword': function(data){
             return this.request({
                 'method': "POST",
                 'url': "/password/change/",
-                'data':{
-                    'new_password1':password1,
-                    'new_password2':password2
-                }
+                'data': data
             });
         },
         'resetPassword': function(email){

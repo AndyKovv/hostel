@@ -15,6 +15,7 @@ height: 50%;
 }
 .navbar {
     z-index: 10;
+    min-height: 60px;
     
 }
 
@@ -195,4 +196,24 @@ h6 span { background:#fff; padding:0 10px; }
     padding-right: 15px;
     overflow: scroll;
     height: 25em;
+}
+
+.navbar-text-main{
+    font-size: 1.2em;
+    margin-top: 0px;
+    margin-bottom: 0px;    
+}
+
+.navbar-fade-in-out {
+  transition: 1s linear all;  
+  opacity: 1;
+}
+
+.navbar-fade-in-out.ng-hide {
+  opacity: 0;
+}
+
+.navbar-login-header{
+    color: #FCFCFC;
+    font-size: 1.2em;
 }

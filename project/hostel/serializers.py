@@ -216,8 +216,8 @@ class UserDetailsSerializer(serializers.ModelSerializer):
 	"""
 	class Meta:
 		model = UserModel
-		fields = ('email', 'user_firstname', 'user_lastname', 'user_middlename', 'phone_number', 'is_active',)
-		read_only_fields = ('email', )
+		fields = ('email', 'user_firstname', 'user_lastname', 'user_middlename', 'phone_number', 'is_active', 'inner_reg',)
+		read_only_fields = ('email', 'is_active', 'inner_reg', )
 
 	#Validate input user profile data
 	def validate(self, attr):
@@ -329,10 +329,10 @@ class PasswordChangeSerializer(serializers.Serializer):
 
 	def __init__(self, *args, **kwargs):
 		self.old_password_field_enabled = getattr(
-			settings, 'OLD_PASSWORD_FIELD_ENABLED', False
+			settings, 'OLD_PASSWORD_FIELD_ENABLED', True
 		)
 		self.logout_on_password_change = getattr(
-			settings, 'LOGOUT_ON_PASSWORD_CHANGE', False
+			settings, 'LOGOUT_ON_PASSWORD_CHANGE', True
 		)
 		super(PasswordChangeSerializer, self).__init__(*args, **kwargs)
 
@@ -408,6 +408,7 @@ class RegisterSerializer(serializers.Serializer):
     def save(self, request):
         adapter = get_adapter()
         user = adapter.new_user(request)
+        user.inner_reg = True
         self.cleaned_data = self.get_cleaned_data()
         adapter.save_user(request, user, self)
         self.custom_signup(request, user)

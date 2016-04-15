@@ -14,7 +14,7 @@ from django.core.exceptions import ValidationError
 class UserAdmin(UserAdmin):
       list_display = [
 
-                    'email', 'user_firstname', 'user_lastname','is_admin', 'is_active',
+                    'email', 'user_firstname', 'user_lastname','inner_reg','is_admin', 'is_active',
       ]
       list_filter = ('is_admin',)
 
@@ -24,6 +24,7 @@ class UserAdmin(UserAdmin):
                 ('Permissions', {'fields' : ('is_admin','groups',)}),
                 ('Important dates', {'fields' : ('last_login',)}),
                 ('Is active', {'fields': ('is_active',)}),
+                ('Inner reg', {'fields': ('inner_reg',)}),
       )
 
       add_fields = (

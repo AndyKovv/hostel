@@ -22,7 +22,9 @@ angular
     'registrationAuth',
     'OrderRoom',
     'directive-hostel',
-    'dry'
+    'userAccount',
+    'dry',
+    
 
 
   ]).config( function($stateProvider, $urlRouterProvider, $locationProvider, $httpProvider){
@@ -53,7 +55,6 @@ angular
           }
       },
       onEnter:[ '$state', '$uibModal', '$resource', 'getRoom',  function($state, $uibModal, $resource, getRoom ){
-
         $uibModal.open({
               resolve:{
                 getRoom: function(){
@@ -104,8 +105,19 @@ angular
       }]
 
     })
-   
-   
+    .state('mainpage.account_settings', {
+      url: 'settings/',
+      onEnter:['$uibModal', '$state', function($uibModal, $state){
+        $uibModal.open({
+          templateUrl: 'static/view/account/settings.tpl.html',
+          controller: 'userAccountCtrl'
+
+        })
+        .result.finally(function(){
+          $state.go('^');
+        });
+      }]
+    })
     .state('googlelogin',{
       url:'^/accounts/google/login/',
       controller: function($window){
@@ -160,7 +172,10 @@ angular
   });
 
  });
+
  angular.module('registrationAuth', ['toastr']);
  angular.module('OrderRoom', []);
  angular.module('directive-hostel', []);
  angular.module('dry', []);
+ angular.module('userAccount', []);
+
