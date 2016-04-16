@@ -3,7 +3,7 @@
             <form name="userInfoForm" role="form" ng-submit="additionalRegister(userInfoForm)"  novalidate> 
            <div class="row"> 
             
-                            <!-- Show modal header only when user register be allauth-->
+                           
                           <div class="modal-header text-center">
                                 <button type="button" class="close" data-dismiss="modal" ng-click="close();"style="color:red;">X</button>
                                     <h5 class="h5-responsive">Please enter additional information to you profile</h5>
@@ -20,8 +20,9 @@
                                 <label for="icon_prefix_1">First Name</label>
                                 
                             </div>
-                             <div class="text-center"><span class="custom-error-text " ng-show="userInfoForm.user_firstname.$error.namecheck">
-                                                      First must contain only charasters and be more than 2 letter</span></div>
+                             <div class="text-center"><span class="custom-error-text " 
+                             ng-show="userInfoForm.user_firstname.$error.namecheck">
+                                First must contain only charasters and be more than 2 letter</span></div>
 
                              <div class="input-field col-md-12 col-lg-12">
                                 <i class="material-icons prefix">account_circle</i>

@@ -36,10 +36,10 @@ angular
     $stateProvider.state('mainpage',{
       url:'/',
       resolve:{
-          Rooms: 'Rooms',
-          allRooms : function(Rooms){
+          
+          allRooms : ['Rooms', function(Rooms){
             return Rooms.query().$promise;
-          }
+          }]
       },
       templateUrl:'static/view/main/main.tpl.html',
       controller : 'MainPageCtrl',
@@ -48,13 +48,13 @@ angular
     .state('mainpage.detail',{
       url: 'detail/:roomId',
          resolve: {
-          Rooms : 'Rooms',
-          getRoom : function(Rooms, $stateParams){
+          
+          getRoom :['Rooms', '$stateParams', function(Rooms, $stateParams){
             var roomId = $stateParams.roomId;
             return Rooms.get({roomId: roomId}).$promise;
-          }
+          }]
       },
-      onEnter:[ '$state', '$uibModal', '$resource', 'getRoom',  function($state, $uibModal, $resource, getRoom ){
+      onEnter:[ '$state', '$uibModal', 'getRoom',  function($state, $uibModal, getRoom ){
         $uibModal.open({
               resolve:{
                 getRoom: function(){
@@ -107,17 +107,25 @@ angular
     })
     .state('mainpage.account_settings', {
       url: 'settings/',
-      onEnter:['$uibModal', '$state', function($uibModal, $state){
-        $uibModal.open({
-          templateUrl: 'static/view/account/settings.tpl.html',
-          controller: 'userAccountCtrl'
+      param: {
+      authenticated: true,
+      redirectTo: 'mainpage.login'
 
-        })
-        .result.finally(function(){
-          $state.go('^');
-        });
+      },
+      onEnter:['$rootScope', '$uibModal', '$state', 'dryAuth',  
+        function($rootScope, $uibModal, $state, dryAuth ){
+             if(dryAuth.chekStatus()){
+                $uibModal.open({
+                  templateUrl: 'static/view/user-account/user-settings.tpl.html',
+                  controller: 'userAccountCtrl',
+                  size: 'md',
+                })
+                  .result.finally(function(){
+                     $state.go('^');
+                   });
+            }
       }]
-    })
+     })
     .state('googlelogin',{
       url:'^/accounts/google/login/',
       controller: function($window){
@@ -128,7 +136,6 @@ angular
     .state('vklogin',{
       url:'^/accounts/vk/login/',
       controller: function($window){
-        
         $window.location.href ="/accounts/vk/login/";
       }
       

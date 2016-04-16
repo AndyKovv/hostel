@@ -1,0 +1,31 @@
+      <div class="col-md-12">
+          <div class="input-field col-md-12 col-lg-12">
+            <i class="material-icons prefix">lock</i>
+              <input id="old_passw" type="password" class="validate" name="old_passw" ng-model="pwupdate.old_passw">
+              <label for="old_passw">Old passwor</label>
+           </div>
+
+          <div class="input-field col-md-12 col-lg-12">
+            <i class="material-icons prefix">lock</i>
+              <input id="password1" type="password" class="validate" name="password1" ng-model="pwupdate.new_passw1">
+              <label for="password1">Password</label>
+           </div>
+
+           <div class="input-field col-md-12 col-lg-12">
+            <i class="material-icons prefix">lock</i>
+              <input id="password-rep" type="password" class="validate" name="password2" ng-model="pwupdate.new_passw2" 
+                 pw-match="pwupdate.new_passw1">
+              <label for="password-rep">Repeat password</label>
+           </div>
+   
+           <div class="text-center" ng-show="changePasswForm.$invalid">
+                <span class="custom-error-text" ng-show="changePasswForm.password2.$error.pwchek">Password not match</span>
+            </div>
+            <div class="text-center" ng-show="changePasswForm.$invalid">
+                <span class="custom-error-text" ng-show="changePasswForm.password2.$error.regchek">Password must contain at least one big Lettet an onne numeric and be > 6 characters</span>
+            </div>
+            <div class="text-center">
+              <button type="submit" class="btn btn-success waves-effect waves-light" 
+                  ng-disabled="changePasswForm.$invalid || changePasswForm.$pristine">Update Password</button>
+              </div> 
+      </div>

@@ -2,8 +2,9 @@
 'use strict';
 
 angular.module('registrationAuth')
-  .controller('MasterCtrl',['$scope', '$location', '$rootScope', 'djangoAuth', 'dryAuth', 
-    function ($scope, $location, $rootScope, djangoAuth, dryAuth) {
+  .controller('MasterCtrl',['$scope', '$location', '$rootScope', '$state', 'djangoAuth', 'dryAuth', 
+    function ($scope, $location, $rootScope, $state, djangoAuth, dryAuth) {
+     
 
     // Assume user is not logged in until we hear otherwise
     $rootScope.authenticated = false;
@@ -23,8 +24,14 @@ angular.module('registrationAuth')
     dryAuth.userData();
     });
     // If the user attempts to access a restricted page, redirect them back to the main page.
-    $scope.$on('$routeChangeError', function(ev, current, previous, rejection){
-      console.error("Unable to change routes.  Error: ", rejection)
-      $location.path('/restricted').replace();
-    });
+
+
+$rootScope.$on('$stateChangeSuccess', function(event, toState, toParams, fromState, fromParams ) {
+    if (!dryAuth.chekStatus()) {
+      if (toState.param && toState.param.authenticated && toState.param.redirectTo) {
+          $state.go(toState.param.redirectTo);
+      }
+    }
+
+  });
   }]);

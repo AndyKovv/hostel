@@ -1,4 +1,5 @@
-angular.module('dry').factory('dryAuth', [ '$rootScope','djangoAuth', function ($rootScope, djangoAuth) {
+angular.module('dry').factory('dryAuth', [ '$rootScope', 'djangoAuth', 
+	function ($rootScope, djangoAuth) {
 	return{
 		userData: function(){
 
@@ -16,7 +17,9 @@ angular.module('dry').factory('dryAuth', [ '$rootScope','djangoAuth', function (
         		$rootScope.authenticated = true;
     		});
 		},
+		chekStatus: function(){
+			return $rootScope.authenticated;
+		},
 
-		
 	}
 }]);

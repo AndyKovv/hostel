@@ -38,7 +38,7 @@
 
   <!-- JQuery -->
   <script type="text/javascript" src="{% static "bower_components/jquery/dist/jquery.min.js" %}"></script>
-  
+   <script type="text/javascript" src="{% static "bower_components/lodash/dist/lodash.min.js" %}"></script>
   <!-- ANGULAR SCRIPTS -->
   <script type="text/javascript" src="{% static "bower_components/angular/angular.min.js" %}"></script> 
   <script type="text/javascript" src="{% static "bower_components/angular-ui-router/release/angular-ui-router.min.js" %}"></script>
@@ -58,7 +58,7 @@
   <!--/. Google Maps Directive /-->
   <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyD7gca_XV2K1bT5Rb5mWlBpfjYTetkPpMI&callback"
   type="text/javascript"></script>
-  <script type="text/javascript" src="{% static "bower_components/lodash/dist/lodash.min.js" %}"></script>
+ 
   <script type="text/javascript" src="{% static "bower_components/angular-simple-logger/dist/angular-simple-logger.min.js" %}"></script>
   <script type="text/javascript" src="{% static "bower_components/angular-google-maps/dist/angular-google-maps.min.js" %}"></script>
   
@@ -130,13 +130,14 @@
                     <li class="navbar-text-main"><a href="#sec-footer" class="waves-effect waves-light" >
                     <i class="fa fa-list" aria-hidden="true"></i> &nbsp;<span>My Orders</span></a></li>
 
-                    <li class="navbar-text-main"><a href="#sec-footer" class="waves-effect waves-light">
+                    <li class="navbar-text-main"><a ui-sref="mainpage.account_settings" class="waves-effect waves-light">
                     <i class="fa fa-cogs" aria-hidden="true"></i> &nbsp;<span>My Settings</span></a></li>
                  
                 </ul>
               <form class="navbar-form navbar-right">
           <div class="form-group" ng-cloak>
-            <span class="navbar-login-header">Sing in</span>
+            <span class="navbar-login-header" ng-hide="authenticated">Sing in</span>
+            <span class="navbar-login-header" ng-hide="!authenticated">Sing out</span>
              <a class="btn-floating info-color waves-effect waves-light navbar-fade-in-out" ui-sref="mainpage.login" 
                   ng-hide="authenticated"><i class="fa fa-sign-in"></i>
              <br></a> 

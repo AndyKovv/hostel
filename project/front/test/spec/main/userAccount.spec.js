@@ -9,7 +9,7 @@ describe('userAccount:', function () {
 
 
 
-		var $scope, $rootScope, $state, ctrl,  $httpBackend, djangoAuthService;
+		var $scope, $rootScope, $state, ctrl,  $httpBackend, djangoAuthService, $uibModalInstance;
 		
 		beforeEach(inject(function(_$controller_, $compile, _$rootScope_, _$httpBackend_, _$state_, djangoAuth){
 
@@ -21,22 +21,22 @@ describe('userAccount:', function () {
 			spyOn(djangoAuthService, 'updateProfile').and.callThrough();
 			spyOn(djangoAuthService, 'changePassword').and.callThrough();
 			spyOn($state, 'go');
-			
+			$uibModalInstance = jasmine.createSpyObj('$uibModalInstance', ['close', 'dismiss']);
 			
 
 
 			var element = angular.element(
 				'<form name = profileForm>'+
-				'	<input type="text" name="first_name" rus-eng-name ng-model="update.first_name">'+
-				'		<input type="text" name="middle_name" rus-eng-name ng-model= "update.middle_name">'+
-				'			<input type="text" name="last_name" rus-eng-name ng-model="update.last_name">'+
+				'	<input type="text" name="first_name" rus-eng-name ng-model="update.user_firstname">'+
+				'		<input type="text" name="middle_name" rus-eng-name ng-model= "update.user_middlename">'+
+				'			<input type="text" name="last_name" rus-eng-name ng-model="update.user_lastname">'+
 				'				<input type="phone" name="phone" ng-model="update.phone_number">'+
 				'</form>');
 			var element2 = angular.element(
 				'<form name="changePasswForm">'+
-				'	<input type="password" name="old_passw" ng-model="upd.old_passw">'+
-				'			<input type="password" name="new_passw1" ng-model="upd.new_passw1">'+
-				'				<input type="password" name="new_passw2" ng-model="upd.new_passw2" pw-match="upd.new_passw1">'+
+				'	<input type="password" name="old_passw" ng-model="pwupdate.old_passw">'+
+				'			<input type="password" name="new_passw1" ng-model="pwupdate.new_passw1">'+
+				'				<input type="password" name="new_passw2" ng-model="pwupdate.new_passw2" pw-match="upd.new_passw1">'+
 				'</form>'
 				);
 			$compile(element)($scope);
@@ -53,6 +53,7 @@ describe('userAccount:', function () {
 				$rootScope : $rootScope,
 				$state : $state,
 				djangoAuth: djangoAuthService,
+				$uibModalInstance: $uibModalInstance,
 
 			});
 
@@ -82,16 +83,28 @@ describe('userAccount:', function () {
 
 			$scope.updProfileData(profileForm);
 			var data = {
-				user_firstname : $scope.update.first_name,
-				user_middlename: $scope.update.middle_name,
-				user_lastname: $scope.update.last_name,
+				user_firstname : $scope.update.user_firstname,
+				user_middlename: $scope.update.user_middlename,
+				user_lastname: $scope.update.user_lastname,
 				phone_number: $scope.update.phone_number,
 
 			}
-			$httpBackend.expectPATCH('/api/user/', data).respond(201, '');
+			$httpBackend.expectPATCH('/api/user/', data).respond(201, {
+				user_firstname : 'Nasty',
+				user_middlename: 'NastyM',
+				user_lastname: 'NastyN',
+				phone_number: '1111111111111'
+			});
 			
 			expect(djangoAuthService.updateProfile).toHaveBeenCalledWith(data);
 			$httpBackend.flush();
+			expect($rootScope.user).toEqual({
+				user_firstname : 'Nasty',
+				user_middlename: 'NastyM',
+				user_lastname: 'NastyN',
+				phone_number: '1111111111111'
+			});
+			expect($scope.update_success).toBe(true);
 			
 
 		});
@@ -99,9 +112,6 @@ describe('userAccount:', function () {
 		it('should change password', function(){
 			expect($rootScope.authenticated).toBeTruthy();
 			expect($rootScope.user.inner_reg).toBe('true');
-			
-			
-
 
 			changePasswForm.old_passw.$setViewValue('111111');
 			changePasswForm.new_passw1.$setViewValue('a4Fn2U4@');
@@ -112,16 +122,17 @@ describe('userAccount:', function () {
 			$scope.changeUserPassword(changePasswForm);
 			expect(changePasswForm.$valid).toBeTruthy();
 			var data = {
-				old_password: $scope.upd.old_passw,
-				new_password1: $scope.upd.new_passw1,
-				new_password2: $scope.upd.new_passw2,
+				old_password: $scope.pwupdate.old_passw,
+				new_password1: $scope.pwupdate.new_passw1,
+				new_password2: $scope.pwupdate.new_passw2,
 
 			}
 			$httpBackend.expectPOST('/api/password/change/', data).respond(201);
 			expect(djangoAuthService.changePassword).toHaveBeenCalledWith(data);
+			$httpBackend.expectPOST('/api/logout/').respond(200);
 			$httpBackend.flush();
-
-
-
+			expect($uibModalInstance.close).toHaveBeenCalled();
+			expect($state.go).toHaveBeenCalledWith('mainpage');
+			
 		});
 });

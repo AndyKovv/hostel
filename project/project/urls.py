@@ -33,7 +33,7 @@ urlpatterns = [
     url(r'^accounts/', include('allauth.urls')),
     url(r'^api/registration/$', views.RegisterView.as_view(), name='rest_register'),
     url(r'^api/registration/verify-email/$', views.VerifyEmailView.as_view(), name='rest_verify_email'),
-    
+    url(r'^api/password/change/$', views.PasswordChangeView.as_view(), name='rest_password_change'),
     url(r'^.*$', TemplateView.as_view(template_name='index.html')),
     #url(r'^$', TemplateView.as_view(template_name='index.html')),
     url(r'^verifyEmail/(?P<key>\w+)/$', TemplateView.as_view(), name='account_confirm_email'),

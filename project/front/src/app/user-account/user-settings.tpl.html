@@ -1,0 +1,37 @@
+
+          <div class="modal-header text-center col-md-12 col-lg-12">
+                                <button type="button" class="close"  ng-click="close();"style="color:red;">X</button>
+                                    <h4><i class="fa fa-cogs" aria-hidden="true"></i> Settings</h4>
+          </div>
+
+    <div class="modal-body" >
+    <uib-tabset active="active">
+    <uib-tab index="0">
+      <uib-tab-heading>
+        <i class="material-icons left">account_circle</i>Profile
+      </uib-tab-heading>
+      
+    
+    <!-- User profile form-->
+      <div class="row"> 
+          <form name="profileForm" role="form" ng-submit="updProfileData(profileForm)"  novalidate> 
+            <div ng-include = "'static/view/user-account/template/profileForm.tpl.html'" class="animate-if" ></div>
+          </form>
+      </div>
+  </uib-tab>
+  <uib-tab index="1" ng-if="changePwForm">
+    <uib-tab-heading>
+        <i class="material-icons left">account_circle</i>Security
+    </uib-tab-heading>
+    <!--- Password form -->
+      <div class="row">
+      <form name="changePasswForm" role="form" ng-submit="changeUserPassword(changePasswForm)" novalidate> 
+           <div ng-include = "'static/view/user-account/template/changePassw.tpl.html'" class="animate-if" ></div>
+        </form>
+      </div>
+
+    </uib-tab>
+  </uib-tabset>
+      
+    </div>
+            <!---/ User addiional /-->
