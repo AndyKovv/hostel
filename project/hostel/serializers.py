@@ -16,10 +16,19 @@ from allauth.account.utils import setup_user_email
 
 from rest_framework import serializers, exceptions
 from rest_framework.exceptions import ValidationError
-from hostel.models import HostelRoom, RoomImage, TokenModel, Order
+from hostel.models import HostelRoom, RoomImage, TokenModel, Order, TransactionPrivat24
 
 #Get User Model
 UserModel = get_user_model()
+
+
+class Privat24Serializer(serializers.Serializer):
+	
+
+	class Meta:
+		model = TransactionPrivat24
+		write_only_fields = ('amt', 'ccy', 'details', 'ext_details',
+		'pay_way', 'order', 'merchant', 'state', 'date', 'ref', 'payCountry' )
 
 
 class RoomImage(serializers.ModelSerializer):
@@ -92,8 +101,8 @@ class OrderSerializer(serializers.ModelSerializer):
 
 	class Meta:
 		model = Order
-		fields = ('room','user', 'person_firstname', 'person_lastname', 'person_middlename', 'date_in', 'date_out',)
-		write_only_fields = ('room','user', 'person_firstname', 'person_lastname', 'person_middlename', 'date_in', 'date_out',)
+		fields = ('room', 'person_email', 'person_firstname', 'person_middlename', 'person_lastname',  'person_phonenumber', 'date_in', 'date_out',)
+		write_only_fields = ('room','user', 'person_email', 'person_firstname','person_middlename', 'person_lastname',  'person_phonenumber', 'date_in', 'date_out',)
 
 
 
@@ -216,8 +225,8 @@ class UserDetailsSerializer(serializers.ModelSerializer):
 	"""
 	class Meta:
 		model = UserModel
-		fields = ('email', 'user_firstname', 'user_lastname', 'user_middlename', 'phone_number', 'is_active', 'inner_reg',)
-		read_only_fields = ('email', 'is_active', 'inner_reg', )
+		fields = ('id', 'email', 'user_firstname', 'user_lastname', 'user_middlename', 'phone_number', 'is_active', 'inner_reg',)
+		read_only_fields = ('id', 'email', 'is_active', 'inner_reg', )
 
 	#Validate input user profile data
 	def validate(self, attr):

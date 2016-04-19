@@ -27,11 +27,6 @@ beforeEach(module('ngCookies'));
  var $scope, $httpBackend, router, ctrl, latitude, longitude, $rootScope;
 
   
-  var date = {
-        order_in :'2016-04-20',
-        order_out : '2016-04-24',
-                    
-        }
 
 
 var getRoomMock = {
@@ -41,7 +36,7 @@ var getRoomMock = {
      id : 1,
 
 }
- beforeEach(inject(function(_$httpBackend_, _$rootScope_, $controller, _OrderRoomService_){
+ beforeEach(inject(function(_$httpBackend_, _$rootScope_, $controller, _OrderRoomService_, $compile){
 
     
     $httpBackend = _$httpBackend_;
@@ -51,9 +46,23 @@ var getRoomMock = {
  	$rootScope = _$rootScope_;
     $scope = _$rootScope_.$new();
 
-
-    
-
+    var element_order = angular.element(
+        '<form name= "orderForm">'+
+        '<input type="text" name="date_arival" ng-model="date.order_in">'+
+        '<input type="text" name="date_departure" ng-model="date.order_out">'+
+        '<input type="text" name="phone_number" ng-model="user.phonenumber" required>'+
+        '<input type="email"  name="email" ng-model="user.email" required>'+
+        '<input type="text" rus-eng-name name="user_firstname" ng-model="user.user_firstname" required>'+
+        '<input type="text" rus-eng-name name="user_middlename" ng-model="user.user_middlename" required>'+
+        '<input type="text" rus-eng-name name="user_lastname" ng-model="user.user_lastname" required>'+
+        '</form>'
+        )
+        $compile(element_order)($scope);
+        orderForm = $scope.orderForm
+        
+       $scope.date = {order_in: '2016-04-19', order_out: '2016-04-20'}
+       $scope.room = { id: '1'} 
+       $rootScope.user = {id : '1'}
     
 
 
@@ -74,6 +83,45 @@ var getRoomMock = {
    });
 
   
+it('should write order to db anonim user', function(){
+    expect($rootScope.user.id).toEqual('1');
+
+    
+    orderForm.phone_number.$setViewValue('1111111111111');
+
+    orderForm.email.$setViewValue('kova_andriy@mail.com');
+    orderForm.user_firstname.$setViewValue('Andriy');
+    orderForm.user_middlename.$setViewValue('Oleksandr');
+    orderForm.user_lastname.$setViewValue('Andy');
+    
+    $scope.$apply();
+    
+
+    $scope.orderRoom(orderForm);
+    expect(orderForm.$valid).toBeTruthy();
+    var order_in = angular.toJson($scope.date.order_in).slice(1,11);
+        var order_out = angular.toJson($scope.date.order_out).slice(1,11); 
+
+    var data = {
+        room : $scope.room.id,
+        user : $rootScope.user.id,
+        person_email : $scope.user.email,
+        person_firstname : $scope.user.user_firstname,
+        person_middlename : $scope.user.user_middlename,
+        person_lastname: $scope.user.user_lastname,
+        person_phonenumber: $scope.user.phone_number,
+        date_in: order_in,
+        date_out: order_out,
+
+    }
+
+    $httpBackend.expectPOST('/api/orders/order_room/', data).respond('201');
+    
+    $httpBackend.flush();
+    expect($scope.success_order).toEqual(true);
+
+});
+
 
 it('should fetch room detail', function(){
 
@@ -107,6 +155,11 @@ it('should test close modal window function', function(){
 });
 
 it('should test chekFreePlace free room ', function(){
+  var date = {
+        order_in :'2016-04-20',
+        order_out : '2016-04-24',
+                    
+        }
 
  $scope.freePlaceInRoom(date);
  var data = {
@@ -126,23 +179,36 @@ expect($scope.additionalrooms).toBe(undefined);
 });
 
 it('should test chekFreePlace occupied room', function(){
+      var date = {
+        order_in :'2016-04-20',
+        order_out : '2016-04-24',
+                    
+        }
+
 $scope.freePlaceInRoom(date);
  var data = {
         order_in: '2016-04-20',
         order_out: '2016-04-24',
         room_id: $scope.room.id,
         }
-expect($rootScope.additional_date_in).toEqual(data.order_in);
-expect($rootScope.additional_date_out).toEqual(data.order_out);
+
 $httpBackend.expectPOST('/api/orders/chek_room/', data).respond(200, {room: 1,});
 
 $httpBackend.flush();
 expect($scope.status_place).toBe('Occupied');
 expect($scope.additionalrooms).toEqual({room:1});
+expect($rootScope.additional_date_in).toEqual(data.order_in);
+expect($rootScope.additional_date_out).toEqual(data.order_out);
 
 });
 
 it('it should test chekFreePlace server error', function(){
+      var date = {
+        order_in :'2016-04-20',
+        order_out : '2016-04-24',
+                    
+        }
+
 $scope.freePlaceInRoom(date);
  var data = {
         order_in: '2016-04-20',
@@ -155,6 +221,12 @@ expect($scope.server_error).toBe(true);
 });
 
 it('should test freePlaceInRoom algoritm on client side', function(){
+      var date = {
+        order_in :'2016-04-20',
+        order_out : '2016-04-24',
+                    
+        }
+
 var order_in = date.order_in;
 var order_out = date.order_out;
 var mock_today = '2016-04-20';
@@ -169,6 +241,10 @@ expect(mock_today).toEqual('2016-04-20');
 expect(order_in >= mock_today && order_in < order_out).toBeFalsy();
 
 
+});
+
+it('should send order room request', function(){
+    
 });
 
 });

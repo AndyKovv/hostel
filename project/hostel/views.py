@@ -1,21 +1,32 @@
 
-from rest_framework import viewsets
+import time
+from hashlib import md5, sha1
 
-from django.contrib.auth import login, logout
+from rest_framework import viewsets
+from django.contrib.auth import login, logout, get_user_model
 from django.conf import settings
 from django.core.exceptions import ObjectDoesNotExist
 from django.utils.translation import ugettext_lazy as _
 from django.db.models import Count
 #from django.views.generic import TemplateView
 from django.views.generic.base import TemplateResponseMixin, View, TemplateView
-from django.shortcuts import redirect  
+from django.shortcuts import redirect, render 
+from django.views.decorators.csrf import csrf_exempt
+from django.http import HttpResponse, HttpResponseRedirect
+
+import requests
 from rest_framework import status
-from rest_framework.decorators import detail_route, list_route
+from rest_framework.decorators import detail_route, list_route, api_view, parser_classes
+from rest_framework.parsers import FormParser
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework.generics import GenericAPIView, CreateAPIView
 from rest_framework.permissions import IsAuthenticated, AllowAny
 from rest_framework.generics import RetrieveUpdateAPIView
+from rest_framework.authentication import TokenAuthentication
+from rest_framework_xml.parsers import XMLParser
+
+from urllib.parse import urlparse, parse_qsl
 
 
 from .app_settings import (
@@ -30,9 +41,73 @@ from allauth.account import app_settings as allauth_settings
 
 from .utils import jwt_encode
 
-from hostel.models import HostelRoom, RoomImage, Order, TokenModel
+from hostel.models import HostelRoom, RoomImage, Order, TokenModel, ExtUser, TransactionPrivat24
 from hostel.serializers import (HostelRoomSerializer, OrderSerializer,
-									 ChekRoomSerializer, FreeRoomSerializer, VerifyEmailSerializer)
+									 ChekRoomSerializer, FreeRoomSerializer, VerifyEmailSerializer, Privat24Serializer)
+
+
+
+
+class Privat_24(APIView):
+	authentication_classes = (TokenAuthentication,)
+	parser_classes = (FormParser,)
+	permission_classes = (AllowAny,)
+
+
+	def build_signature(self, payment):
+		password = '94f3qkAmXhjXEsoGPC7iX6KnVm1727Eq'
+		test_str = ("%s%s" % (payment, password))
+		md = md5(test_str.encode('utf-8')).hexdigest()
+		sha = sha1(md.encode('utf-8')).hexdigest()
+		return sha
+
+	def post(self, request, format=None):
+		
+		payment = request.data.get('payment')
+		#import pdb
+		#pdb.set_trace()
+		signature = request.data.get('signature')
+		local_signature = self.build_signature(payment)
+		
+		if local_signature == signature:
+			params = dict(parse_qsl(payment))
+			order_i = params.get('order')
+			date_op = params.get('date')
+			op_date = time.strptime(date_op, "%d%m%y%H%M%S")
+			date = time.strftime('%Y-%m-%d %H:%M:%S', op_date)
+
+			try:
+
+				order = Order.objects.get(pk = order_i)
+			except Order.DoesNotExist:
+				return Response({'raise': _("Something went wrong please contact our manager")})
+
+			try:
+				trans = TransactionPrivat24.objects.get(order = order_i)
+				return Response({'raise': _("Order already exist please contact our manager")})
+				
+			except TransactionPrivat24.DoesNotExist:
+				transaction = TransactionPrivat24.objects.create(
+					signature = signature,
+					amt = params.get('amt'),
+					ccy = params.get('ccy'),
+					details = params.get('details'),
+					ext_details = params.get('ext_details'),
+					pay_way = params.get('pay_way'),
+					order = order,
+					merchant = params.get('merchant'),
+					state = params.get('state'),
+					date = date,
+					ref = params.get('ref'),
+					payCountry = params.get('payCountry')
+					)
+				#Add Order unique href to redirect
+				order.payment = True
+				order.save()
+				return HttpResponseRedirect('/')
+
+		return Response({'ransaction': 'Validattion'})
+	
 
 
 class RoomViewSet(viewsets.ReadOnlyModelViewSet):
@@ -57,13 +132,18 @@ class OrderView(viewsets.ModelViewSet):
 			order_in = serializer.data['order_in']
 			order_out = serializer.data['order_out']
 			place_in_room = HostelRoom.objects.get(id=room_id).places_in_room
-			live_in_interval = queryset.filter(room=room_id, date_in__lt=order_out, date_out__gt=order_in).count()
+			live_in_interval = queryset.filter(room=room_id, date_in__lt=order_out, date_out__gt=order_in, payment=True, is_booking=True).count()
 			free_place = place_in_room - live_in_interval
 
 			if free_place <=0:
 				
 				query_room = HostelRoom.objects.all()
-				rooms = query_room.filter(order__date_in__lt=order_out, order__date_out__gt=order_in).annotate(num_orders=Count('name_room'))
+				rooms = query_room.filter(
+					order__date_in__lt=order_out, 
+					order__date_out__gt=order_in, 
+					payment=True,
+					is_booking = True
+					).annotate(num_orders=Count('name_room'))
 				busy_room = []
 
 				for room in rooms:
@@ -75,12 +155,46 @@ class OrderView(viewsets.ModelViewSet):
 				free_serializer = FreeRoomSerializer(interval_free_room, many=True)
 				return Response(free_serializer.data, status=status.HTTP_200_OK)			
 
-
-
 			return Response({'free_place': free_place}, status=status.HTTP_200_OK) 
-			
 
 		return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+	@list_route(methods=['post'])
+	def order_room(self, request):
+		serializer = OrderSerializer(data = request.data)
+		queryset = self.get_queryset()
+		
+		if serializer.is_valid(raise_exception=True):
+			try:
+				req_room = serializer.data['room']
+				room = HostelRoom.objects.get(pk=req_room, active=True)
+				if request.user.is_authenticated():
+					req_user = self.request.user.id
+					user = ExtUser.objects.get(pk = req_user)
+				else:
+					user = None
+			except HostelRoom.DoesNotExist:
+				return Response({"error": _("Undefined room")}, status=status.HTTP_400_BAD_REQUEST)
+			
+			pe = serializer.data['person_email']
+			pf = serializer.data['person_firstname']
+			pm = serializer.data['person_middlename']
+			pl = serializer.data['person_lastname']
+			pp = serializer.data['person_phonenumber']
+			di = serializer.data['date_in']
+			do = serializer.data['date_out']
+			
+			place_in_room = HostelRoom.objects.get(id=room.id).places_in_room
+			live_in_interval = queryset.filter(room=room.id, date_in__lt=do, date_out__gt=di, payment=True, is_booking=True).count()
+			free_place = place_in_room - live_in_interval
+
+			if free_place > 0:
+				order = Order.objects.create(
+					room = room, user = user, person_email = pe, person_firstname = pf, person_middlename = pm,
+					person_lastname = pl, person_phonenumber = pp, date_in = di, date_out = do
+					)
+				return Response({'order_id': order.id})
+			return Response({"error": _("Room already occupied")})
 
 
 class LoginView(GenericAPIView):
@@ -247,58 +361,58 @@ class PasswordChangeView(GenericAPIView):
 
 class VerifyEmailView(APIView, ConfirmEmailView):
 
-    permission_classes = (AllowAny,)
-    allowed_methods = ('POST', 'OPTIONS', 'HEAD')
+	permission_classes = (AllowAny,)
+	allowed_methods = ('POST', 'OPTIONS', 'HEAD')
 
-    def get(self, *args, **kwargs):
-        raise MethodNotAllowed('GET')
+	def get(self, *args, **kwargs):
+		raise MethodNotAllowed('GET')
 
-    def post(self, request, *args, **kwargs):
-        serializer = VerifyEmailSerializer(data=request.data)
-        serializer.is_valid(raise_exception=True)
-        self.kwargs['key'] = serializer.validated_data['key']
-        confirmation = self.get_object()
-        confirmation.confirm(self.request)
-        user = confirmation.email_address.user
-        user.is_active = True
-        user.save()
-        return Response({'message': _('ok')}, status=status.HTTP_200_OK)
+	def post(self, request, *args, **kwargs):
+		serializer = VerifyEmailSerializer(data=request.data)
+		serializer.is_valid(raise_exception=True)
+		self.kwargs['key'] = serializer.validated_data['key']
+		confirmation = self.get_object()
+		confirmation.confirm(self.request)
+		user = confirmation.email_address.user
+		user.is_active = True
+		user.save()
+		return Response({'message': _('ok')}, status=status.HTTP_200_OK)
 
 
 class RegisterView(CreateAPIView):
-    serializer_class = RegisterSerializer
-    permission_classes = (AllowAny, )
-    token_model = TokenModel
+	serializer_class = RegisterSerializer
+	permission_classes = (AllowAny, )
+	token_model = TokenModel
 
-    def get_response_data(self, user):
-        if allauth_settings.EMAIL_VERIFICATION == \
-                allauth_settings.EmailVerificationMethod.MANDATORY:
-            return {}
+	def get_response_data(self, user):
+		if allauth_settings.EMAIL_VERIFICATION == \
+				allauth_settings.EmailVerificationMethod.MANDATORY:
+			return {}
 
-        if getattr(settings, 'REST_USE_JWT', False):
-            data = {
-                'user': user,
-                'token': self.token
-            }
-            return JWTSerializer(data).data
-        else:
-            return TokenSerializer(user.auth_token).data
+		if getattr(settings, 'REST_USE_JWT', False):
+			data = {
+				'user': user,
+				'token': self.token
+			}
+			return JWTSerializer(data).data
+		else:
+			return TokenSerializer(user.auth_token).data
 
-    def create(self, request, *args, **kwargs):
-        serializer = self.get_serializer(data=request.data)
-        serializer.is_valid(raise_exception=True)
-        user = self.perform_create(serializer)
-        headers = self.get_success_headers(serializer.data)
+	def create(self, request, *args, **kwargs):
+		serializer = self.get_serializer(data=request.data)
+		serializer.is_valid(raise_exception=True)
+		user = self.perform_create(serializer)
+		headers = self.get_success_headers(serializer.data)
 
-        return Response(self.get_response_data(user), status=status.HTTP_201_CREATED, headers=headers)
+		return Response(self.get_response_data(user), status=status.HTTP_201_CREATED, headers=headers)
 
-    def perform_create(self, serializer):
-        user = serializer.save(self.request)
-        if getattr(settings, 'REST_USE_JWT', False):
-            self.token = jwt_encode(user)
-        else:
-            create_token(self.token_model, user, serializer)
-        complete_signup(self.request._request, user,
-                        allauth_settings.EMAIL_VERIFICATION,
-                        None)
-        return user
+	def perform_create(self, serializer):
+		user = serializer.save(self.request)
+		if getattr(settings, 'REST_USE_JWT', False):
+			self.token = jwt_encode(user)
+		else:
+			create_token(self.token_model, user, serializer)
+		complete_signup(self.request._request, user,
+						allauth_settings.EMAIL_VERIFICATION,
+						None)
+		return user

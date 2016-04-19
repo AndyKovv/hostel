@@ -112,31 +112,11 @@ class RoomImage(models.Model):
 	#import pdb
 	#pdb.set_trace()
 
-	def path_and_rename(last_folder):
-		
-		def wrapper(instance, filename):
-				#import pdb
-				#pdb.set_trace()
-				ext = filename.split('.')[-1] # get filename
-				count_dir = next(os.walk(last_folder))[2] # get files in the folder
-				filename = '{}.{}'.format(SG(r'[\u\d]{6}').render(), ext) # set filename as random string
-
-				if len(count_dir) > 8: #count files in the last created folder
-						path_to_dirs = str('/var/www/hostel.te.ua/project/media/roomimage/')
-						new_folder = SG(r'[\u\d]{6}').render() # Create new name
-						new_path = path_to_dirs + new_folder + '/' + filename #Create new path
-				
-								
-				else:
-						new_path = last_folder + filename	# return old path
-										
-				return new_path
-					
-		return wrapper
+	
 		
 	room = models.ForeignKey(HostelRoom, related_name='roomimages')
 	image_main = models.BooleanField()
-	image_original = models.ImageField('original file upload', upload_to=path_and_rename(last_folder), max_length=255)
+	image_original = models.ImageField('original file upload', upload_to="/", max_length=255)
 	image_medium = models.ImageField(max_length=255, blank=True)
 	image_thumb = models.ImageField(max_length=255, blank=True) 
 	date_create = models.DateTimeField(auto_now_add=True)
@@ -221,10 +201,14 @@ class RoomImage(models.Model):
 class Order(models.Model):
 
 	room = models.ForeignKey(HostelRoom, null=True) 
-	user = models.ForeignKey(ExtUser, null=True)
+	user = models.ForeignKey(ExtUser, blank=True, null=True)
+	unique_href = models.CharField(max_length=70, null=False)
+	deselected = models.BooleanField(default=False)
+	person_email = models.EmailField(max_length=100, null=False)
 	person_firstname = models.CharField(max_length=25, null=False)
-	person_lastname = models.CharField(max_length=25, null=False)
 	person_middlename = models.CharField(max_length=25, null=False)
+	person_lastname = models.CharField(max_length=25, null=False)
+	person_phonenumber = models.CharField(max_length=20, null=False)
 	date_in = models.DateField()
 	date_out = models.DateField()
 	order_time_in = models.DateTimeField(auto_now_add=True)
@@ -233,11 +217,27 @@ class Order(models.Model):
 	payment = models.BooleanField(default=False)
 
 	def __str__(self):
-		return self.person_firstname
+		return str(self.pk) + ' ' + self.person_firstname + ' ' + self.person_lastname
 	"""
 	def save(self):
 		
 		self.order_time_out = timezone.now() + datetime.timedelta(hours=5)
 		super(Order, self).save()
 	"""	
+
+
+class TransactionPrivat24(models.Model):
+	signature = models.CharField(max_length=100)
+	amt = models.FloatField()
+	ccy = models.CharField(max_length=4)
+	details = models.CharField(max_length=40)
+	ext_details = models.CharField(max_length=40)
+	pay_way = models.CharField(max_length=10)
+	order = models.ForeignKey(Order, related_name='order_id')
+	merchant = models.IntegerField()
+	state = models.CharField(max_length=6)
+	date = models.DateTimeField()
+	ref = models.CharField(max_length=50)
+	payCountry = models.CharField(max_length=10)
+
 

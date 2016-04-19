@@ -7,7 +7,7 @@ from django.shortcuts import redirect
 from django.contrib.auth.admin import UserAdmin
 from django.contrib.auth.models import Group
 from django.contrib.auth.models import User  
-from .models import ExtUser, HostelRoom, RoomImage, Order
+from .models import ExtUser, HostelRoom, RoomImage, Order, TransactionPrivat24
 from django.core.exceptions import ValidationError
 
 
@@ -67,4 +67,5 @@ admin.site.register(HostelRoom, HostelRoomAdmin)
 admin.site.register(User)
 admin.site.register(RoomImage, ImageRoomAdmin)
 admin.site.register(Order, OrderRoom)
+admin.site.register(TransactionPrivat24)
 

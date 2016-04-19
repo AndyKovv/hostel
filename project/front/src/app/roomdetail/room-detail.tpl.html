@@ -48,13 +48,16 @@
                     </div>
                     <!--Third column: product description-->
                     <div class="col-xs-6 col-sm-6 col-lg-7">
-                        <h5>Full description </h5>
-                        <hr>
-                        <p class="flow-text"><span ng-bind="room.description_full"></span></p>
-                        <p>{{room.id}}</p>
-                        <span>
-                <a class="btn btn-flat waves-effect waves-teal" ng-click="mapShow()"><i class="fa fa-map-o right"></i>Show on map</a> 
+                        <div class="panel panel-primary col-xs-12 col-sm-12 col-lg-12" >
+                        <div class="panel-heading">Panel with panel-primary class</div>
+                      <div class="panel-body">
+                        
+                        <a class="btn btn-flat waves-effect waves-teal" ng-click="mapShow()"><i class="fa fa-map-o right"></i>Show on map</a> 
             </span>
+                      </div>
+
+                      </div>
+                
                         
                     </div>
                     <!--/.Third column: product description-->
@@ -66,12 +69,12 @@
                  <h6><span>Chek free place</span></h6>  
                  <!---/ Calender group /-->
                     <div class="text-center">
-                        <span class="order-info">Date You want arival</span>
+                        <span class="order-info">Date arival</span>
                               <quick-datepicker init-value="{{redirect_init_date_in}}" ng-model='date.order_in' disable-timepicker='true' 
-                              placeholder="Date In"on-change="freePlaceInRoom(date)">
+                              placeholder="Date In"on-change="freePlaceInRoom(date)" style="margin-right:30px;">
                               </quick-datepicker>
                 
-                        <span class="order-info">Date You want dispatch</span>
+                        <span class="order-info">Date  dispatch</span>
                                  <quick-datepicker init-value="{{redirect_init_date_out}}" ng-model='date.order_out' disable-timepicker='true' 
                                  placeholder="Date Out" on-change="freePlaceInRoom(date)" >
                                 </quick-datepicker>

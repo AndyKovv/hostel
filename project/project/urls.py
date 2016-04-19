@@ -20,6 +20,7 @@ from rest_framework.routers import DefaultRouter, SimpleRouter
 
 from django.views.generic import TemplateView, RedirectView
 
+
 router = DefaultRouter()
 router.register(r'rooms', views.RoomViewSet) 
 router.register(r'orders', views.OrderView) 
@@ -27,6 +28,7 @@ router.register(r'orders', views.OrderView)
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url(r'^api/', include(router.urls)),
+    url(r'^api/privat24/$', views.Privat_24.as_view(), name='privat24'),
     url(r'^api/login/$', views.LoginView.as_view(), name='rest_login'),
     url(r'^api/logout/$', views.LogoutView.as_view(), name='rest_logout'),
     url(r'^api/user/$', views.UserDetailsView.as_view(), name='rest_user_details'),
@@ -34,7 +36,7 @@ urlpatterns = [
     url(r'^api/registration/$', views.RegisterView.as_view(), name='rest_register'),
     url(r'^api/registration/verify-email/$', views.VerifyEmailView.as_view(), name='rest_verify_email'),
     url(r'^api/password/change/$', views.PasswordChangeView.as_view(), name='rest_password_change'),
-    url(r'^.*$', TemplateView.as_view(template_name='index.html')),
+    url(r'^.*$', TemplateView.as_view(template_name='index.html'), name='main_page'),
     #url(r'^$', TemplateView.as_view(template_name='index.html')),
     url(r'^verifyEmail/(?P<key>\w+)/$', TemplateView.as_view(), name='account_confirm_email'),
 ]

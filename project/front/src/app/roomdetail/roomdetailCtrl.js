@@ -4,8 +4,9 @@ angular.module('mainPage')
 .controller('DetailPageCtrl', ['$rootScope', '$scope', '$timeout',  '$uibModalInstance', 'OrderRoomService', 'djangoAuth', 'getRoom', 
  function ($rootScope, $scope, $timeout, $uibModalInstance, OrderRoomService, djangoAuth, getRoom) {
  var authenticated = $rootScope.authenticated;
-
+ 
 $scope.room = getRoom;
+
 
 //Send Date to redirect page
 $scope.redirect_init_date_in = $rootScope.additional_date_in;
@@ -46,24 +47,20 @@ $scope.redirectFreeRoom = function(){
 $scope.close = function(){
 	$uibModalInstance.close();
 	delete $rootScope.additional_date_in;
-	delete $rootScope.additional_date_out;
-
-	
+	delete $rootScope.additional_date_out;	
 }
 
 //Show additional room form
 $scope.showAdditionalRoom = function(){
 		$scope.render_additional = true;
-		//$scope.additionalrooms = $scope.additionalRoom;
-		
-		
-		
+    	//$scope.additionalrooms = $scope.additionalRoom;	
 }
 
 
 //Show order room form
 $scope.showOrderForm = function(){
 $scope.orderadd = true;
+$scope.render_additional = false;
 
 };
 
@@ -75,8 +72,7 @@ if(date.order_in && date.order_out){
 	var order_in = angular.toJson(date.order_in).slice(1,11);
 	var order_out = angular.toJson(date.order_out).slice(1,11);
 	var today = angular.toJson(new Date()).slice(1,11);
-		$rootScope.additional_date_in = order_in;
-		$rootScope.additional_date_out = order_out;
+		
 		
 		// Chek date order in must be less then order out 
 		if(order_in >= today && order_in < order_out ){
@@ -93,6 +89,8 @@ if(date.order_in && date.order_out){
  						
  				$scope.status_place = response.data.free_place > 0 ? 'Free' : 'Occupied';
 						if($scope.status_place === 'Occupied'){
+								$rootScope.additional_date_in = order_in;
+								$rootScope.additional_date_out = order_out;
 								$scope.additionalrooms = response.data;
 										}
 											
@@ -106,9 +104,43 @@ if(date.order_in && date.order_out){
 			$scope.status_place = 'Wrong';
 		}
 	}
+}
 
 
+$rootScope.user = $rootScope.user ? $rootScope.user : '';
+	$scope.user = {
+				email : $rootScope.user.email,
+        		user_firstname : $rootScope.user.user_firstname,
+        		user_middlename :$rootScope.user.user_middlename,
+        		user_lastname: $rootScope.user.user_lastname,
+        		phone_number : $rootScope.user.phone_number,
+}
 
+$scope.orderRoom = function(orderForm){
+	if(orderForm.$valid){
+		var user_id = $rootScope.user ? $rootScope.user.id : 'null';
+		var order_in = angular.toJson($scope.date.order_in).slice(1,11);
+		var order_out = angular.toJson($scope.date.order_out).slice(1,11);
+		var data = {
+       			room : $scope.room.id,
+        		user: user_id,
+        		person_email : $scope.user.email,
+        		person_firstname : $scope.user.user_firstname,
+        		person_middlename : $scope.user.user_middlename,
+        		person_lastname: $scope.user.user_lastname,
+        		person_phonenumber : $scope.user.phone_number,
+        		date_in:  order_in,
+        		date_out: order_out,
+
+    }
+    console.log('orderForm data'+ data);
+    	OrderRoomService.orderRoom(data).then(function(data){
+    		$scope.success_order = true;
+    		console.log('DetailPageCtrl' + data);
+    		$scope.order_id = data;
+    	});
+
+	}
 }
 
 }]);

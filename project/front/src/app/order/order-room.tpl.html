@@ -1,41 +1,62 @@
      <!-- Order Template -->
-     <h6><span>Order form</span></h6>  
+     <h6><span>Order form</span></h6> 
+     <form name="orderForm" role="form" ng-submit="orderRoom(orderForm)"> 
      <div class="row" class="col-xs-12 col-sm-12 col-lg-12">
      <!-- Disabled date form -->
-        <div class="input-field col-xs-4 col-sm-4 col-lg-4" >
+        <div class="input-field col-xs-2 col-sm-2 col-lg-2" >
           <input id="date_arival" date-formater type="text" class="validate" disabled ng-model="date.order_in">
           <label for="date_arival" class="active">Date arrival</label>
         </div>
 
-        <div class="input-field col-xs-4 col-sm-4 col-lg-4" >
+        <div class="input-field col-xs-2 col-sm-2 col-lg-2" >
           <input id="date_departue"  date-formater type="text" class="validate" disabled ng-model="date.order_out">
           <label for="date_departue" class="active">Date departure </label>
         </div>
 
         <div class="input-field col-xs-4 col-sm-4 col-lg-4" >
-          <input id="phone_number"  type="tel" class="validate" ng-model="user.phone_number">
+          <input id="phone_number"  type="tel" class="validate" ng-model="user.phone_number" required>
           <label for="phone_number" ng-class='{active: authenticated}'>Phone number </label>
         </div>
-    <!--/ Disabled date form -->
+
+        <div class="input-field col-xs-4 col-sm-4 col-lg-4" >
+          <input name="email" id="email" type="email" ng-model="user.email" required ng-pattern="/^.+@.+\..+$/" 
+              class="validate">
+          <label for="phone_number" ng-class='{active: authenticated}'>Email </label>
+        </div>
+   
      </div>
       
       <div class="row" >
       <!-- About user form --> 
       <div class="input-field col-xs-4 col-sm-4 col-lg-4" >
-          <input id="first_name" type="text" class="validate" ng-model="user.user_firstname">
+          <input name="first_name" id="first_name" type="text" class="validate"  ng-model="user.user_firstname" required>
           <label for="first_name" ng-class='{active: authenticated}'>First Name</label>
        </div>
+       <div class="input-field col-xs-4 col-sm-4 col-lg-4">
+          <input name="middle_name" id="middle_name" type="text" class="validate" ng-model="user.user_middlename" required>
+          <label for="middle_name" ng-class='{active: authenticated}'>Middle Name</label>
+        </div>
 
         <div class="input-field col-xs-4 col-sm-4 col-lg-4" >
-          <input id="second_name" type="text" class="validate" ng-model="user.user_lastname">
-          <label for="second_name" ng-class='{active: authenticated}'>Second Name</label>
-        </div>
-
-        <div class="input-field col-xs-4 col-sm-4 col-lg-4">
-          <input id="last_name" type="text" class="validate" ng-model="user.user_middlename">
+          <input name="last_name" id="last_name" type="text" class="validate" ng-model="user.user_lastname" required>
           <label for="last_name" ng-class='{active: authenticated}'>Last Name</label>
         </div>
+        
         <!--/. About user form -->
       </div>
-     
+      <button type="submit" class="btn btn-primary waves-effect waves-light" ng-disabled="orderForm.$invalid">Order Romm</button>
+      </form>
+     <form method="POST" action="https://api.privatbank.ua/p24api/ishop">
+          <input type="hidden" name="amt" value="{{room.price_room}}" />
+          <input type="hidden" name="ccy" value="UAH" />
+          <input type="hidden" name="merchant" value="118128" />
+          <input type="hidden" name="merchant" value="118128" />
+          <input type="hidden" name="order" value="{{order_id}}" />
+          <input type="hidden" name="details" value="{{room.id}}" />
+          <input type="hidden" name="ext_details" value="Full description of room" />
+          <input type="hidden" name="pay_way" value="privat24" />
+         <input type="hidden" name="return_url" value="http://localhost:8000/api/privat24/" />
+          <input type="hidden" name="server_url" value="http://localhost:8000/" />
+          <button type="submit"><img src="img/buttons/api_logo_1.jpg" border="0" /></button>
+</form>
       <!--/ Order Template -->
