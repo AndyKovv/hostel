@@ -98,12 +98,16 @@ class HostelRoomSerializer(serializers.ModelSerializer):
 
 
 class OrderSerializer(serializers.ModelSerializer):
-
+	
+	room_name = serializers.SerializerMethodField()
 	class Meta:
 		model = Order
-		fields = ('room', 'person_email', 'person_firstname', 'person_middlename', 'person_lastname',  'person_phonenumber', 'date_in', 'date_out',)
+		fields = ('id', 'room', 'room_name', 'user', 'person_email', 'person_firstname', 'person_middlename', 'person_lastname',  'person_phonenumber', 'date_in', 'date_out', 'payment',)
 		write_only_fields = ('room','user', 'person_email', 'person_firstname','person_middlename', 'person_lastname',  'person_phonenumber', 'date_in', 'date_out',)
 
+	def get_room_name(self, obj):
+		room_name = obj.room.name_room
+		return room_name
 
 
 class ChekRoomSerializer(serializers.Serializer):

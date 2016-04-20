@@ -16,12 +16,12 @@ from django.http import HttpResponse, HttpResponseRedirect
 
 import requests
 from rest_framework import status
-from rest_framework.decorators import detail_route, list_route, api_view, parser_classes
+from rest_framework.decorators import detail_route, list_route, api_view, parser_classes, permission_classes
 from rest_framework.parsers import FormParser
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework.generics import GenericAPIView, CreateAPIView
-from rest_framework.permissions import IsAuthenticated, AllowAny
+from rest_framework.permissions import IsAuthenticated, AllowAny, IsAdminUser
 from rest_framework.generics import RetrieveUpdateAPIView
 from rest_framework.authentication import TokenAuthentication
 from rest_framework_xml.parsers import XMLParser
@@ -79,6 +79,7 @@ class Privat_24(APIView):
 			try:
 
 				order = Order.objects.get(pk = order_i)
+				unique_href = order.unique_href
 			except Order.DoesNotExist:
 				return Response({'raise': _("Something went wrong please contact our manager")})
 
@@ -101,10 +102,10 @@ class Privat_24(APIView):
 					ref = params.get('ref'),
 					payCountry = params.get('payCountry')
 					)
-				#Add Order unique href to redirect
 				order.payment = True
+				
 				order.save()
-				return HttpResponseRedirect('/')
+				return HttpResponseRedirect('/order/'+ unique_href +'/')
 
 		return Response({'ransaction': 'Validattion'})
 	
@@ -122,8 +123,10 @@ class OrderView(viewsets.ModelViewSet):
 	# Get month!!!!!!
 	queryset = Order.objects.all()
 	serializer_class = OrderSerializer
+	permission_classes = (IsAdminUser,)
+	
 
-	@list_route(methods=['post'])
+	@list_route(methods=['post'], permission_classes=[AllowAny])
 	def chek_room(self, request):
 		serializer = ChekRoomSerializer(data = request.data)
 		queryset = self.get_queryset()
@@ -159,7 +162,7 @@ class OrderView(viewsets.ModelViewSet):
 
 		return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
-	@list_route(methods=['post'])
+	@list_route(methods=['post'], permission_classes=[AllowAny])
 	def order_room(self, request):
 		serializer = OrderSerializer(data = request.data)
 		queryset = self.get_queryset()
@@ -195,6 +198,23 @@ class OrderView(viewsets.ModelViewSet):
 					)
 				return Response({'order_id': order.id})
 			return Response({"error": _("Room already occupied")})
+	
+
+	
+	@list_route(methods=['get'], permission_classes=[IsAuthenticated])
+	def order_list(self, request):
+		queryset = self.get_queryset()
+		user = request.user
+		user_orders = queryset.filter(user = user).order_by('-pk')
+		if user_orders.exists():
+			serializer = self.get_serializer(user_orders, many=True)
+			return Response(serializer.data, status=status.HTTP_200_OK)
+
+		return Response({"error": _("Empty")})
+
+
+
+
 
 
 class LoginView(GenericAPIView):

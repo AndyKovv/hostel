@@ -20,10 +20,27 @@ angular.module('OrderRoom').factory('OrderRoomService',[ '$http', '$q', '$cookie
 						deferred.resolve(data.order_id);
 					})
 					.error(function(data, status, headers, config){
-						deferred.reject();
+						deferred.reject(data);
 					});
 				return deferred.promise;
 			},
+
+			getOrders: function(){
+				var deferred = $q.defer();
+				$http({
+					url:'/api/orders/order_list/',
+					method: 'GET',
+					headers:{'X-CSRFToken': $cookies['csrftoken']},
+				}).
+				success(function(data){
+					//console.log('getOrders' + data);
+					deferred.resolve(data)
+				}).
+				error(function(data){
+					deferred.reject(data);
+				});
+				return deferred.promise;
+			}
 
 
 		};

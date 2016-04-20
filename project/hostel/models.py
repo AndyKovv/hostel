@@ -1,9 +1,11 @@
-import datetime
+import datetime, uuid
 import random
 import string
 import sys, time  
 import os
 import glob
+
+from hashlib import sha1 
 
 from django.db.models.signals import pre_save
 from django.db.models import signals 
@@ -200,7 +202,7 @@ class RoomImage(models.Model):
 
 class Order(models.Model):
 
-	room = models.ForeignKey(HostelRoom, null=True) 
+	room = models.ForeignKey(HostelRoom, null=True, related_name='room') 
 	user = models.ForeignKey(ExtUser, blank=True, null=True)
 	unique_href = models.CharField(max_length=70, null=False)
 	deselected = models.BooleanField(default=False)
@@ -212,18 +214,22 @@ class Order(models.Model):
 	date_in = models.DateField()
 	date_out = models.DateField()
 	order_time_in = models.DateTimeField(auto_now_add=True)
-	order_time_out = models.DateTimeField(auto_now=True)
+	order_time_out = models.DateTimeField()
 	is_booking = models.BooleanField(default=True)
 	payment = models.BooleanField(default=False)
 
 	def __str__(self):
 		return str(self.pk) + ' ' + self.person_firstname + ' ' + self.person_lastname
-	"""
-	def save(self):
+	
+	def save(self, *args, **kwargs):
 		
-		self.order_time_out = timezone.now() + datetime.timedelta(hours=5)
+		salt = uuid.uuid4().hex
+		uniq_hash = ("%s%s" % (self.pk, salt))
+		unique_href = sha1(uniq_hash.encode('utf8')).hexdigest()[:20]
+		self.unique_href = unique_href
+		self.order_time_out = timezone.now() + datetime.timedelta(hours=1)
 		super(Order, self).save()
-	"""	
+	
 
 
 class TransactionPrivat24(models.Model):

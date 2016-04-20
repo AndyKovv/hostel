@@ -31,6 +31,10 @@ $rootScope.$on('$stateChangeSuccess', function(event, toState, toParams, fromSta
       if (toState.param && toState.param.authenticated && toState.param.redirectTo) {
           $state.go(toState.param.redirectTo);
       }
+    }else if(dryAuth.chekStatus()){
+      if(toState.param && !toState.param.authenticated && toState.param.redirectTo){
+        $state.go(toState.param.redirectTo);
+      }
     }
 
   });

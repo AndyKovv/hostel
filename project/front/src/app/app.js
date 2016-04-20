@@ -43,10 +43,9 @@ angular
       },
       templateUrl:'static/view/main/main.tpl.html',
       controller : 'MainPageCtrl',
-            
-    })
+   })
     .state('mainpage.detail',{
-      url: 'detail/:roomId',
+      url: 'detail/:roomId/',
          resolve: {
           
           getRoom :['Rooms', '$stateParams', function(Rooms, $stateParams){
@@ -65,7 +64,6 @@ angular
               controller: 'DetailPageCtrl',
               size: 'lg',
               windowTopClass: 'hoverable'
-
         })
         .result.finally(function(){
           $state.go('^');
@@ -74,46 +72,50 @@ angular
     })
      .state('mainpage.register',{
       url: 'registration/',
-       onEnter:['$state', '$uibModal', function($state, $uibModal){
-        $uibModal.open({
+      param: {
+        authenticated: false,
+        redirectTo: 'mainpage',
+      },
+       onEnter:['$state', '$uibModal', 'dryAuth', function($state, $uibModal, dryAuth){
+        if(!dryAuth.chekStatus()){
+          $uibModal.open({
               templateUrl: 'static/view/registration-auth/registration/user-registration.tpl.html',
               controller: 'RegistrationCtrl',
               size: 'md',
               windowTopClass: 'hoverable'
-
         })
         .result.finally(function(){
           $state.go('^');
         });
+        }
       }]
     })
- 
     .state('mainpage.login',{
       url:'login/',
-      onEnter:['$uibModal', '$state', function($uibModal, $state){
-        $uibModal.open({
-          templateUrl: 'static/view/registration-auth/login/login.tpl.html',
-          controller: 'LoginCtrl'
-
-
-        })
-        .result.finally(function(){
-          $state.go('^');
-        });
-
-
+      param: {
+        authenticated: false,
+        redirectTo: 'mainpage',
+      },
+      onEnter:['$uibModal', '$state', 'dryAuth', function($uibModal, $state, dryAuth){
+        if(!dryAuth.chekStatus()){
+          $uibModal.open({
+            templateUrl: 'static/view/registration-auth/login/login.tpl.html',
+            controller: 'LoginCtrl'
+         })
+          .result.finally(function(){
+            $state.go('^');
+          });
+       }
       }]
-
     })
     .state('mainpage.account_settings', {
       url: 'settings/',
       param: {
       authenticated: true,
       redirectTo: 'mainpage.login'
-
       },
-      onEnter:['$rootScope', '$uibModal', '$state', 'dryAuth',  
-        function($rootScope, $uibModal, $state, dryAuth ){
+      onEnter:['$uibModal', '$state', 'dryAuth',  
+        function($uibModal, $state, dryAuth ){
              if(dryAuth.chekStatus()){
                 $uibModal.open({
                   templateUrl: 'static/view/user-account/user-settings.tpl.html',
@@ -126,6 +128,36 @@ angular
             }
       }]
      })
+    .state('mainpage.account_orders', {
+      url: 'orders/',
+      param: {
+        authenticated: true,
+        redirectTo:'mainpage.login'
+      },
+      resolve: {
+        getOrdersList: ['OrderRoomService', function(OrderRoomService){
+            return OrderRoomService.getOrders();
+        }]
+      },
+      onEnter:['$uibModal', '$state', 'dryAuth', 'getOrdersList',
+      function($uibModal, $state, dryAuth, getOrdersList){
+        if(dryAuth.chekStatus()){
+            $uibModal.open({
+            resolve:{
+                getOrdersList: function(){
+                    return getOrdersList;
+                }
+            },
+            templateUrl: 'static/view/order/order-list.tpl.html',
+            controller: 'OrderRoomCtrl',
+            size: 'lg',
+          })
+            .result.finally(function(){
+              $state.go('^');
+            });
+        }
+      }]
+    })
     .state('googlelogin',{
       url:'^/accounts/google/login/',
       controller: function($window){
@@ -138,7 +170,6 @@ angular
       controller: function($window){
         $window.location.href ="/accounts/vk/login/";
       }
-      
     })
     .state('logout', {
       url:'logout/',
@@ -181,7 +212,7 @@ angular
  });
 
  angular.module('registrationAuth', ['toastr']);
- angular.module('OrderRoom', []);
+ angular.module('OrderRoom', ['ui.bootstrap']);
  angular.module('directive-hostel', []);
  angular.module('dry', []);
  angular.module('userAccount', []);
