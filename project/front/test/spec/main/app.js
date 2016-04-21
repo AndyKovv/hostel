@@ -100,8 +100,8 @@ describe('HostelApp', function(){
 
       it('should test mainpage.orderinfo state', function(){
         var state = $state.get('mainpage.orderinfo');
-        expect($state.href("mainpage,orderinfo", {orderInformationToken : 'asasasasasdsdfdgf'})).toEqual('/orderinfo/asasasasasdsdfdgf/');
-        expect(state.controller).toEqual('OrderRoomCtrl');
+        expect($state.href("mainpage.orderinfo", {orderInformationToken : 'asasasasasdsdfdgf'})).toEqual('/orderinfo/asasasasasdsdfdgf/');
+        
       });
 
 

@@ -49,6 +49,9 @@ INSTALLED_APPS = [
     'hostel',
     'geoposition',
 
+
+
+
 ]
 
 MIDDLEWARE_CLASSES = [
@@ -69,6 +72,7 @@ AUTHENTICATION_BACKENDS = (
 
 ROOT_URLCONF = 'project.urls'
 
+EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 
 TEMPLATES = [
     {
@@ -172,7 +176,7 @@ MEDIA_ROOT = '/var/www/hostel.te.ua/project/media/roomimage/'
 
 
 REST_SESSION_LOGIN = True
-EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+
 SITE_ID = 4
 ACCOUNT_EMAIL_REQUIRED = True
 ACCOUNT_AUTHENTICATION_METHOD = 'email'

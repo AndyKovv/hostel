@@ -31,12 +31,29 @@ angular.module('OrderRoom').factory('OrderRoomService',[ '$http', '$q', '$cookie
 					url:'/api/orders/order_list/',
 					method: 'GET',
 					headers:{'X-CSRFToken': $cookies['csrftoken']},
-				}).
-				success(function(data){
+				})
+				.success(function(data, status, headers, config){
 					//console.log('getOrders' + data);
 					deferred.resolve(data)
-				}).
-				error(function(data){
+				})
+				.error(function(data, status, headers, config){
+					deferred.reject(data);
+				});
+				return deferred.promise;
+			},
+
+			orderInfo: function(key){
+				var deferred = $q.defer();
+				$http({
+					url:'/api/orders/order_info/',
+					method: 'POST',
+					data: key,
+					headers:{'X-CSRFToken': $cookies['csrftoken']},
+				})
+				.success(function(data, status, headers, config){
+					deferred.resolve(data);
+				})
+				.error(function(data, status, headers, config){
 					deferred.reject(data);
 				});
 				return deferred.promise;

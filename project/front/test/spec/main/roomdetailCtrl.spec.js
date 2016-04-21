@@ -104,7 +104,7 @@ it('should write order to db anonim user', function(){
 
     var data = {
         room : $scope.room.id,
-        user : $rootScope.user.id,
+        
         person_email : $scope.user.email,
         person_firstname : $scope.user.user_firstname,
         person_middlename : $scope.user.user_middlename,
@@ -156,39 +156,40 @@ it('should test close modal window function', function(){
 
 it('should test chekFreePlace free room ', function(){
   var date = {
-        order_in :'2016-04-20',
-        order_out : '2016-04-24',
+        order_in :'2016-10-20',
+        order_out : '2016-10-24',
                     
         }
 
  $scope.freePlaceInRoom(date);
  var data = {
-        order_in: '2016-04-20',
-        order_out: '2016-04-24',
+        order_in: '2016-10-20',
+        order_out: '2016-10-24',
         room_id: $scope.room.id,
         }
  $httpBackend.expectPOST('/api/orders/chek_room/', data).respond(200, {
     free_place: 1,
  });
- expect(OrderRoomService.chekFreePlace).toHaveBeenCalledWith(data);
 
  $httpBackend.flush();
 
+expect(OrderRoomService.chekFreePlace).toHaveBeenCalledWith(data);
 expect($scope.status_place).toBe('Free');
 expect($scope.additionalrooms).toBe(undefined);
 });
 
 it('should test chekFreePlace occupied room', function(){
       var date = {
-        order_in :'2016-04-20',
-        order_out : '2016-04-24',
+        order_in :'2016-10-20',
+        order_out : '2016-10-24',
+
                     
         }
 
 $scope.freePlaceInRoom(date);
  var data = {
-        order_in: '2016-04-20',
-        order_out: '2016-04-24',
+        order_in: '2016-10-20',
+        order_out: '2016-10-24',
         room_id: $scope.room.id,
         }
 
@@ -204,15 +205,15 @@ expect($rootScope.additional_date_out).toEqual(data.order_out);
 
 it('it should test chekFreePlace server error', function(){
       var date = {
-        order_in :'2016-04-20',
-        order_out : '2016-04-24',
+        order_in :'2016-10-20',
+        order_out : '2016-10-24',
                     
         }
 
 $scope.freePlaceInRoom(date);
  var data = {
-        order_in: '2016-04-20',
-        order_out: '2016-04-24',
+        order_in: '2016-10-20',
+        order_out: '2016-10-24',
         room_id: $scope.room.id,
         }
 $httpBackend.expectPOST('/api/orders/chek_room/', data).respond(500);
@@ -222,22 +223,22 @@ expect($scope.server_error).toBe(true);
 
 it('should test freePlaceInRoom algoritm on client side', function(){
       var date = {
-        order_in :'2016-04-20',
-        order_out : '2016-04-24',
+        order_in :'2016-10-20',
+        order_out : '2016-10-24',
                     
         }
 
 var order_in = date.order_in;
 var order_out = date.order_out;
-var mock_today = '2016-04-20';
-expect(order_in).toEqual('2016-04-20');
-expect(order_out).toEqual('2016-04-24');
+var mock_today = '2016-10-20';
+expect(order_in).toEqual('2016-10-20');
+expect(order_out).toEqual('2016-10-24');
 expect(order_in >= mock_today && order_in < order_out).toBeTruthy();
 
 $scope.$apply();
-var order_in = '2016-04-19';
-expect(order_in).toEqual('2016-04-19');
-expect(mock_today).toEqual('2016-04-20');
+var order_in = '2016-10-19';
+expect(order_in).toEqual('2016-10-19');
+expect(mock_today).toEqual('2016-10-20');
 expect(order_in >= mock_today && order_in < order_out).toBeFalsy();
 
 

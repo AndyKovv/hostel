@@ -201,7 +201,7 @@ class RoomImage(models.Model):
 
 
 class Order(models.Model):
-
+	#Timer!!!!! Delete non payment booking orders
 	room = models.ForeignKey(HostelRoom, null=True, related_name='room') 
 	user = models.ForeignKey(ExtUser, blank=True, null=True)
 	unique_href = models.CharField(max_length=70, null=False)
@@ -222,12 +222,14 @@ class Order(models.Model):
 		return str(self.pk) + ' ' + self.person_firstname + ' ' + self.person_lastname
 	
 	def save(self, *args, **kwargs):
-		
-		salt = uuid.uuid4().hex
-		uniq_hash = ("%s%s" % (self.pk, salt))
-		unique_href = sha1(uniq_hash.encode('utf8')).hexdigest()[:20]
-		self.unique_href = unique_href
-		self.order_time_out = timezone.now() + datetime.timedelta(hours=1)
+		if len(self.unique_href) == 0:
+			salt = uuid.uuid4().hex
+			uniq_hash = ("%s%s" % (self.pk, salt))
+			unique_href = sha1(uniq_hash.encode('utf8')).hexdigest()[:20]
+			self.unique_href = unique_href
+			
+		if self.order_time_out is None:
+			self.order_time_out = timezone.now() + datetime.timedelta(hours=1)
 		super(Order, self).save()
 	
 

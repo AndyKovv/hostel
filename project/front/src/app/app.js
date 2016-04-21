@@ -149,7 +149,7 @@ angular
                 }
             },
             templateUrl: 'static/view/order/order-list.tpl.html',
-            controller: 'OrderRoomCtrl',
+            controller: 'OrderListCtrl',
             size: 'lg',
           })
             .result.finally(function(){
@@ -158,6 +158,33 @@ angular
         }
       }]
     })
+     .state('mainpage.orderinfo', {
+      url: 'orderinfo/:orderInformationToken/',
+      resolve: {
+        getOrderInfo: ['OrderRoomService', '$stateParams',
+        function(OrderRoomService, $stateParams){
+          return OrderRoomService.orderInfo({key: $stateParams.orderInformationToken});
+        }]
+      },
+      onEnter:['$state', '$uibModal', 'getOrderInfo',
+      function($state, $uibModal, getOrderInfo){
+        
+        $uibModal.open({
+          resolve:{
+            getOrderInfo:function(){
+              return getOrderInfo;
+            }
+          },
+          templateUrl: 'static/view/order/order-info/order-info.tpl.html',
+          controller: 'OrderInfoCtrl',
+          size: 'lg',
+
+        }).result.finally(function(){
+          $state.go('^');
+        });
+       
+      }]
+    })      
     .state('googlelogin',{
       url:'^/accounts/google/login/',
       controller: function($window){

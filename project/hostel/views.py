@@ -1,8 +1,9 @@
-
+import requests
 import time
+#For Privat24
 from hashlib import md5, sha1
 
-from rest_framework import viewsets
+
 from django.contrib.auth import login, logout, get_user_model
 from django.conf import settings
 from django.core.exceptions import ObjectDoesNotExist
@@ -13,8 +14,12 @@ from django.views.generic.base import TemplateResponseMixin, View, TemplateView
 from django.shortcuts import redirect, render 
 from django.views.decorators.csrf import csrf_exempt
 from django.http import HttpResponse, HttpResponseRedirect
+from django.contrib.sites.shortcuts import get_current_site
+from django.core.mail import send_mail
+from django.template.loader import render_to_string
 
-import requests
+#DjangoRestFramework
+from rest_framework import viewsets
 from rest_framework import status
 from rest_framework.decorators import detail_route, list_route, api_view, parser_classes, permission_classes
 from rest_framework.parsers import FormParser
@@ -43,7 +48,7 @@ from .utils import jwt_encode
 
 from hostel.models import HostelRoom, RoomImage, Order, TokenModel, ExtUser, TransactionPrivat24
 from hostel.serializers import (HostelRoomSerializer, OrderSerializer,
-									 ChekRoomSerializer, FreeRoomSerializer, VerifyEmailSerializer, Privat24Serializer)
+									 ChekRoomSerializer, FreeRoomSerializer, VerifyEmailSerializer, OrderKeySerializer, OrderInfoSerializer)
 
 
 
@@ -66,6 +71,7 @@ class Privat_24(APIView):
 		payment = request.data.get('payment')
 		#import pdb
 		#pdb.set_trace()
+		site = str(get_current_site(request))
 		signature = request.data.get('signature')
 		local_signature = self.build_signature(payment)
 		
@@ -79,13 +85,13 @@ class Privat_24(APIView):
 			try:
 
 				order = Order.objects.get(pk = order_i)
-				unique_href = order.unique_href
+				
 			except Order.DoesNotExist:
 				return Response({'raise': _("Something went wrong please contact our manager")})
 
 			try:
 				trans = TransactionPrivat24.objects.get(order = order_i)
-				return Response({'raise': _("Order already exist please contact our manager")})
+				return Response({'raise': _("Payment already exist please contact our manager")})
 				
 			except TransactionPrivat24.DoesNotExist:
 				transaction = TransactionPrivat24.objects.create(
@@ -103,9 +109,16 @@ class Privat_24(APIView):
 					payCountry = params.get('payCountry')
 					)
 				order.payment = True
-				
 				order.save()
-				return HttpResponseRedirect('/order/'+ unique_href +'/')
+				unique_href = order.unique_href
+				mail_link = site + '/orderinfo/' + unique_href + '/' 
+				msg_plain = render_to_string('templated_email/confirmpayment.txt', {
+					'order_id': order_i,
+					'order_link': mail_link,
+					'site': site
+					})
+				send_mail(_("Order information"), msg_plain, 'orders@hostel.te.ua', [order.person_email])
+				return HttpResponseRedirect('/orderinfo/'+ unique_href +'/')
 
 		return Response({'ransaction': 'Validattion'})
 	
@@ -211,6 +224,26 @@ class OrderView(viewsets.ModelViewSet):
 			return Response(serializer.data, status=status.HTTP_200_OK)
 
 		return Response({"error": _("Empty")})
+
+
+
+	@list_route(methods=['post'], permission_classes=[AllowAny])
+	def order_info(self, request):
+		serializer = OrderKeySerializer(data = request.data)
+		queryset = self.get_queryset()
+		if serializer.is_valid():
+			unique_href = serializer.data['key']
+			try:
+				order = queryset.get(unique_href = unique_href)
+			except Order.DoesNotExist:
+				return Response({"error": "Does Not Exists"})
+				
+			respond_order_serializer = OrderInfoSerializer(order)
+			return Response(respond_order_serializer.data)
+			
+			
+
+		return Response({"error": "error request"})
 
 
 

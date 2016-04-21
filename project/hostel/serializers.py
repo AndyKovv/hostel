@@ -22,14 +22,8 @@ from hostel.models import HostelRoom, RoomImage, TokenModel, Order, TransactionP
 UserModel = get_user_model()
 
 
-class Privat24Serializer(serializers.Serializer):
-	
-
-	class Meta:
-		model = TransactionPrivat24
-		write_only_fields = ('amt', 'ccy', 'details', 'ext_details',
-		'pay_way', 'order', 'merchant', 'state', 'date', 'ref', 'payCountry' )
-
+class OrderKeySerializer(serializers.Serializer):
+	key = serializers.CharField(required=True)
 
 class RoomImage(serializers.ModelSerializer):
 	image_original = serializers.SerializerMethodField('get_image_original_url')
@@ -62,6 +56,9 @@ class RoomImage(serializers.ModelSerializer):
 		static_url = str('/static/pictures/') + abs_url
 		return static_url
 	
+
+
+
  
 class FreeRoomSerializer(serializers.Serializer):
 	id = serializers.IntegerField()
@@ -99,15 +96,36 @@ class HostelRoomSerializer(serializers.ModelSerializer):
 
 class OrderSerializer(serializers.ModelSerializer):
 	
-	room_name = serializers.SerializerMethodField()
+	
 	class Meta:
 		model = Order
-		fields = ('id', 'room', 'room_name', 'user', 'person_email', 'person_firstname', 'person_middlename', 'person_lastname',  'person_phonenumber', 'date_in', 'date_out', 'payment',)
+		fields = ('id', 'room',  'person_email', 'person_firstname',
+		'person_middlename', 'person_lastname',  'person_phonenumber', 'date_in', 'date_out', 'payment',)
 		write_only_fields = ('room','user', 'person_email', 'person_firstname','person_middlename', 'person_lastname',  'person_phonenumber', 'date_in', 'date_out',)
+
+
+class OrderInfoSerializer(serializers.ModelSerializer):
+	
+	room_name = serializers.SerializerMethodField()
+	room_address = serializers.SerializerMethodField()
+	order_date = serializers.SerializerMethodField() 
+	
+	class Meta:
+		model = Order
+		fields = ('id', 'room', 'room_name', 'room_address', 'user', 'person_email', 'person_firstname',
+		'person_middlename', 'person_lastname',  'person_phonenumber', 'date_in', 'date_out', 'payment', 'order_date',)
+	
 
 	def get_room_name(self, obj):
 		room_name = obj.room.name_room
 		return room_name
+
+	def get_room_address(self, obj):
+		room_address = obj.room.location_room
+		return room_address
+	def get_order_date(self, obj):
+		date = obj.order_time_in.date()
+		return date
 
 
 class ChekRoomSerializer(serializers.Serializer):

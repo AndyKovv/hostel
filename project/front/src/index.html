@@ -78,8 +78,9 @@
    <script src="{% static "registration-auth/authService.js" %}"></script>   
    <script src="{% static "registration-auth/MasterCtrl.js" %}"></script> 
    <script src="{% static "registration-auth/Validation.js" %}"></script> 
-   <script src="{% static "order/OrderRoomCtrl.js" %}"></script> 
+   <script src="{% static "order/OrderListCtrl.js" %}"></script> 
    <script src="{% static "order/OrderRoomServices.js" %}"></script>
+   <script src="{% static "order/order-info/OrderInfoCtrl.js" %}"></script>
 
 
   <script src="{% static "registration-auth/registration/RegistrationCtrl.js" %}"></script> 
@@ -241,7 +242,7 @@
         <div class="col-md-3 col-md-offset-1">
           <p class="white-text center-on-small-only">GET STARTED</p>
           <p class="white-text center-on-small-only">Register for free and start to create amazing things.</p>
-          <a href="http://mdbootstrap.com/getting-started/" class="btn btn-danger waves-effect waves-light">Get started!</a>
+          <a ui-sref="mainpage.orderinfo({orderInformationToken : '2efd57b432bd9f4228ea'})" class="btn btn-danger waves-effect waves-light">Get started!</a>
 
         </div>
         <hr class="hidden-lg hidden-md">

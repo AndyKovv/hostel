@@ -1,0 +1,25 @@
+ <!--Multi-item panel-->
+<div class="card-panel horizontal-listing no-padding comments-section">
+    <h5 class="text-center title">Free room</h5>
+    <hr>
+    <div class="container-fluid-additionalroom">
+
+        <!--First row-->
+        <div class="row hoverable" ng-repeat="room in additionalrooms">
+            <div class="col-sm-2">
+            <div ng-repeat="img in room.roomimages | filter: { image_main: 'true' }">
+                <img ng-src ="{{img.image_thumb}}" class="img-responsive z-depth-">
+                </div>
+            </div>
+            <div class="col-sm-10">
+                <a ui-sref="mainpage.detail({roomId: room.id})" ng-click="redirectFreeRoom()"><h5 class="title"><span ng-bind="room.name_room"></span> <i class="fa fa-reply"> Reply</i></h5></a>
+                <i class="fa fa-clock-o"> 05/10/2015</i>
+                <p><span ng-bind="room.description_short"></span></p>
+            </div>
+        </div>
+        <!--/.First row-->
+
+    
+    </div>
+</div>
+<!--/.Multi-item panel-->

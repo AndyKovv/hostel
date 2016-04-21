@@ -118,12 +118,11 @@ $rootScope.user = $rootScope.user ? $rootScope.user : '';
 
 $scope.orderRoom = function(orderForm){
 	if(orderForm.$valid){
-		var user_id = $rootScope.user ? $rootScope.user.id : 'null';
+		
 		var order_in = angular.toJson($scope.date.order_in).slice(1,11);
 		var order_out = angular.toJson($scope.date.order_out).slice(1,11);
 		var data = {
        			room : $scope.room.id,
-        		user: user_id,
         		person_email : $scope.user.email,
         		person_firstname : $scope.user.user_firstname,
         		person_middlename : $scope.user.user_middlename,

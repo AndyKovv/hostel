@@ -1,0 +1,6 @@
+Thank you for ordering room. Your order number is {{ order_id }}.
+      You can see your order in account, or go to link {{order_link}}
+
+If you didn't do order, please resend the letter to admin@hostel.te.ua
+
+With best Regards {{site}} team.
