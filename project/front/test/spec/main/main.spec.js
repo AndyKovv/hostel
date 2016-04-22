@@ -37,7 +37,7 @@ beforeEach(inject(function(_$httpBackend_, _$rootScope_, $controller, _$uibModal
         $scope : $scope,
         $rootScope: $rootScope,
         $uibModal: uibModal,
-         allRooms : { data: ['room1', 'room2']},
+        allRooms : { data: ['room1', 'room2']},
     });
     
 
@@ -62,6 +62,24 @@ it('should open modal when data user data name is empty', function(){
     uibModal.open();
    expect(uibModal.open).toHaveBeenCalled(); 
    
+});
+
+it('should open google map modal with hostel location', function(){
+    var hostel = {
+        longitude : '123',
+        latitude: '456',
+    }
+    $scope.openLocation(hostel);
+    var longitude = hostel.longitude;
+    var latitude = hostel.latitude;
+    expect($scope.map.center.latitude).toEqual('456');
+    expect($scope.map.center.longitude).toEqual('123');
+    expect($scope.marker.id).toEqual(0);
+    expect($scope.marker.coords.longitude).toEqual('123');
+    expect($scope.marker.coords.latitude).toEqual('456');
+    expect(uibModal.open).toHaveBeenCalled();
+
+
 });
 
 });

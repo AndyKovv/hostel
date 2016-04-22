@@ -42,6 +42,7 @@ module.exports = function(config) {
       'bower_components/angular-ui-mask/dist/mask.min.js',
       'bower_components/ngQuickDate/dist/ng-quick-date.js',
       'bower_components/angular-toastr/dist/angular-toastr.tpls.min.js',
+      'bower_components/file-saver/FileSaver.min.js',
 
 
 

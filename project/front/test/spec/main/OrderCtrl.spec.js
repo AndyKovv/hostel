@@ -76,17 +76,7 @@ describe('OrderListCtrl', function () {
 		expect($scope.currentPage).toBe(1);
 		expect($scope.orders.length).toBe(2);
 		});
-	/*
-	it('should show order info form', function(){
-
-		$httpBackend.expectPOST('/api/order/orderiformation/', {key: $stateParams.orderInformationToken}).respond(200, {"sucess": "sucess"});
-		$httpBackend.flush();
-		expect($scope.order_data).toBeDefined();
-		
-
-
-	});
-	*/
+	
 	
 
 });

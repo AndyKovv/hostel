@@ -3,6 +3,10 @@ import time
 #For Privat24
 from hashlib import md5, sha1
 
+from io import StringIO, BytesIO
+
+#PDF gen
+from rlextra.rml2pdf import rml2pdf
 
 from django.contrib.auth import login, logout, get_user_model
 from django.conf import settings
@@ -16,7 +20,9 @@ from django.views.decorators.csrf import csrf_exempt
 from django.http import HttpResponse, HttpResponseRedirect
 from django.contrib.sites.shortcuts import get_current_site
 from django.core.mail import send_mail
-from django.template.loader import render_to_string
+from django.template.loader import render_to_string, get_template
+from django.template import Template, Context
+
 
 #DjangoRestFramework
 from rest_framework import viewsets
@@ -85,7 +91,6 @@ class Privat_24(APIView):
 			try:
 
 				order = Order.objects.get(pk = order_i)
-				
 			except Order.DoesNotExist:
 				return Response({'raise': _("Something went wrong please contact our manager")})
 
@@ -129,8 +134,7 @@ class RoomViewSet(viewsets.ReadOnlyModelViewSet):
 	serializer_class = HostelRoomSerializer
 
 	
-	def free_room_count(self, pk=None):
-		pass
+	
 
 class OrderView(viewsets.ModelViewSet):
 	# Get month!!!!!!
@@ -183,6 +187,7 @@ class OrderView(viewsets.ModelViewSet):
 		if serializer.is_valid(raise_exception=True):
 			try:
 				req_room = serializer.data['room']
+				#Give only active room
 				room = HostelRoom.objects.get(pk=req_room, active=True)
 				if request.user.is_authenticated():
 					req_user = self.request.user.id
@@ -220,7 +225,7 @@ class OrderView(viewsets.ModelViewSet):
 		user = request.user
 		user_orders = queryset.filter(user = user).order_by('-pk')
 		if user_orders.exists():
-			serializer = self.get_serializer(user_orders, many=True)
+			serializer = OrderInfoSerializer(user_orders, many=True)
 			return Response(serializer.data, status=status.HTTP_200_OK)
 
 		return Response({"error": _("Empty")})
@@ -240,10 +245,45 @@ class OrderView(viewsets.ModelViewSet):
 				
 			respond_order_serializer = OrderInfoSerializer(order)
 			return Response(respond_order_serializer.data)
-			
-			
-
+		
 		return Response({"error": "error request"})
+
+	@list_route(methods=['post'], permission_classes=[AllowAny])
+	def pdfcreator(self, request):
+		req_unique_href = request.data.get('unique_href')
+		try:
+			order = Order.objects.get(unique_href = req_unique_href)
+		except Order.DoesNotExist:
+			return Response({"error": "Order not exists"})
+
+		serializer = OrderInfoSerializer(order)
+		if serializer:
+
+			t = get_template('templated_pdf/order.rml')
+			c = Context({
+				"id" : serializer.data['id'],
+				"date": serializer.data['order_date'],
+				"date_in": serializer.data['date_in'],
+				"date_out": serializer.data['date_out'],
+				"phone_number": serializer.data['person_phonenumber'],
+				"first_name": serializer.data['person_firstname'],
+				"middle_name": serializer.data['person_middlename'],
+				"last_name": serializer.data['person_lastname'],
+				"address": serializer.data['room_address'],
+				"payment": serializer.data['payment'],
+				"room_name": serializer.data['room_name'],
+				})
+			rml = t.render(c)
+			rml_unicode = rml.encode('utf-8')
+			#import pdb
+			#pdb.set_trace()
+			buf = BytesIO()
+			a = rml2pdf.go(rml_unicode, outputFileName = buf)
+			pdfData = buf.getvalue()
+			response = HttpResponse(content_type='application/pdf')
+			response.write(pdfData)
+			response['Content-Disposition'] = 'attachment; filename="order.pdf"'
+			return response
 
 
 

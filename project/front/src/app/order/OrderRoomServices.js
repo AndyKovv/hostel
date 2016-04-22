@@ -57,6 +57,23 @@ angular.module('OrderRoom').factory('OrderRoomService',[ '$http', '$q', '$cookie
 					deferred.reject(data);
 				});
 				return deferred.promise;
+			},
+
+			createPdf: function(data){
+				var deferred = $q.defer();
+				$http({
+					url:'/api/orders/pdfcreator/',
+					method: 'POST',
+					data : data,
+				})
+				.success(function(data, status, headers, config){
+					deferred.resolve(data);
+				})
+				.error(function(data, status, headers, config){
+					deferred.reject(data);
+				});
+
+				return deferred.promise;
 			}
 
 

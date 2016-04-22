@@ -24,8 +24,8 @@
             <tbody ng-repeat = "order in filteredOrders">
                 <tr>
                     <td><span>{{$index +1 }}</span></td>
-                        <td><span ng-bind="order.id"></span></td>
-                            <td><a ui-sref="mainpage.detail({roomId: order.room})"<span ng-bind="order.room_name"></span></a></td>
+                        <td><a ui-sref="mainpage.orderinfo({orderInformationToken: order.unique_href})"><span ng-bind="order.id"></span></a></td>
+                            <td><a ui-sref="mainpage.detail({roomId: order.room})"><span ng-bind="order.room_name"></span></a></td>
                                 <td><span ng-bind="order.date_in | date : 'MM/dd/yyyy'"></span></td>
                     <td><span ng-bind="order.date_out | date : 'MM/dd/yyyy'" ></span></td>
                         <td><span ng-bind="order.person_firstname + ' ' + order.person_middlename + ' ' + order.person_lastname"></span></td>

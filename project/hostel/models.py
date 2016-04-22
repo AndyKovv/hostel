@@ -214,7 +214,7 @@ class Order(models.Model):
 	date_in = models.DateField()
 	date_out = models.DateField()
 	order_time_in = models.DateTimeField(auto_now_add=True)
-	order_time_out = models.DateTimeField()
+	order_time_out = models.DateTimeField(auto_now=True)
 	is_booking = models.BooleanField(default=True)
 	payment = models.BooleanField(default=False)
 

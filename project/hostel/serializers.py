@@ -61,7 +61,7 @@ class RoomImage(serializers.ModelSerializer):
 
  
 class FreeRoomSerializer(serializers.Serializer):
-	id = serializers.IntegerField()
+	id = serializers.IntegerField(required=True)
 	name_room = serializers.CharField(required=True)
 	description_short = serializers.CharField(required=True)
 	price_room = serializers.IntegerField(required=True)
@@ -99,11 +99,11 @@ class OrderSerializer(serializers.ModelSerializer):
 	
 	class Meta:
 		model = Order
-		fields = ('id', 'room',  'person_email', 'person_firstname',
-		'person_middlename', 'person_lastname',  'person_phonenumber', 'date_in', 'date_out', 'payment',)
+		fields = ('id', 'room','person_email', 'person_firstname','person_middlename', 'person_lastname', 
+		'person_phonenumber', 'date_in', 'date_out', 'payment',)
 		write_only_fields = ('room','user', 'person_email', 'person_firstname','person_middlename', 'person_lastname',  'person_phonenumber', 'date_in', 'date_out',)
 
-
+	
 class OrderInfoSerializer(serializers.ModelSerializer):
 	
 	room_name = serializers.SerializerMethodField()
@@ -112,7 +112,7 @@ class OrderInfoSerializer(serializers.ModelSerializer):
 	
 	class Meta:
 		model = Order
-		fields = ('id', 'room', 'room_name', 'room_address', 'user', 'person_email', 'person_firstname',
+		fields = ('id', 'room', 'room_name', 'room_address', 'user', 'person_email', 'person_firstname', 'unique_href',
 		'person_middlename', 'person_lastname',  'person_phonenumber', 'date_in', 'date_out', 'payment', 'order_date',)
 	
 

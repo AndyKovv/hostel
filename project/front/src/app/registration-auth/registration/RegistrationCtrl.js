@@ -48,4 +48,7 @@ $scope.mainRegister = function(registrationForm){
 	}
 };
 
+$scope.close = function(){
+	$uibModalInstance.close();
+}
 }]);
