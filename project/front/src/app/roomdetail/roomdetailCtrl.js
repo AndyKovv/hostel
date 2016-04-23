@@ -130,13 +130,16 @@ $scope.orderRoom = function(orderForm){
         		person_phonenumber : $scope.user.phone_number,
         		date_in:  order_in,
         		date_out: order_out,
+        		amount: $scope.room.price_room,
 
     }
     console.log('orderForm data'+ data);
     	OrderRoomService.orderRoom(data).then(function(data){
     		$scope.success_order = true;
     		console.log('DetailPageCtrl' + data);
-    		$scope.order_id = data;
+    		$scope.orderadd = false;
+    		$scope.order_ok = true;
+    		$scope.order_confirm = data;
     	});
 
 	}

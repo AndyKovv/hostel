@@ -19,6 +19,11 @@
             <drawCentredString x="297.5" y="720">
             This is order document,  please print it for identify you on reseption.
             </drawCentredString>
+
+            <drawRightString x="640" y="530">
+            Amount: {{amount}} UAH
+            </drawRightString>
+
         
 
 

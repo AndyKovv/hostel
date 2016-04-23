@@ -19,7 +19,7 @@
             <!--Main image-->
             <div class="col-xs-8 col-sm-8">
               <!-- Wrapper for slides -->
-                <div class="carousel-inner z-depth-1 hoverable" role="listbox" >
+                <div class="carousel-inner z-depth-1 hoverable" role="listbox">
 
                    <!--/. Image Big  -->    
                      <div id="imgitem" ng-class='{active: $first}' class="item" ng-repeat= "images in room.roomimages | orderBy: '-image_main'">
@@ -47,18 +47,41 @@
 
                     </div>
                     <!--Third column: product description-->
-                    <div class="col-xs-6 col-sm-6 col-lg-7">
-                        <div class="panel panel-primary col-xs-12 col-sm-12 col-lg-12" >
-                        <div class="panel-heading">Panel with panel-primary class</div>
-                      <div class="panel-body">
-                        
-                        <a class="btn btn-flat waves-effect waves-teal" ng-click="mapShow()"><i class="fa fa-map-o right"></i>Show on map</a> 
-            </span>
-                      </div>
+                    <div class="col-xs-6 col-sm-6 col-lg-8">
+                     <table class="table detail-td">
+                       <tbody>
+                          <tr>
+                              <td>Description: </td>
+                              <td><span ng-bind="room.description_full"></span></td>
+                              
+                          </tr>
 
-                      </div>
-                
-                        
+                          <tr>
+                              <td>Beds:</td>
+                              <td><span ng-bind="room.places_in_room"></span></td>
+                              
+                          </tr>
+
+                          <tr>
+                              <td>Price: </td>
+                              <td><b><span ng-bind="room.price_room"></b></span></td>
+                              
+                          </tr>
+                          <tr>
+                              <td>Location:</td>
+                              <td><a ng-click="mapShow()"><span ng-bind="room.location_room"></span>
+                               <i class="fa fa-map-o left"></i></a></td>
+                              
+                          </tr>
+                        </tbody>
+                     </table>
+                     
+                      
+                     
+                      
+                      <!--
+                        <a class="btn btn-flat waves-effect waves-teal" ng-click="mapShow()"><i class="fa fa-map-o right"></i>Show on map</a>                 
+                        -->
                     </div>
                     <!--/.Third column: product description-->
               
@@ -71,7 +94,7 @@
                     <div class="text-center">
                         <span class="order-info">Date arival</span>
                               <quick-datepicker init-value="{{redirect_init_date_in}}" ng-model='date.order_in' disable-timepicker='true' 
-                              placeholder="Date In"on-change="freePlaceInRoom(date)" style="margin-right:30px;">
+                              placeholder="Date In" on-change="freePlaceInRoom(date)" style="margin-right:30px;">
                               </quick-datepicker>
                 
                         <span class="order-info">Date  dispatch</span>
@@ -100,12 +123,12 @@
                 </div>
     </div>
 
-      <div class="row">
+      <div class="row ">
         <div class="col-xs-12 col-sm-12 col-lg-12">
             <div ng-include="'static/view/roomdetail/order-tpl/additional-room-template.tpl.html'" ng-if="render_additional" class="animate-if"></div>
         </div>
       </div>
-    <div class="row">
+    <div class="row ">
         <!---/ Include order template/-->
               
               <div class="col-xs-12 col-sm-12 col-lg-12">
@@ -114,9 +137,9 @@
     </div>
 
     
-    <div class="row" >
+    <div class="row detail-map" >
     <!---/. Goodle maps directive /-->          
-              <div ng-if="render" class="col-xs-12 col-sm-12 col-lg-12" >
+              <div ng-if="render" class="col-xs-12 col-sm-12 col-lg-12">
 
                          <ui-gmap-google-map center='map.center' zoom='map.zoom' refresh='render'>
                                     <ui-gmap-marker coords="marker.coords" idkey="marker.id">
@@ -124,6 +147,11 @@
                          </ui-gmap-google-map>
               </div>
 
+    </div>
+    <div class="row" >
+      <div class="col-xs-12 col-sm-12 col-lg-12">
+                    <div ng-include = "'static/view/roomdetail/payment-confirm/payment-confirm.tpl.html'" ng-if="order_ok" class="animate-if" ></div>
+                </div>
     </div>
 
 <!--/ Modal body -->

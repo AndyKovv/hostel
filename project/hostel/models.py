@@ -202,7 +202,7 @@ class RoomImage(models.Model):
 
 class Order(models.Model):
 	#Timer!!!!! Delete non payment booking orders
-	room = models.ForeignKey(HostelRoom, null=True, related_name='room') 
+	room = models.ForeignKey(HostelRoom) 
 	user = models.ForeignKey(ExtUser, blank=True, null=True)
 	unique_href = models.CharField(max_length=70, null=False)
 	deselected = models.BooleanField(default=False)
@@ -213,6 +213,7 @@ class Order(models.Model):
 	person_phonenumber = models.CharField(max_length=20, null=False)
 	date_in = models.DateField()
 	date_out = models.DateField()
+	amount = models.FloatField()
 	order_time_in = models.DateTimeField(auto_now_add=True)
 	order_time_out = models.DateTimeField(auto_now=True)
 	is_booking = models.BooleanField(default=True)

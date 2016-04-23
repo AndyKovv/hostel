@@ -8,8 +8,8 @@
  * Controller of the angularApp
  */
 angular.module('mainPage')
-  .controller('MainPageCtrl', [ '$rootScope','$scope',  '$uibModal', '$timeout', 'allRooms',  'toastr',  
-    function ($rootScope, $scope,  $uibModal, $timeout, allRooms, toastr) {
+  .controller('MainPageCtrl', [ '$rootScope','$scope', '$uibModal', '$timeout', 'allRooms',  'toastr',  
+    function ($rootScope, $scope, $uibModal, $timeout, allRooms, toastr) {
     //resolve all room in app.js
     $scope.hostels = allRooms;
  // Chek user fully entered data   
@@ -28,11 +28,15 @@ angular.module('mainPage')
          });
       
        }
+
+
 $scope.openLocation = function(hostel){
   //Coords render to map
   var latitude = hostel.latitude;
-  var longitude = hostel.longitude;  
-
+  var longitude = hostel.longitude; 
+  console.log('latitude' + latitude);
+  console.log('longitude' + longitude); 
+ 
 $scope.map = {center: {latitude:latitude, longitude: longitude}, zoom: 16 };
  $scope.marker = {
       id: 0,
@@ -42,15 +46,30 @@ $scope.map = {center: {latitude:latitude, longitude: longitude}, zoom: 16 };
 
       }
   }
-  // Do this thing
   if(latitude && longitude){
-    $uibModal.open({
+  
+  $uibModal.open({
+      resolve: {
+        map: function(){
+          return $scope.map;
+        },
+        marker: function(){
+          return $scope.marker;
+        },
+        render: function(){
+          return $scope.render;
+        }
+      },
       templateUrl: 'static/view/main/show-map.tpl.html',
-      controller: function(){
+      controller: function($scope, map, marker, render){
+        $scope.render = true;
+        $scope.map = map;
+        $scope.marker = marker;
       },
       size: 'md',
 
     });
-  }
+ 
+ }
 };
 }]);

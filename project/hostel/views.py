@@ -152,7 +152,7 @@ class OrderView(viewsets.ModelViewSet):
 			order_in = serializer.data['order_in']
 			order_out = serializer.data['order_out']
 			place_in_room = HostelRoom.objects.get(id=room_id).places_in_room
-			live_in_interval = queryset.filter(room=room_id, date_in__lt=order_out, date_out__gt=order_in, payment=True, is_booking=True).count()
+			live_in_interval = queryset.filter(room=room_id, date_in__lt=order_out, date_out__gt=order_in, is_booking=True).count()
 			free_place = place_in_room - live_in_interval
 
 			if free_place <=0:
@@ -161,8 +161,7 @@ class OrderView(viewsets.ModelViewSet):
 				rooms = query_room.filter(
 					order__date_in__lt=order_out, 
 					order__date_out__gt=order_in, 
-					payment=True,
-					is_booking = True
+					
 					).annotate(num_orders=Count('name_room'))
 				busy_room = []
 
@@ -204,17 +203,19 @@ class OrderView(viewsets.ModelViewSet):
 			pp = serializer.data['person_phonenumber']
 			di = serializer.data['date_in']
 			do = serializer.data['date_out']
+			am = serializer.data['amount']
 			
 			place_in_room = HostelRoom.objects.get(id=room.id).places_in_room
-			live_in_interval = queryset.filter(room=room.id, date_in__lt=do, date_out__gt=di, payment=True, is_booking=True).count()
+			live_in_interval = queryset.filter(room=room.id, date_in__lt=do, date_out__gt=di, is_booking=True).count()
 			free_place = place_in_room - live_in_interval
 
 			if free_place > 0:
 				order = Order.objects.create(
 					room = room, user = user, person_email = pe, person_firstname = pf, person_middlename = pm,
-					person_lastname = pl, person_phonenumber = pp, date_in = di, date_out = do
+					person_lastname = pl, person_phonenumber = pp, date_in = di, date_out = do, amount = am
 					)
-				return Response({'order_id': order.id})
+				response_serializer = OrderSerializer(order)
+				return Response(response_serializer.data, status=status.HTTP_201_CREATED)
 			return Response({"error": _("Room already occupied")})
 	
 
@@ -272,6 +273,7 @@ class OrderView(viewsets.ModelViewSet):
 				"address": serializer.data['room_address'],
 				"payment": serializer.data['payment'],
 				"room_name": serializer.data['room_name'],
+				"amount": serializer.data['amount'],
 				})
 			rml = t.render(c)
 			rml_unicode = rml.encode('utf-8')

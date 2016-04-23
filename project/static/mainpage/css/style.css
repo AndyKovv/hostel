@@ -3,6 +3,10 @@ body {
     height: 100%;
 }
 
+
+.privat-img {
+    width: 9.7em;
+}
 .carousel {
     height: 50%;
     margin-top: -20px;
@@ -75,6 +79,13 @@ font-size: 15px;
     padding:10px;
     padding-top:25px;
 }
+.elegant-card .card-content {
+    padding: 1em;
+    color: #666;
+    background-color: #fff;
+    min-height: 11em;
+    max-height: 11em;
+}
 .carousel-thumbnails .carousel-indicators img {
     max-width:53px;
     max-height:100px;
@@ -97,7 +108,7 @@ font-size: 15px;
     margin-top: 0px;
     margin-right: 0.4em;
     margin-bottom: 0px;
-    margin-left: 0.4em;
+    margin-left: 1.4em;
     overflow-x: hidden;
     position: static;
     
@@ -115,6 +126,12 @@ font-size: 15px;
     margin-left: 0px;
     background-color: rgba(0,0,0,0);
 }
+.carousel-inner {
+    position: relative;
+    overflow: hidden;
+    width: 100%;
+    margin-left: 1em;
+    }
 
 .modal-body {
     position: relative;
@@ -122,9 +139,13 @@ font-size: 15px;
     padding-top: 3px;
 }
 
-.angular-google-map-container { 
+.detail-map .angular-google-map-container { 
      height: 12em; 
  }
+.main-map .angular-google-map-container { 
+     height: 20em; 
+ }
+ 
 
 .animate-if.ng-enter, .animate-if.ng-leave {
     -webkit-transition:all cubic-bezier(0.250, 0.460, 0.450, 0.940) 0.2s;
@@ -229,3 +250,18 @@ h6 span { background:#fff; padding:0 10px; }
     padding-left: 0px;
     padding-right: 0px;"
 }
+
+
+.detail-td > tbody > tr > td{
+    padding: 8px;
+    line-height: 1.42857143;
+    vertical-align: top;
+    border-bottom: 1px solid #ddd;
+    border-top: 0px solid #ddd;
+
+}
+
+.max-h-45{
+    max-height: 3.27em;
+}
+

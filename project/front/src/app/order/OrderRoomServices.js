@@ -16,8 +16,8 @@ angular.module('OrderRoom').factory('OrderRoomService',[ '$http', '$q', '$cookie
 					
 					})
 					.success(function(data, status, headers, config){
-							console.log('OrderRoomService' + data.order_id);
-						deferred.resolve(data.order_id);
+							console.log('OrderRoomService' + data);
+						deferred.resolve(data);
 					})
 					.error(function(data, status, headers, config){
 						deferred.reject(data);

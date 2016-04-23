@@ -42,22 +42,14 @@
           <input name="last_name" id="last_name" type="text" class="validate" ng-model="user.user_lastname" required>
           <label for="last_name" ng-class='{active: user.user_lastname}'>Last Name</label>
         </div>
-        
+               
         <!--/. About user form -->
       </div>
-      <button type="submit" class="btn btn-primary waves-effect waves-light" ng-disabled="orderForm.$invalid">Order Romm</button>
-      </form>
-     <form method="POST" action="https://api.privatbank.ua/p24api/ishop">
-          <input type="hidden" name="amt" value="{{room.price_room}}" />
-          <input type="hidden" name="ccy" value="UAH" />
-          <input type="hidden" name="merchant" value="118128" />
-          <input type="hidden" name="merchant" value="118128" />
-          <input type="hidden" name="order" value="{{order_id}}" />
-          <input type="hidden" name="details" value="{{room.id}}" />
-          <input type="hidden" name="ext_details" value="Full description of room" />
-          <input type="hidden" name="pay_way" value="privat24" />
-         <input type="hidden" name="return_url" value="http://localhost:8000/api/privat24/" />
-          <input type="hidden" name="server_url" value="http://localhost:8000/" />
-          <button type="submit"><img src="img/buttons/api_logo_1.jpg" border="0" /></button>
-</form>
+       <button type="submit" class="btn btn-primary waves-effect waves-light" ng-disabled="orderForm.$invalid || orderForm.$send">Order Romm</button>
+         
+     </form>
+
+     
+
+    
       <!--/ Order Template -->

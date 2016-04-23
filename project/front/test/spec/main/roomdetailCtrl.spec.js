@@ -61,7 +61,7 @@ var getRoomMock = {
         orderForm = $scope.orderForm
         
        $scope.date = {order_in: '2016-04-19', order_out: '2016-04-20'}
-       $scope.room = { id: '1'} 
+       $scope.room = { id: '1', amount:'100'} 
        $rootScope.user = {id : '1'}
     
 
@@ -112,13 +112,17 @@ it('should write order to db anonim user', function(){
         person_phonenumber: $scope.user.phone_number,
         date_in: order_in,
         date_out: order_out,
+        amount: $scope.room.amount,
 
     }
 
-    $httpBackend.expectPOST('/api/orders/order_room/', data).respond('201');
+    $httpBackend.expectPOST('/api/orders/order_room/', data).respond('201', {data: 1});
     
     $httpBackend.flush();
     expect($scope.success_order).toEqual(true);
+    expect($scope.orderadd).toEqual(false);
+    expect($scope.order_ok).toEqual(true);
+    expect($scope.order_confirm).toEqual('201');
 
 });
 

@@ -81,7 +81,7 @@ class HostelRoomSerializer(serializers.ModelSerializer):
 		fields = (
 			'id', 'name_room', 'price_room', 'description_full', 
 			'description_short', 'places_in_room', 'rating', 'free_places', 'roomimages',
-			'latitude','longitude', 
+			'latitude','longitude', 'location_room', 
 			)
 
 	def get_position_lat(self, obj):
@@ -100,7 +100,7 @@ class OrderSerializer(serializers.ModelSerializer):
 	class Meta:
 		model = Order
 		fields = ('id', 'room','person_email', 'person_firstname','person_middlename', 'person_lastname', 
-		'person_phonenumber', 'date_in', 'date_out', 'payment',)
+		'person_phonenumber', 'date_in', 'date_out', 'payment','order_time_in', 'amount', )
 		write_only_fields = ('room','user', 'person_email', 'person_firstname','person_middlename', 'person_lastname',  'person_phonenumber', 'date_in', 'date_out',)
 
 	
@@ -113,7 +113,7 @@ class OrderInfoSerializer(serializers.ModelSerializer):
 	class Meta:
 		model = Order
 		fields = ('id', 'room', 'room_name', 'room_address', 'user', 'person_email', 'person_firstname', 'unique_href',
-		'person_middlename', 'person_lastname',  'person_phonenumber', 'date_in', 'date_out', 'payment', 'order_date',)
+		'person_middlename', 'person_lastname',  'person_phonenumber', 'date_in', 'date_out', 'payment', 'order_date', 'amount',)
 	
 
 	def get_room_name(self, obj):

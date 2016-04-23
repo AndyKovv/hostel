@@ -27,7 +27,9 @@ beforeEach(inject(function(_$httpBackend_, _$rootScope_, $controller, _$uibModal
     
     $rootScope = _$rootScope_;
     uibModal = _$uibModal_;
+   
     spyOn(uibModal, 'open');
+
     
 
     
@@ -38,6 +40,7 @@ beforeEach(inject(function(_$httpBackend_, _$rootScope_, $controller, _$uibModal
         $rootScope: $rootScope,
         $uibModal: uibModal,
         allRooms : { data: ['room1', 'room2']},
+       
     });
     
 
