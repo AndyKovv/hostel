@@ -90,6 +90,42 @@ angular
         }
       }]
     })
+    .state('mainpage.passw_reset', {
+      url: 'passw_reset/',
+      param:{
+        authenticated: false,
+        redirectTo: 'mainpage',
+      },
+      onEnter:['$state', '$uibModal', 'dryAuth', function($state, $uibModal, dryAuth){
+          if(!dryAuth.chekStatus()){
+            $uibModal.open({
+              templateUrl: 'static/view/registration-auth/forgot-password/password-reset-form.tpl.html',
+              controller: 'PasswordResetCtrl',
+              size: 'md',
+            }).result.finally(function(){
+              $state.go('^');
+            });
+          }
+      }]
+    })
+    .state('mainpage.passw_reset_confirm', {
+      url: 'password-reset/confirm/:firstToken/:passwordResetToken/',
+      param:{
+        authenticated: false,
+        redirectTo: 'mainpage',
+      },
+      onEnter:['$state', '$uibModal', 'dryAuth', function($state, $uibModal, dryAuth){
+        if(!dryAuth.chekStatus()){
+          $uibModal.open({  
+            templateUrl: 'static/view/registration-auth/forgot-password/password-reset-confirm-form.tpl.html',
+            controller: 'PasswordResetCtrl',
+            size: 'md',
+          }).result.finally(function(){
+            $state.go('^');
+          });
+        }
+      }]
+    })
     .state('mainpage.login',{
       url:'login/',
       param: {
@@ -238,7 +274,7 @@ angular
 
  });
 
- angular.module('registrationAuth', ['toastr']);
+ angular.module('registrationAuth', ['toastr', 'ui.bootstrap']);
  angular.module('OrderRoom', ['ui.bootstrap']);
  angular.module('directive-hostel', []);
  angular.module('dry', []);

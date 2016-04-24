@@ -112,13 +112,11 @@ angular.module('registrationAuth')
                 'data': data
             });
         },
-        'resetPassword': function(email){
+        'resetPassword': function(data){
             return this.request({
                 'method': "POST",
                 'url': "/password/reset/",
-                'data':{
-                    'email':email
-                }
+                'data': data
             });
         },
         'profile': function(){
@@ -141,16 +139,11 @@ angular.module('registrationAuth')
                 'data': {'key': key} 
             });            
         },
-        'confirmReset': function(uid,token,password1,password2){
+        'confirmReset': function(data){
             return this.request({
                 'method': "POST",
                 'url': "/password/reset/confirm/",
-                'data':{
-                    'uid': uid,
-                    'token': token,
-                    'new_password1':password1,
-                    'new_password2':password2
-                }
+                'data': data
             });
         },
         'authenticationStatus': function(restrict, force){

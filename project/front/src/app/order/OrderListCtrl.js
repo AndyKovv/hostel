@@ -18,11 +18,9 @@ console.log('RoomOrderCTRL' + $scope.orders);
     $scope.filteredOrders = $scope.orders.slice(begin, end);
     }
   });
-  /*
-  $scope.$on('$stateChangeSuccess', function(){
-    $uibModalInstance.close();
-
-  })
-*/
+  
+ $scope.close = function(){
+$uibModalInstance.close();
+}
 
 }]);

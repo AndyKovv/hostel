@@ -5,7 +5,8 @@ angular.module('userAccount')
     function ($rootScope, $scope, $location, $state, $timeout, $uibModalInstance, toastr,  djangoAuth) {
  	
 
-	$scope.changePwForm = $rootScope.user.inner_reg ? true : false;
+$scope.changePwForm = $rootScope.user.inner_reg ? true : false;
+
 $scope.update = {
 		user_firstname: $rootScope.user.user_firstname, 
 		user_middlename: $rootScope.user.user_middlename,
@@ -53,6 +54,8 @@ $scope.changeUserPassword = function(changePasswForm){
 
 }
 
-
+$scope.close = function(){
+$uibModalInstance.close();
+}
 
 }]);

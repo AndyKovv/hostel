@@ -170,7 +170,9 @@ class OrderView(viewsets.ModelViewSet):
 					if free <=0: 
 						busy_room.append(room.id)
 
-				interval_free_room = query_room.exclude(id__in=busy_room).filter(roomimages__image_main='True', active='True')
+				#import pdb
+				#pdb.set_trace()
+				interval_free_room = query_room.exclude(id__in=busy_room).filter(roomimages__image_main= True, active='True').order_by('-roomimages__image_main')
 				free_serializer = FreeRoomSerializer(interval_free_room, many=True)
 				return Response(free_serializer.data, status=status.HTTP_200_OK)			
 
@@ -286,9 +288,6 @@ class OrderView(viewsets.ModelViewSet):
 			response.write(pdfData)
 			response['Content-Disposition'] = 'attachment; filename="order.pdf"'
 			return response
-
-
-
 
 
 
@@ -410,14 +409,20 @@ class PasswordResetView(GenericAPIView):
 	def post(self, request, *args, **kwargs):
 		# Create a serializer with request.data
 		serializer = self.get_serializer(data=request.data)
-		serializer.is_valid(raise_exception=True)
+		if serializer.is_valid(raise_exception=True):
+			try:
+				email = serializer.data['email']
+				ExtUser.objects.get(email = email)
+			except ExtUser.DoesNotExist:
+				return Response(
+					{"error": _("Email does not exist")})
 
-		serializer.save()
-		# Return the success message with OK HTTP status
-		return Response(
-			{"success": _("Password reset e-mail has been sent.")},
-			status=status.HTTP_200_OK
-		)
+			serializer.save()
+			# Return the success message with OK HTTP status
+			return Response(
+				{"success": _("Password reset e-mail has been sent.")},
+				status=status.HTTP_200_OK
+			)
 
 
 class PasswordResetConfirmView(GenericAPIView):

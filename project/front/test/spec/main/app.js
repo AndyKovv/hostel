@@ -104,6 +104,23 @@ describe('HostelApp', function(){
         
       });
 
+      it('should test mainpage.passw_reset', function(){
+          var state = $state.get('mainpage.passw_reset');
+          expect($state.href("mainpage.passw_reset")).toEqual('/passw_reset/');
+          expect(state.param.authenticated).toEqual(false);
+          expect(state.param.redirectTo).toEqual('mainpage');
+
+      });
+
+      it('should test mainpage.passw_reset_confirm', function(){
+        var state  = $state.get('mainpage.passw_reset_confirm');
+        expect(state.param.authenticated).toEqual(false);
+        expect(state.param.redirectTo).toEqual('mainpage');
+        expect($state.href("mainpage.passw_reset_confirm", {
+          firstToken: 'firstToken',
+          passwordResetToken: 'passwordResetToken'})).toEqual('/password-reset/confirm/firstToken/passwordResetToken/');
+      });
+
 
 
 });
