@@ -38,9 +38,11 @@ $scope.map = {center: {latitude:latitude, longitude: longitude}, zoom: 16 };
 
 //Redirecting to chosen free room
 $scope.redirectFreeRoom = function(){
+	/*
 	$timeout(function(){
 		$uibModalInstance.close();
 		}, 500);		
+	*/
 }
 
 //Close modal

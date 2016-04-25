@@ -5,6 +5,23 @@ angular.module('OrderRoom').factory('OrderRoomService',[ '$http', '$q', '$cookie
 				return	$http.post('/api/orders/chek_room/', data);
            
 			},
+		
+			chekFreePlaces: function(data){
+				var deferred = $q.defer()
+				$http({
+					url:'/api/orders/manager_filter/',
+					method: 'POST',
+					headers: {'X-CSRFToken':$cookies['csrftoken']},
+					data: data
+				})
+				.success(function(){
+					deferred.resolve(data);
+				}).
+				error(function(data){
+					deferred.reject()
+				});
+				return deferred.promise;
+			},
 
 			orderRoom: function(data){
 				var deferred = $q.defer();

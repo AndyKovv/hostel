@@ -13,6 +13,7 @@ describe('HostelApp', function(){
     beforeEach(module('OrderRoom'));
     beforeEach(module('directive-hostel'));
     beforeEach(module('userAccount'));
+    beforeEach(module('managerModule'));
     beforeEach(module('dry'));
 
     var $stateProvider, $urlRouterProvider, $locationProvider, $httpProvider, $state, $resolve;
@@ -119,6 +120,13 @@ describe('HostelApp', function(){
         expect($state.href("mainpage.passw_reset_confirm", {
           firstToken: 'firstToken',
           passwordResetToken: 'passwordResetToken'})).toEqual('/password-reset/confirm/firstToken/passwordResetToken/');
+      });
+
+      it('should test mainpage.mager_main', function(){
+        var state = $state.get('mainpage.manager_main');
+        expect(state.param.authenticated).toEqual(true);
+        expect(state.param.redirectTo).toEqual('mainpage');
+        expect($state.href("mainpage.manager_main")).toEqual('/manager/');
       });
 
 

@@ -42,6 +42,7 @@ class UserManager(BaseUserManager):
 					user.is_admin = True
 					user.save(using = self._db)
 					return user
+	
 
 class ExtUser(AbstractBaseUser, PermissionsMixin):
 
@@ -54,6 +55,7 @@ class ExtUser(AbstractBaseUser, PermissionsMixin):
 			inner_reg = models.BooleanField('Inner Register', default=False)
 			is_active = models.BooleanField ('Is Active', default=True)
 			is_admin = models.BooleanField('Administrator', default = False)
+			is_manager = models.BooleanField('Manager', default=False)
 
 			# Этот метод обязательно должен быть определён
 			def get_full_name(self):

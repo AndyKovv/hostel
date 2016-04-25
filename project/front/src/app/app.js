@@ -23,6 +23,7 @@ angular
     'OrderRoom',
     'directive-hostel',
     'userAccount',
+    'managerModule',
     'dry',
     
 
@@ -220,6 +221,19 @@ angular
         });
        
       }]
+    })
+    .state('mainpage.manager_main',{
+      url:'manager/',
+      resolve:{
+        getAllRooms: ['Rooms', function(Rooms){
+            return Rooms.query().$promise;
+        }]
+      },
+      param:{
+        authenticated: true,
+        redirectTo: 'mainpage',
+      },
+      controller: 'ManagerCtrl'
     })      
     .state('googlelogin',{
       url:'^/accounts/google/login/',
@@ -279,4 +293,5 @@ angular
  angular.module('directive-hostel', []);
  angular.module('dry', []);
  angular.module('userAccount', []);
+ angular.module('managerModule', []);
 

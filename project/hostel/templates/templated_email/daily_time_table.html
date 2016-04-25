@@ -1,0 +1,44 @@
+<body>
+	<table>
+		<tr>
+		<td>#</td>
+			<td>Номер кімнати</td>
+				<td>Ім’я</td>
+				<td>Прзівище</td>
+			<td>По батькові</td>
+		<td>Телефон</td>
+		</tr>
+		{% for people_in in peoples_in %}
+		<tr>
+		<td>{{ forloop.counter }}</td>
+		<td>{{people_in.room}}</td>
+		<td>{{people_in.person_firstname}}</td>
+		<td>{{people_in.person_middlename}}</td>
+		<td>{{people_in.person_lastname}}</td>
+		<td>{{people_in.person_phonenumber}}</td>
+		</tr>
+		{% endfor %}
+	</table> <br>
+
+	<table>
+		<tr>
+		<td>#</td>
+			<td>Номер кімнати</td>
+				<td>Ім’я</td>
+				<td>Прзівище</td>
+			<td>По батькові</td>
+		<td>Телефон</td>
+		</tr>
+		{% for people_out in peoples_out %}
+		<tr>
+		<td>{{ forloop.counter }}</td>
+		<td>{{people_out.room}}</td>
+		<td>{{people_out.person_firstname}}</td>
+		<td>{{people_out.person_middlename}}</td>
+		<td>{{people_out.person_lastname}}</td>
+		<td>{{people_out.person_phonenumber}}</td>
+		</tr>
+		{% endfor %}
+	</table>
+
+</body>

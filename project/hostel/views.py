@@ -251,6 +251,11 @@ class OrderView(viewsets.ModelViewSet):
 		
 		return Response({"error": "error request"})
 
+
+	@list_route(methods=['post'], permission_classes=[IsAuthenticated])
+	def manager_main_list(self, request):
+		pass
+
 	@list_route(methods=['post'], permission_classes=[AllowAny])
 	def pdfcreator(self, request):
 		req_unique_href = request.data.get('unique_href')

@@ -1,0 +1,76 @@
+Content-Type: multipart/alternative;
+ boundary="===============9044027247023383783=="
+MIME-Version: 1.0
+Subject: Daily Time Table
+From: timetable_manager@hostel.te.ua
+To: manager-room@hostel.te.ua
+Date: Mon, 25 Apr 2016 18:48:02 -0000
+Message-ID: <20160425184802.20081.1736@andy-linux>
+
+--===============9044027247023383783==
+MIME-Version: 1.0
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+
+text mess
+--===============9044027247023383783==
+Content-Type: text/html; charset="utf-8"
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
+
+<body>
+	<table>
+		<tr>
+		<td>#</td>
+			<td>Номер кімнати</td>
+				<td>Ім’я</td>
+				<td>Прзівище</td>
+			<td>По батькові</td>
+		<td>Телефон</td>
+		</tr>
+		
+		<tr>
+		<td></td>
+		<td>Room #3</td>
+		<td>Andriy</td>
+		<td>Olek</td>
+		<td>Kovalovvvvvv</td>
+		<td>111111111111</td>
+		</tr>
+		
+		<tr>
+		<td></td>
+		<td>Room #4</td>
+		<td>Andriy</td>
+		<td>Olek</td>
+		<td>Kovalovvvvvv</td>
+		<td>111111111111</td>
+		</tr>
+		
+	</table> <br>
+
+	<table>
+		<tr>
+		<td>#</td>
+			<td>Номер кімнати</td>
+				<td>Ім’я</td>
+				<td>Прзівище</td>
+			<td>По батькові</td>
+		<td>Телефон</td>
+		</tr>
+		
+		<tr>
+		<td></td>
+		<td>Room #2</td>
+		<td>Andriy</td>
+		<td>Olek</td>
+		<td>Kovalovvvvvv</td>
+		<td>111111111111</td>
+		</tr>
+		
+	</table>
+
+</body>
+--===============9044027247023383783==--
+
+-------------------------------------------------------------------------------

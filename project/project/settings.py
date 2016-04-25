@@ -48,6 +48,7 @@ INSTALLED_APPS = [
     'rest_framework.authtoken',
     'hostel',
     'geoposition',
+    'django_cron',
 
 
 
@@ -65,6 +66,11 @@ MIDDLEWARE_CLASSES = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
+CRON_CLASSES = [
+    'hostel.cronjobs.UnpaymentOrder',
+    'hostel.cronjobs.DailyTimeTable',    
+]
+
 AUTHENTICATION_BACKENDS = (
     'django.contrib.auth.backends.ModelBackend',
     'allauth.account.auth_backends.AuthenticationBackend',
@@ -72,13 +78,17 @@ AUTHENTICATION_BACKENDS = (
 
 ROOT_URLCONF = 'project.urls'
 
-EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+#EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+EMAIL_BACKEND = 'django.core.mail.backends.filebased.EmailBackend'
+EMAIL_FILE_PATH = '/var/www/hostel.te.ua/email_tmp'
 
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
         'DIRS': [
+
                 '/var/www/hostel.te.ua/project/front/src/',
+                '/var/www/hostel.te.ua/project/hostel/templates/',
         ],
         'APP_DIRS': True,
         'OPTIONS': {
@@ -144,15 +154,6 @@ USE_L10N = True
 USE_TZ = True
 
 AUTH_USER_MODEL = 'hostel.ExtUser'
-
-PRIVAT24_SETTINGS = {
-    'merchant': '',
-    'password': '',
-    'ccy': '',
-    'test_mode': True,
-    'return_url': '',
-    'server_url': ''
-}
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.9/howto/static-files/
