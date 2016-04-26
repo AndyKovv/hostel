@@ -130,8 +130,10 @@ font-size: 15px;
     position: relative;
     overflow: hidden;
     width: 100%;
-    margin-left: 1em;
     }
+.detail-room {
+    margin-left: 1em;
+}
 
 .modal-body {
     position: relative;
@@ -220,6 +222,15 @@ h6 span { background:#fff; padding:0 10px; }
     padding-right: 15px;
     overflow: scroll;
     height: 25em;
+}
+
+.container-fluid-manager {
+    margin-right: auto;
+    margin-left: auto;
+    padding-left: 15px;
+    padding-right: 15px;
+    overflow: scroll;
+    height: 35em;
 }
 
 .navbar-text-main{

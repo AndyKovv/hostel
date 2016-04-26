@@ -1,0 +1,46 @@
+ <!--Multi-item panel-->
+<div class="card-panel horizontal-listing no-padding comments-section" ng-cloack>
+    <h5 class="text-center title">Manager Page</h5>
+        <div class="text-center">
+                        <span class="order-info">Date arival</span>
+                              <quick-datepicker  ng-model='date.order_in' disable-timepicker='true' 
+                              placeholder="Date In" on-change="filterFreeRoom(date)" style="margin-right:30px;" name="order_in">
+                              </quick-datepicker>
+                
+                        <span class="order-info">Date  dispatch</span>
+                                 <quick-datepicker ng-model='date.order_out' disable-timepicker='true' 
+                                 placeholder="Date Out" on-change="filterFreeRoom(date)" name="order_out">
+                                </quick-datepicker>
+                    </div>
+    <hr>
+    <div class="container-fluid-manager">
+
+        <!--First row-->
+        <div class="row hoverable" ng-repeat="room in rooms">
+            <div class="col-sm-2 col-lg-2">
+            <div ng-if="room.roomimages" ng-repeat= "thumb_image in room.roomimages | filter: { image_main: 'true' }">
+                <img ng-src ="{{thumb_image.image_thumb}}" class="img-responsive z-depth-">
+                </div>
+
+             <div ng-if="room.thumb_image" >
+                <img ng-src ="{{room.thumb_image}}" class="img-responsive z-depth-">
+                </div>
+            </div>
+            <div class="col-sm-10 col-lg-10">
+                <a ui-sref="mainpage.detail({roomId: room.id})" ng-click="redirectFreeRoom()"><h5 class="title"><span ng-bind="room.name_room"></span> <i class="fa fa-reply"> Watch </i> Price: <span ng-bind="room.price_room"></span></h5></a>
+                <i class="fa fa-map-marker" aria-hidden="true"></i><span ng-bind="room.location_room"></span>
+                <p><span ng-bind="room.description_short"></span></p>
+            </div>
+            <div class="row">
+
+                 <button type="submit" class="btn btn-primary waves-effect waves-light" ng-disabled="!button_enable"
+                  ng-click="orderRoomManager(room)" ng-disabled="">Order Romm</button>
+            </div>
+
+        </div>
+        <!--/.First row-->
+
+    
+    </div>
+</div>
+<!--/.Multi-item panel-->

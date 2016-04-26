@@ -1,0 +1,49 @@
+Content-Type: multipart/alternative;
+ boundary="===============8475055596158222434=="
+MIME-Version: 1.0
+Subject: Daily Time Table
+From: timetable_manager@hostel.te.ua
+To: manager-room@hostel.te.ua
+Date: Tue, 26 Apr 2016 20:36:02 -0000
+Message-ID: <20160426203602.2271.85997@andy-linux>
+
+--===============8475055596158222434==
+MIME-Version: 1.0
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+
+text mess
+--===============8475055596158222434==
+Content-Type: text/html; charset="utf-8"
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
+
+<body>
+	<table>
+		<tr>
+		<td>#</td>
+			<td>Номер кімнати</td>
+				<td>Ім’я</td>
+				<td>Прзівище</td>
+			<td>По батькові</td>
+		<td>Телефон</td>
+		</tr>
+		
+	</table> <br>
+
+	<table>
+		<tr>
+		<td>#</td>
+			<td>Номер кімнати</td>
+				<td>Ім’я</td>
+				<td>Прзівище</td>
+			<td>По батькові</td>
+		<td>Телефон</td>
+		</tr>
+		
+	</table>
+
+</body>
+--===============8475055596158222434==--
+
+-------------------------------------------------------------------------------

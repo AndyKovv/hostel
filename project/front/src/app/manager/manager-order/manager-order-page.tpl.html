@@ -1,0 +1,59 @@
+ <div class="modal-header" >
+              <button type="button" class="close" data-dismiss="modal" ng-click="close()"style="color:red;">X</button>
+                <h4><span>Order form</span></h4>   
+    </div>    <!-- Order Template -->
+     
+<div class="modal-body">
+
+     <form name="orderRoomManagerForm" role="form" ng-submit="orderSendManager(orderRoomManagerForm)"> 
+     <div class="row col-xs-12 col-sm-12 col-lg-12">
+     <!-- Disabled date form -->
+        <div class="input-field col-xs-2 col-sm-2 col-lg-2" >
+          <input id="date_arival"  type="text" date-formater class="validate"  ng-model="m_order.order_in" disabled>
+          <label for="date_arival" class="active">Date arrival</label>
+        </div>
+
+        <div class="input-field col-xs-2 col-sm-2 col-lg-2" >
+          <input id="date_departue"   type="text" date-formater class="validate" ng-model="m_order.order_out" disabled >
+          <label for="date_departue" class="active">Date departure </label>
+        </div>
+
+        <div class="input-field col-xs-4 col-sm-4 col-lg-4" >
+          <input id="phone_number"  type="tel" class="validate" ng-model="m_order.phone_number" 
+          ui-mask="+99(999) 999-9999" add-default-placeholder required>
+          <label for="phone_number">Phone number </label>
+        </div>
+
+        <div class="input-field col-xs-4 col-sm-4 col-lg-4" >
+          <input name="email" id="email" type="email" ng-model="m_order.email" required disabled ng-pattern="/^.+@.+\..+$/" 
+              class="validate">
+          <label for="phone_number" class="active">Email </label>
+        </div>         
+     </div>
+      
+      <div class="row" >   
+      <div class="input-field col-xs-4 col-sm-4 col-lg-4" >
+          <input name="first_name" id="first_name" type="text" class="validate" rus-eng-name  ng-model="m_order.user_firstname" required>
+          <label for="first_name">First Name</label>
+       </div>
+       <div class="input-field col-xs-4 col-sm-4 col-lg-4">
+          <input name="middle_name" id="middle_name" type="text" class="validate" rus-eng-name ng-model="m_order.user_middlename" required>
+          <label for="middle_name">Middle Name</label>
+        </div>
+
+        <div class="input-field col-xs-4 col-sm-4 col-lg-4" >
+          <input name="last_name" id="last_name" type="text" class="validate" rus-eng-name ng-model="m_order.user_lastname" required>
+          <label for="last_name">Last Name</label>
+        </div>
+      </div>
+      <div class="row text-center">
+       <button type="submit" class="btn btn-primary waves-effect waves-light" ng-disabled="orderRoomManagerForm.$invalid" >
+          Order Romm</button>
+      </div>
+       
+     </form>
+</div>
+     
+
+    
+      <!--/ Order Template -->

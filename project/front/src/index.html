@@ -84,6 +84,8 @@
    <script src="{% static "order/OrderListCtrl.js" %}"></script> 
    <script src="{% static "order/OrderRoomServices.js" %}"></script>
    <script src="{% static "order/order-info/OrderInfoCtrl.js" %}"></script>
+   <script src="{% static "manager/ManagerCtrl.js" %}"></script>
+   <script src="{% static "manager/manager-order/ManagerOrderCtrl.js" %}"></script>
 
 
   <script src="{% static "registration-auth/registration/RegistrationCtrl.js" %}"></script> 
@@ -131,11 +133,14 @@
                     <li class="navbar-text-main"><a href="#sec-footer" class="waves-effect waves-light" >
                     <i class="fa fa-user" aria-hidden="true"></i> &nbsp;<span ng-bind="user.email"></span></a></li>
 
-                    <li class="navbar-text-main"><a ui-sref="mainpage.account_orders" class="waves-effect waves-light" >
+                    <li class="navbar-text-main" ng-if="!user.is_manager"><a ui-sref="mainpage.account_orders" class="waves-effect waves-light" >
                     <i class="fa fa-list" aria-hidden="true"></i> &nbsp;<span>My Orders</span></a></li>
 
-                    <li class="navbar-text-main"><a ui-sref="mainpage.account_settings" class="waves-effect waves-light">
+                    <li class="navbar-text-main" ng-if="!user.is_manager"><a ui-sref="mainpage.account_settings" class="waves-effect waves-light">
                     <i class="fa fa-cogs" aria-hidden="true"></i> &nbsp;<span>My Settings</span></a></li>
+
+                    <li class="navbar-text-main" ng-if="user.is_manager"><a ui-sref="manager_main" class="waves-effect waves-light">
+                    <i class="fa fa-cogs" aria-hidden="true"></i> &nbsp;<span>Manager Page</span></a></li>
                  
                 </ul>
               <form class="navbar-form navbar-right">

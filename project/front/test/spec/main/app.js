@@ -122,11 +122,11 @@ describe('HostelApp', function(){
           passwordResetToken: 'passwordResetToken'})).toEqual('/password-reset/confirm/firstToken/passwordResetToken/');
       });
 
-      it('should test mainpage.mager_main', function(){
-        var state = $state.get('mainpage.manager_main');
+      it('should test mager_main', function(){
+        var state = $state.get('manager_main');
         expect(state.param.authenticated).toEqual(true);
         expect(state.param.redirectTo).toEqual('mainpage');
-        expect($state.href("mainpage.manager_main")).toEqual('/manager/');
+        expect($state.href("manager_main")).toEqual('/manager/');
       });
 
 

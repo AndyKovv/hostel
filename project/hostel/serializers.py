@@ -140,6 +140,9 @@ class ChekRoomSerializer(serializers.Serializer):
 	order_in = serializers.DateField( required=True)	
 	order_out = serializers.DateField( required=True)	
 
+class ManagerRoomSerializer(serializers.Serializer):
+	order_in = serializers.DateField( required=True)	
+	order_out = serializers.DateField( required=True)	
 
 class LoginSerializer(serializers.Serializer):
 	username = serializers.CharField(required=False, allow_blank=True)
@@ -254,7 +257,7 @@ class UserDetailsSerializer(serializers.ModelSerializer):
 	"""
 	class Meta:
 		model = UserModel
-		fields = ('id', 'email', 'user_firstname', 'user_lastname', 'user_middlename', 'phone_number', 'is_active', 'inner_reg',)
+		fields = ('id', 'email', 'user_firstname', 'user_lastname', 'user_middlename', 'phone_number', 'is_active', 'inner_reg', 'is_manager',)
 		read_only_fields = ('id', 'email', 'is_active', 'inner_reg', )
 
 	#Validate input user profile data

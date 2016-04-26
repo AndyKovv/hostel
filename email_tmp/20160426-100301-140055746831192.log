@@ -1,0 +1,22 @@
+Content-Type: text/plain; charset="utf-8"
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
+Subject: Order information
+From: orders@hostel.te.ua
+To: ksadsad@gmail.com
+Date: Tue, 26 Apr 2016 10:03:01 -0000
+Message-ID: <20160426100301.15930.26946@andy-linux>
+
+Thank you for ordering room. Your order number is 98.
+      You can see your order in account, or go to link http://localhost:8000/orderinfo/6fd6397ae98940732b23/
+
+If you didn't do order, please resend the letter to admin@hostel.te.ua
+With best Regards http://localhost:8000 team.
+----------------------------------------------------------------------
+Спасибо за заказ постели в нашем хостеле. Ваш номер заказа 98.
+        Вы можете увидеть ваш заказ в аккаунте, или перейдите по сылке http://localhost:8000/orderinfo/6fd6397ae98940732b23/.
+Если вы не делали заказ у нас на сайте, пожалуйста перешлите письмо по адресу admin@hostel.te.ua
+С лучшими пожеланиями http://localhost:8000 команда.
+
+
+-------------------------------------------------------------------------------

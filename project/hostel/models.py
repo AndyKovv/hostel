@@ -217,21 +217,24 @@ class Order(models.Model):
 	date_out = models.DateField()
 	amount = models.FloatField()
 	order_time_in = models.DateTimeField(auto_now_add=True)
-	order_time_out = models.DateTimeField(auto_now=True)
+	order_time_out = models.DateTimeField(auto_now_add=False)
 	is_booking = models.BooleanField(default=True)
 	payment = models.BooleanField(default=False)
+	payment_type = models.CharField(max_length=25, null=True)
+	payment_id = models.IntegerField(default='0')
 
 	def __str__(self):
 		return str(self.pk) + ' ' + self.person_firstname + ' ' + self.person_lastname
 	
 	def save(self, *args, **kwargs):
+		
 		if len(self.unique_href) == 0:
 			salt = uuid.uuid4().hex
 			uniq_hash = ("%s%s" % (self.pk, salt))
 			unique_href = sha1(uniq_hash.encode('utf8')).hexdigest()[:20]
 			self.unique_href = unique_href
 			
-		if self.order_time_out is None:
+		if self.order_time_out == self.order_time_in:
 			self.order_time_out = timezone.now() + datetime.timedelta(hours=1)
 		super(Order, self).save()
 	
@@ -250,5 +253,18 @@ class TransactionPrivat24(models.Model):
 	date = models.DateTimeField()
 	ref = models.CharField(max_length=50)
 	payCountry = models.CharField(max_length=10)
+
+class AdditionalPayment(models.Model):
+	amt = models.FloatField()
+	ccy = models.CharField(max_length=4, default='UAH')
+	details = models.CharField(max_length=40)
+	ext_details = models.CharField(max_length=40, null=True)
+	pay_way = models.CharField(max_length=10)
+	order = models.ForeignKey(Order)
+	manager = models.ForeignKey(ExtUser, related_name='manager')
+	state = models.CharField(max_length=6)
+	date_time = models.DateTimeField()
+	ref = models.CharField(max_length=50)
+	
 
 

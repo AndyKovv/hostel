@@ -53,8 +53,8 @@ from allauth.account import app_settings as allauth_settings
 from .utils import jwt_encode
 
 from hostel.models import HostelRoom, RoomImage, Order, TokenModel, ExtUser, TransactionPrivat24
-from hostel.serializers import (HostelRoomSerializer, OrderSerializer,
-									 ChekRoomSerializer, FreeRoomSerializer, VerifyEmailSerializer, OrderKeySerializer, OrderInfoSerializer)
+from hostel.serializers import (HostelRoomSerializer, OrderSerializer, ChekRoomSerializer, FreeRoomSerializer,
+									 VerifyEmailSerializer, OrderKeySerializer, OrderInfoSerializer, ManagerRoomSerializer)
 
 
 
@@ -113,6 +113,9 @@ class Privat_24(APIView):
 					ref = params.get('ref'),
 					payCountry = params.get('payCountry')
 					)
+				order.payment_type = 'Privat24'
+				order.payment_id = transaction.id
+				order.is_booking = True
 				order.payment = True
 				order.save()
 				unique_href = order.unique_href
@@ -251,10 +254,33 @@ class OrderView(viewsets.ModelViewSet):
 		
 		return Response({"error": "error request"})
 
-
+	# Manager main page filter
 	@list_route(methods=['post'], permission_classes=[IsAuthenticated])
-	def manager_main_list(self, request):
-		pass
+	def manager_filter(self, request):
+		serializer = ManagerRoomSerializer(data = request.data)
+		queryset = self.get_queryset()
+		if serializer.is_valid():
+			order_in = serializer.data['order_in']
+			order_out = serializer.data['order_out']
+							
+			query_room = HostelRoom.objects.all()
+			rooms = query_room.filter(
+				order__date_in__lt=order_out, 
+				order__date_out__gt=order_in, 
+				
+				).annotate(num_orders=Count('name_room'))
+			busy_room = []
+
+			for room in rooms:
+				free = room.places_in_room - room.num_orders
+				if free <=0: 
+					busy_room.append(room.id)
+
+			interval_free_room = query_room.exclude(id__in=busy_room).filter(roomimages__image_main= True, active='True').order_by('-roomimages__image_main')
+			free_rooms_serializer = FreeRoomSerializer(interval_free_room, many=True)
+			return Response(free_rooms_serializer.data, status=status.HTTP_200_OK)			
+
+		return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 	@list_route(methods=['post'], permission_classes=[AllowAny])
 	def pdfcreator(self, request):

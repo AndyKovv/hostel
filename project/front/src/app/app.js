@@ -222,8 +222,8 @@ angular
        
       }]
     })
-    .state('mainpage.manager_main',{
-      url:'manager/',
+    .state('manager_main',{
+      url:'^/manager/',
       resolve:{
         getAllRooms: ['Rooms', function(Rooms){
             return Rooms.query().$promise;
@@ -233,7 +233,8 @@ angular
         authenticated: true,
         redirectTo: 'mainpage',
       },
-      controller: 'ManagerCtrl'
+      controller: 'ManagerCtrl',
+      templateUrl: 'static/view/manager/manager-main-page.tpl.html'
     })      
     .state('googlelogin',{
       url:'^/accounts/google/login/',

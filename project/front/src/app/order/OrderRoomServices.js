@@ -14,7 +14,7 @@ angular.module('OrderRoom').factory('OrderRoomService',[ '$http', '$q', '$cookie
 					headers: {'X-CSRFToken':$cookies['csrftoken']},
 					data: data
 				})
-				.success(function(){
+				.success(function(data){
 					deferred.resolve(data);
 				}).
 				error(function(data){

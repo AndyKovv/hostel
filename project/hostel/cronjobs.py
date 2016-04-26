@@ -32,10 +32,11 @@ class UnpaymentOrder(CronJobBase):
 
 
 class DailyTimeTable(CronJobBase):
+	RUN_EVERY_MINS = 5
 	RUN_AT_TIMES = ['5:00']
 	
 
-	schedule = Schedule(run_at_times=RUN_AT_TIMES)
+	schedule = Schedule(run_every_mins=RUN_EVERY_MINS, run_at_times=RUN_AT_TIMES)
 	code = 'Daily_Time_Table_cron_task_main'
 
 	def do(self):

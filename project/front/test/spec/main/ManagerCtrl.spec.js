@@ -15,17 +15,23 @@ describe('ManagerCtrl', function () {
 
 
 	}
-	var  $scope, ctrl, $httpBackend, OrderRoomServiceMock;
-	beforeEach(inject(function($compile, _$rootScope_, $controller, OrderRoomService, _$httpBackend_){
+	var  $scope, ctrl, $httpBackend, OrderRoomServiceMock, $uibModal;
+	beforeEach(inject(function($compile, _$rootScope_, $controller, OrderRoomService, _$httpBackend_, _$uibModal_){
 		$httpBackend = _$httpBackend_;
 		$scope = _$rootScope_.$new();
 		OrderRoomServiceMock = OrderRoomService;
+		$uibModal = _$uibModal_;
+		spyOn($uibModal, 'open');
+	
+		$scope.date = {order_in: '2016-10-20', order_out: '2016-10-24', today: '2016-10-20'}
 
 		ctrl=$controller('ManagerCtrl', {
 			$scope: $scope,
 			OrderRoomService: OrderRoomServiceMock,
 			getAllRooms: getRoomMock,
+			$uibModal: $uibModal,
 		})
+		$scope.$apply();
 	}));
 
 	it('should show all room in main page view', function(){
@@ -49,9 +55,19 @@ describe('ManagerCtrl', function () {
         
         $httpBackend.expectPOST('/api/orders/manager_filter/', data).respond(200, {room : '1'});
         $httpBackend.flush();
-        //expect($scope.rooms).toEqual('room');
+        expect($scope.rooms).toEqual({room: '1'});
+      
+	});
 
-        $scope.$apply();
-	})
+	it('should test $scope.orderRoomManager', function(){
+		var room = {
+			id:'1',
+			price_room: '100',
+		}
+		$scope.orderRoomManager(room);
+		expect($scope.chosen_room).toEqual('1');
+		expect($scope.room_amount).toEqual('100');
+		expect($uibModal.open).toBeTruthy();
+	});
 
-})
+});
