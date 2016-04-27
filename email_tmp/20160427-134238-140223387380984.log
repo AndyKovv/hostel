@@ -1,0 +1,22 @@
+Content-Type: text/plain; charset="utf-8"
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
+Subject: Order information
+From: orders@hostel.te.ua
+To: andy.kovv@gmail.com
+Date: Wed, 27 Apr 2016 13:42:38 -0000
+Message-ID: <20160427134238.20375.11261@andy-linux>
+
+Thank you for ordering room. Your order number is 113.
+      You can see your order in account, or go to link http://localhost:8000/orderinfo/d0399e488ceccd2893da/
+
+If you didn't do order, please resend the letter to admin@hostel.te.ua
+With best Regards http://localhost:8000 team.
+----------------------------------------------------------------------
+Спасибо за заказ постели в нашем хостеле. Ваш номер заказа 113.
+        Вы можете увидеть ваш заказ в аккаунте, или перейдите по сылке http://localhost:8000/orderinfo/d0399e488ceccd2893da/.
+Если вы не делали заказ у нас на сайте, пожалуйста перешлите письмо по адресу admin@hostel.te.ua
+С лучшими пожеланиями http://localhost:8000 команда.
+
+
+-------------------------------------------------------------------------------

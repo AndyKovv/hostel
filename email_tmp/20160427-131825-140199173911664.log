@@ -1,0 +1,23 @@
+Content-Type: text/plain; charset="utf-8"
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
+Subject: [http://localhost:8000] Please Confirm Your E-mail Address
+From: webmaster@localhost
+To: kov_andriy@gmail.com
+Date: Wed, 27 Apr 2016 13:18:25 -0000
+Message-ID: <20160427131825.18601.83499@andy-linux>
+
+Hello from http://localhost:8000!
+
+You're receiving this e-mail because user kov_andriy@gmail.com at http://localhost:8000 has given yours as an e-mail address to connect their account.
+
+To confirm this is correct, go to http://localhost:8000/verifyEmail/fedylbtjllvixnzxhioxpuji7dd4dd0zxp2azx6icz9bdvv2bmln4vavf2arduof/
+-------------------------------------------------------------------------------------------------------------------------------------------
+Вы получили это сообщение потому что пользователь kov_andriy@gmail.com на http://localhost:8000 использует Ваш почтовый адрес для регистрации аккаунта.
+
+Для подтверждения регистрации перейдите по сылке http://localhost:8000/verifyEmail/fedylbtjllvixnzxhioxpuji7dd4dd0zxp2azx6icz9bdvv2bmln4vavf2arduof/
+
+
+Thank you from http://localhost:8000!
+http://localhost:8000
+-------------------------------------------------------------------------------

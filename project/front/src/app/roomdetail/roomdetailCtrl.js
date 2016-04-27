@@ -135,10 +135,10 @@ $scope.orderRoom = function(orderForm){
         		amount: $scope.room.price_room,
 
     }
-    console.log('orderForm data'+ data);
+    
     	OrderRoomService.orderRoom(data).then(function(data){
     		$scope.success_order = true;
-    		console.log('DetailPageCtrl' + data);
+    		
     		$scope.orderadd = false;
     		$scope.order_ok = true;
     		$scope.order_confirm = data;

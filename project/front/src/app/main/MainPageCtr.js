@@ -34,8 +34,7 @@ $scope.openLocation = function(hostel){
   //Coords render to map
   var latitude = hostel.latitude;
   var longitude = hostel.longitude; 
-  console.log('latitude' + latitude);
-  console.log('longitude' + longitude); 
+
  
 $scope.map = {center: {latitude:latitude, longitude: longitude}, zoom: 16 };
  $scope.marker = {

@@ -33,7 +33,7 @@ angular.module('OrderRoom').factory('OrderRoomService',[ '$http', '$q', '$cookie
 					
 					})
 					.success(function(data, status, headers, config){
-							console.log('OrderRoomService' + data);
+							
 						deferred.resolve(data);
 					})
 					.error(function(data, status, headers, config){
@@ -50,7 +50,7 @@ angular.module('OrderRoom').factory('OrderRoomService',[ '$http', '$q', '$cookie
 					headers:{'X-CSRFToken': $cookies['csrftoken']},
 				})
 				.success(function(data, status, headers, config){
-					//console.log('getOrders' + data);
+					
 					deferred.resolve(data)
 				})
 				.error(function(data, status, headers, config){

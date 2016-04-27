@@ -15,4 +15,8 @@ $scope.genPdf = function(order_info){
 		});
 }
 
+$scope.close = function(){
+	$uibModalInstance.close()
+}
+
 }]);

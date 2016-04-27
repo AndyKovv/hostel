@@ -115,12 +115,32 @@ class RoomImage(models.Model):
 	
 	#import pdb
 	#pdb.set_trace()
+	def path_and_rename(last_folder):
+		
+		def wrapper(instance, filename):
+				#import pdb
+				#pdb.set_trace()
+				ext = filename.split('.')[-1] # get filename
+				count_dir = next(os.walk(last_folder))[2] # get files in the folder
+				filename = '{}.{}'.format(SG(r'[\u\d]{6}').render(), ext) # set filename as random string
 
+				if len(count_dir) > 8: #count files in the last created folder
+						path_to_dirs = str('/var/www/hostel.te.ua/project/media/roomimage/')
+						new_folder = SG(r'[\u\d]{6}').render() # Create new name
+						new_path = path_to_dirs + new_folder + '/' + filename #Create new path
+				
+								
+				else:
+						new_path = last_folder + filename	# return old path
+										
+				return new_path
+					
+		return wrapper
 	
 		
 	room = models.ForeignKey(HostelRoom, related_name='roomimages')
 	image_main = models.BooleanField()
-	image_original = models.ImageField('original file upload', upload_to="/", max_length=255)
+	image_original = models.ImageField('original file upload', upload_to=path_and_rename(last_folder), max_length=255)
 	image_medium = models.ImageField(max_length=255, blank=True)
 	image_thumb = models.ImageField(max_length=255, blank=True) 
 	date_create = models.DateTimeField(auto_now_add=True)
@@ -263,8 +283,6 @@ class AdditionalPayment(models.Model):
 	order = models.ForeignKey(Order)
 	manager = models.ForeignKey(ExtUser, related_name='manager')
 	state = models.CharField(max_length=6)
-	date_time = models.DateTimeField()
-	ref = models.CharField(max_length=50)
+	date_time = models.DateTimeField(auto_now_add=True)
+	ref = models.CharField(max_length=50, null=True)
 	
-
-

@@ -22,12 +22,12 @@ $scope.updProfileData = function(profileForm){
 			user_lastname: $scope.update.user_lastname,
 			phone_number: $scope.update.phone_number,
 		}
-		console.log(data);
+	
 		djangoAuth.updateProfile(data).then(function(response){
 			$scope.update_success = true;
 			profileForm.$pristine = true;
 			$rootScope.user = response;
-			console.log('updProfileData success');			
+					
 		});
 	}
 }
@@ -41,13 +41,13 @@ $scope.changeUserPassword = function(changePasswForm){
 			new_password1: $scope.pwupdate.new_passw1,
 			new_password2: $scope.pwupdate.new_passw2,
 		}
-		console.log(data);
+		
 		djangoAuth.changePassword(data).then(function(){
 			djangoAuth.logout();
 			$uibModalInstance.close();
 			$state.go('mainpage');
 			$timeout(function(){toastr.success('Password change success');}, 3000);
-			console.log('changeUserPassword');
+			
 		}); 
 
 	}

@@ -1,0 +1,25 @@
+MIME-Version: 1.0
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+Subject: Password reset on http://localhost:8000
+From: webmaster@localhost
+To: andy.kovvv@gmail.com
+Date: Wed, 27 Apr 2016 13:05:03 -0000
+Message-ID: <20160427130503.16224.20371@andy-linux>
+
+
+You're receiving this email because you requested a password reset for your user account at http://localhost:8000.
+
+Please go to the following page and choose a new password:
+
+http://localhost:8000/password-reset/confirm/NTY/4bf-d624c47c7826bcd0e1d5/
+
+Your username, in case you've forgotten: andy.kovvv@gmail.com
+
+Thanks for using our site!
+
+The http://localhost:8000 team
+
+
+
+-------------------------------------------------------------------------------

@@ -24,6 +24,7 @@ from django.views.generic import TemplateView, RedirectView
 router = DefaultRouter()
 router.register(r'rooms', views.RoomViewSet) 
 router.register(r'orders', views.OrderView) 
+router.register(r'manager', views.ManagerViewSet) 
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),

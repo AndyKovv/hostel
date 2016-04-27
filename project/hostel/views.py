@@ -32,7 +32,7 @@ from rest_framework.parsers import FormParser
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework.generics import GenericAPIView, CreateAPIView
-from rest_framework.permissions import IsAuthenticated, AllowAny, IsAdminUser
+from rest_framework.permissions import IsAuthenticated, AllowAny
 from rest_framework.generics import RetrieveUpdateAPIView
 from rest_framework.authentication import TokenAuthentication
 from rest_framework_xml.parsers import XMLParser
@@ -51,10 +51,11 @@ from allauth.account.views import ConfirmEmailView
 from allauth.account import app_settings as allauth_settings
 
 from .utils import jwt_encode
-
-from hostel.models import HostelRoom, RoomImage, Order, TokenModel, ExtUser, TransactionPrivat24
+from hostel.permissions import IsManagerUser, IsCustomAdminUser
+from hostel.models import HostelRoom, RoomImage, Order, TokenModel, ExtUser, TransactionPrivat24, AdditionalPayment
 from hostel.serializers import (HostelRoomSerializer, OrderSerializer, ChekRoomSerializer, FreeRoomSerializer,
-									 VerifyEmailSerializer, OrderKeySerializer, OrderInfoSerializer, ManagerRoomSerializer)
+									 VerifyEmailSerializer, OrderKeySerializer, OrderInfoSerializer, ManagerRoomSerializer,
+									  ManagerOrderSerializer, ManagerPaymentSerializer)
 
 
 
@@ -143,7 +144,7 @@ class OrderView(viewsets.ModelViewSet):
 	# Get month!!!!!!
 	queryset = Order.objects.all()
 	serializer_class = OrderSerializer
-	permission_classes = (IsAdminUser,)
+	permission_classes = (IsCustomAdminUser,)
 	
 
 	@list_route(methods=['post'], permission_classes=[AllowAny])
@@ -319,6 +320,46 @@ class OrderView(viewsets.ModelViewSet):
 			response.write(pdfData)
 			response['Content-Disposition'] = 'attachment; filename="order.pdf"'
 			return response
+
+
+class ManagerViewSet(viewsets.ReadOnlyModelViewSet):
+	queryset  = Order.objects.all()
+	serializer_class = ManagerOrderSerializer
+	permission_classes = (IsManagerUser,)
+
+	@list_route(methods=['post'], permission_classes=[IsManagerUser])
+	def payment(self, request):
+		serializer = ManagerPaymentSerializer(data = request.data)
+		if serializer.is_valid(raise_exception=True):
+			order_id = serializer.data['id']
+			amt = serializer.data['amt']
+			pay_way = serializer.data['pay_way']
+			user_id = request.user.id
+			try:
+				manager = ExtUser.objects.get(pk = user_id, is_manager=True)
+			except ExtUser.DoesNotExist:
+				return Response({"error": "Not Manager"})
+			try:
+				order = Order.objects.get(id = order_id)
+			except Order.DoesNotExist:
+				return Response({"error": "OrderDoesNotExist"})
+			transaction = AdditionalPayment.objects.create(
+				amt = amt,
+				details = manager.email,
+				pay_way = pay_way,
+				order = order,
+				manager = manager,
+				state = 'ok',
+				ref = 'ref',
+				)
+			order.payment_type = 'Cash'
+			order.payment_id = transaction.id
+			order.is_booking = True
+			order.payment = True
+			order.save()
+			return Response({"sucess": "Payment receive"})
+
+
 
 
 

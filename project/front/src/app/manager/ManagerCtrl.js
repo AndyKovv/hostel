@@ -20,12 +20,12 @@ $scope.filterFreeRoom = function(date){
 			order_in: order_in,
 			order_out: order_out,
 			}
-			console.log('ManagerCtrl ' + data);
+			
 			//Fire the request to api
 			OrderRoomService.chekFreePlaces(data)
  			.then(function(data){
  				$scope.rooms = data;
- 				console.log('ManagerCtrl ' + data);		
+ 					
 			});
  		
 

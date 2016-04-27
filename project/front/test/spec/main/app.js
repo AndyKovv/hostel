@@ -129,6 +129,13 @@ describe('HostelApp', function(){
         expect($state.href("manager_main")).toEqual('/manager/');
       });
 
+      it('should test manager_order_list', function(){
+        var state = $state.get('manager_order_list');
+        expect(state.param.authenticated).toEqual(true);
+        expect(state.param.redirectTo).toEqual('mainpage');
+        expect($state.href("manager_order_list")).toEqual('/order_list/');
+      });
+
 
 
 });

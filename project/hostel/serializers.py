@@ -110,6 +110,24 @@ class OrderSerializer(serializers.ModelSerializer):
 		'person_phonenumber', 'date_in', 'date_out', 'payment','order_time_in', 'amount', )
 		write_only_fields = ('room','user', 'person_email', 'person_firstname','person_middlename', 'person_lastname',  'person_phonenumber', 'date_in', 'date_out',)
 
+class ManagerPaymentSerializer(serializers.Serializer):
+	id = serializers.IntegerField(required=True)
+	amt = serializers.IntegerField(required=True)
+	pay_way = serializers.CharField(required=True)
+
+class ManagerOrderSerializer(serializers.ModelSerializer):
+	
+	is_manager = serializers.SerializerMethodField()
+	
+	class Meta:
+		model = Order
+		fields = ('id', 'room', 'user', 'is_manager', 'person_email', 'person_firstname','person_middlename', 'person_lastname', 
+		'person_phonenumber', 'date_in', 'date_out', 'payment','order_time_in', 'amount', 'is_booking', 'deselected', 'amount', )
+
+		
+	def get_is_manager(self, obj):
+		is_manager = obj.user.is_manager;
+		return is_manager
 	
 class OrderInfoSerializer(serializers.ModelSerializer):
 	

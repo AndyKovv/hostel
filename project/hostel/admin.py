@@ -8,7 +8,7 @@ from django.contrib.auth.admin import UserAdmin
 from django.contrib.auth.models import Group
 from django.contrib.auth.models import User
 from django.utils.translation import ugettext_lazy as _  
-from .models import ExtUser, HostelRoom, RoomImage, Order, TransactionPrivat24
+from .models import ExtUser, HostelRoom, RoomImage, Order, TransactionPrivat24, AdditionalPayment
 from django.core.exceptions import ValidationError
 from django.contrib.auth.forms import (
     AdminPasswordChangeForm, UserChangeForm, UserCreationForm,
@@ -19,6 +19,7 @@ from django.conf.urls import url
 class UserAdmin(admin.ModelAdmin):
     add_form_template = 'admin/auth/user/add_form.html'
     change_user_password_template = None
+    
     fieldsets = (
         (None, {'fields': ('email', 'password')}),
         (_('Personal info'), {'fields': ('user_firstname', 'user_lastname', 'user_middlename')}),
@@ -44,7 +45,7 @@ class UserAdmin(admin.ModelAdmin):
     form = UserChangeForm
     add_form = UserCreationForm
     change_password_form = AdminPasswordChangeForm
-    list_display = ('email', 'user_firstname', 'user_middlename', 'is_manager')
+    list_display = ('email', 'user_firstname', 'user_middlename', 'is_manager', 'is_admin',)
     list_filter = ('is_manager', 'is_superuser', 'is_active', 'groups')
     search_fields = ('user_firstname', 'user_middlename', 'email')
     ordering = ('email',)
@@ -88,13 +89,14 @@ class ImageRoomAdmin(admin.ModelAdmin):
 
 class OrderRoom(admin.ModelAdmin):
   list_display = [
-      'room', 'person_firstname', 'person_lastname', 'person_middlename', 'date_in', 'date_out', 'is_booking', 'payment', 'order_time_in', 'order_time_out',
+      'id','room', 'person_firstname', 'person_lastname', 'person_middlename', 'date_in',
+       'date_out', 'is_booking', 'payment', 'order_time_in', 'order_time_out',
   ]
 
 admin.site.register(ExtUser, UserAdmin)
 admin.site.unregister(Group)
 admin.site.register(HostelRoom, HostelRoomAdmin)
-
+admin.site.register(AdditionalPayment)
 admin.site.register(RoomImage, ImageRoomAdmin)
 admin.site.register(Order, OrderRoom)
 admin.site.register(TransactionPrivat24)

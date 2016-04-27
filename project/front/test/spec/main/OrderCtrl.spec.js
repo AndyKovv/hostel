@@ -66,7 +66,7 @@ describe('OrderListCtrl', function () {
 
 		});
 
-	console.log('Order ctrl Spec' + e.html());
+	
 	}));
 
 	it('should put data to model', function(){

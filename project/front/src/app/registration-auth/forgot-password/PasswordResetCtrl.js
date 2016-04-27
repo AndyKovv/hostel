@@ -13,7 +13,7 @@ angular.module('registrationAuth')
 			}
 			djangoAuth.resetPassword(data).then(function(data){
 				$scope.errors = data.error;
-				console.log('PasswordResetCtrl '+ data.error);
+				
 				$scope.pass_reset = data.error ? false : true;
 			});
 

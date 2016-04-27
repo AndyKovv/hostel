@@ -3,7 +3,7 @@ angular.module('OrderRoom')
 	 function($rootScope, $scope, $uibModalInstance, OrderRoomService, getOrdersList){
 
 $scope.orders = getOrdersList;
-console.log('RoomOrderCTRL' + $scope.orders);	
+
   
   $scope.filteredOrders = [];
   $scope.currentPage = 1;

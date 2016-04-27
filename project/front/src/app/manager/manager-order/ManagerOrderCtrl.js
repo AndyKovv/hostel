@@ -10,7 +10,7 @@ angular.module('managerModule')
 				}
 
 				$scope.orderSendManager = function(orderRoomManagerForm){
-					console.log('send');
+					
 					var date_in = $filter('date')($scope.m_order.order_in, 'yyyy-MM-dd');
 					var date_out = $filter('date')($scope.m_order.order_out, 'yyyy-MM-dd');
 					if(orderRoomManagerForm.$valid){

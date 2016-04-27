@@ -1,0 +1,39 @@
+<div class="modal-body">
+<div class="row">
+<div class=" col-xs-12 col-sm-12 col-lg-12">
+<table class="table table-bordered">
+        <thead>
+            <tr>
+                <th colspan="6" style="text-align:center;">Order Information</th>
+            </tr>
+             <tr>
+            <th colspan="6" style="text-align:center;"> Order <span ng-bind="order.id"></span> FROM <span ng-bind="order.order_time_in"></span> </th> 
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td><b>Date arrive</b></td>
+                    <td><span ng-bind="order.date_in"></span></td>
+                <td><b>Date departure</b></td>
+                     <td><span ng-bind="order.date_out"></span></td>
+                <td><b>Phone number</b></td>
+                    <td><span ng-bind="order.person_phonenumber"></span></td>
+            </tr>
+            <tr>
+                <td><b>Person First Name </b></td>
+                    <td><span ng-bind="order.person_firstname"></span></td>
+                 <td><b>Person Middle Name </b></td>
+                <td><span ng-bind="order.person_middlename"></span></td>
+                 <td><b>Person Last Name </b></td>
+                <td><span ng-bind="order.person_lastname"></span></td>
+            </tr>
+        
+        </tbody>
+</table>
+</div>
+</div>
+<div class="row text-center">
+    <a class="btn btn-primary waves-effect waves-light" ng-click="addPayment(order)">Pay</a>
+</div>
+</div>
+    

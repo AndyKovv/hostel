@@ -235,6 +235,21 @@ angular
       },
       controller: 'ManagerCtrl',
       templateUrl: 'static/view/manager/manager-main-page.tpl.html'
+    })
+    .state('manager_order_list',{
+      url: '^/order_list/',
+      resolve:{
+        getManagerOrders: ['ManagerService', function(ManagerService){
+          return ManagerService.getManagerOrders();
+        }]
+      },
+      param:{
+        authenticated: true,
+        redirectTo: 'mainpage'
+      },
+      templateUrl: 'static/view/manager/manager-list/manager-order-list.tpl.html',
+      controller: 'ManagerOrderListCtrl',
+
     })      
     .state('googlelogin',{
       url:'^/accounts/google/login/',

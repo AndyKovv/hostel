@@ -9,12 +9,12 @@ return{
 					var domain = attrs_value.replace(/.*@/, "");
 					var redirect_url = 'http://www.'+ domain;
 					$window.location.href =redirect_url;
-					console.log(redirect_url);
+					
 			}
 
 		elem.bind('click', function(){
 			cleanDomen()
-			console.log('click');
+			
 		});
 	}
 
