@@ -267,7 +267,7 @@ class TransactionPrivat24(models.Model):
 	details = models.CharField(max_length=40)
 	ext_details = models.CharField(max_length=40)
 	pay_way = models.CharField(max_length=10)
-	order = models.ForeignKey(Order, related_name='order_id')
+	order = models.ForeignKey(Order)
 	merchant = models.IntegerField()
 	state = models.CharField(max_length=6)
 	date = models.DateTimeField()
@@ -285,4 +285,9 @@ class AdditionalPayment(models.Model):
 	state = models.CharField(max_length=6)
 	date_time = models.DateTimeField(auto_now_add=True)
 	ref = models.CharField(max_length=50, null=True)
+
+class DeselectedOrders(models.Model):
+	order = models.ForeignKey(Order)
+	manager = models.ForeignKey(ExtUser)
+	deselected_reason = models.CharField(max_length=255)
 	

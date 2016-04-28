@@ -8,9 +8,9 @@ from hostel.models import ExtUser, Order
 from django.core.mail import EmailMultiAlternatives
 from django.template import Context
 
-
+#Manager Order bug
 class UnpaymentOrder(CronJobBase):
-    RUN_EVERY_MINS = 5 # every 2 hours
+    RUN_EVERY_MINS = 15 # every 2 hours
     RETRY_AFTER_FAILURE_MINS = 2
 
     schedule = Schedule(run_every_mins=RUN_EVERY_MINS, retry_after_failure_mins=RETRY_AFTER_FAILURE_MINS)

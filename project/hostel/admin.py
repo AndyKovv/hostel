@@ -8,7 +8,7 @@ from django.contrib.auth.admin import UserAdmin
 from django.contrib.auth.models import Group
 from django.contrib.auth.models import User
 from django.utils.translation import ugettext_lazy as _  
-from .models import ExtUser, HostelRoom, RoomImage, Order, TransactionPrivat24, AdditionalPayment
+from .models import ExtUser, HostelRoom, RoomImage, Order, TransactionPrivat24, AdditionalPayment, DeselectedOrders
 from django.core.exceptions import ValidationError
 from django.contrib.auth.forms import (
     AdminPasswordChangeForm, UserChangeForm, UserCreationForm,
@@ -93,11 +93,25 @@ class OrderRoom(admin.ModelAdmin):
        'date_out', 'is_booking', 'payment', 'order_time_in', 'order_time_out',
   ]
 
+class TransactionPrivatAdmin(admin.ModelAdmin):
+  list_display = [
+        'id',
+        'amt',
+        'details',
+        'pay_way',
+        'order',
+        'state',
+        'date',
+        'ref',
+        'payCountry',
+  ]
+
 admin.site.register(ExtUser, UserAdmin)
 admin.site.unregister(Group)
 admin.site.register(HostelRoom, HostelRoomAdmin)
 admin.site.register(AdditionalPayment)
 admin.site.register(RoomImage, ImageRoomAdmin)
 admin.site.register(Order, OrderRoom)
-admin.site.register(TransactionPrivat24)
+admin.site.register(DeselectedOrders)
+admin.site.register(TransactionPrivat24, TransactionPrivatAdmin)
 

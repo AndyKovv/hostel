@@ -110,6 +110,12 @@ class OrderSerializer(serializers.ModelSerializer):
 		'person_phonenumber', 'date_in', 'date_out', 'payment','order_time_in', 'amount', )
 		write_only_fields = ('room','user', 'person_email', 'person_firstname','person_middlename', 'person_lastname',  'person_phonenumber', 'date_in', 'date_out',)
 
+
+class DeselectPaymentSerializer(serializers.Serializer):
+	id = serializers.IntegerField(required=True)
+	deselected_reason = serializers.CharField(required=True)
+
+
 class ManagerPaymentSerializer(serializers.Serializer):
 	id = serializers.IntegerField(required=True)
 	amt = serializers.IntegerField(required=True)
@@ -118,16 +124,46 @@ class ManagerPaymentSerializer(serializers.Serializer):
 class ManagerOrderSerializer(serializers.ModelSerializer):
 	
 	is_manager = serializers.SerializerMethodField()
-	
+	payment_date = serializers.SerializerMethodField()
+	manager_take_order = serializers.SerializerMethodField()
 	class Meta:
 		model = Order
-		fields = ('id', 'room', 'user', 'is_manager', 'person_email', 'person_firstname','person_middlename', 'person_lastname', 
-		'person_phonenumber', 'date_in', 'date_out', 'payment','order_time_in', 'amount', 'is_booking', 'deselected', 'amount', )
+		fields = ('id', 'room', 'manager_take_order', 'is_manager', 'person_email', 'person_firstname','person_middlename', 'person_lastname', 
+		'person_phonenumber', 'date_in', 'date_out', 'payment', 'payment_type', 'payment_date', 'order_time_in', 'amount', 'is_booking',
+		 'deselected', 'amount', )
 
 		
 	def get_is_manager(self, obj):
-		is_manager = obj.user.is_manager;
+		if obj.user is None:
+			is_manager = False
+			
+		else:
+			is_manager = obj.user.is_manager
 		return is_manager
+
+	def get_payment_date(self, obj):
+		if obj.payment:
+			try:
+				if obj.additionalpayment_set.exists():
+					payment_date = obj.additionalpayment_set.get(id = obj.payment_id).date_time.date()
+					return payment_date
+				elif obj.transactionprivat24_set.exists():
+					payment_date = obj.transactionprivat24_set.get(id = obj.payment_id).date.date()
+					return payment_date
+			except AttributeError:
+				payment_date = None
+		else:
+			payment_date = None
+
+		return payment_date 
+
+	def get_manager_take_order(self, obj):
+		if obj.user:
+			manager_middle_name = obj.user.user_middlename
+		else:
+			manager_middle_name = None
+		return manager_middle_name
+
 	
 class OrderInfoSerializer(serializers.ModelSerializer):
 	

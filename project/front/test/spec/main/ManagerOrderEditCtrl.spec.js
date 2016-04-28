@@ -18,6 +18,7 @@ describe('ManagerOrderEditCtrl', function(){
 		ManagerServiceMock = ManagerService;
 		$scope = _$rootScope_.$new();
 		$uibModalInstance = jasmine.createSpyObj('$uibModalInstance', ['close','dismiss']);
+		$scope.payment_type ={pay_way : 'cash'};
 
 		ctrl = $controller('ManagerOrderEditCtrl', {
 			$scope: $scope,
@@ -33,7 +34,9 @@ it('should test $scope.order_edit', function(){
 	});
 it('should test $scope.addPayment()', function(){
 	$scope.addPayment(order);
-	var pay_way = 'cash';
+
+	var pay_way = $scope.payment_type.pay_way;
+	
 	var data = {
 		id: order.id,
 		amt: order.amount,
@@ -41,6 +44,19 @@ it('should test $scope.addPayment()', function(){
 	}
 	$httpBackend.expectPOST('/api/manager/payment/', data).respond(201, {sucess: 'ok'});
 	$httpBackend.flush();
+	expect($uibModalInstance.close).toBeTruthy();
 
+});
+
+it('should test $scope.orderDeselect', function(){
+	$scope.orderDeselect(order);
+	var deselected_reason = $scope.deselected_reason;
+	var data = {
+		id : order.id,
+		deselected_reason: deselected_reason,
+	}
+	$httpBackend.expectPOST('/api/manager/deselect_order/', data).respond(201, {success: "OK"})
+	$httpBackend.flush()
+	expect($uibModalInstance.close).toBeTruthy();
 });
 });

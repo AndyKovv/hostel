@@ -36,6 +36,7 @@ from rest_framework.permissions import IsAuthenticated, AllowAny
 from rest_framework.generics import RetrieveUpdateAPIView
 from rest_framework.authentication import TokenAuthentication
 from rest_framework_xml.parsers import XMLParser
+from rest_framework import filters
 
 from urllib.parse import urlparse, parse_qsl
 
@@ -52,10 +53,11 @@ from allauth.account import app_settings as allauth_settings
 
 from .utils import jwt_encode
 from hostel.permissions import IsManagerUser, IsCustomAdminUser
-from hostel.models import HostelRoom, RoomImage, Order, TokenModel, ExtUser, TransactionPrivat24, AdditionalPayment
+from hostel.models import HostelRoom, RoomImage, Order, TokenModel, ExtUser, TransactionPrivat24, AdditionalPayment, DeselectedOrders
+from hostel.filters import ManagerFilter
 from hostel.serializers import (HostelRoomSerializer, OrderSerializer, ChekRoomSerializer, FreeRoomSerializer,
 									 VerifyEmailSerializer, OrderKeySerializer, OrderInfoSerializer, ManagerRoomSerializer,
-									  ManagerOrderSerializer, ManagerPaymentSerializer)
+									  ManagerOrderSerializer, ManagerPaymentSerializer, DeselectPaymentSerializer)
 
 
 
@@ -165,7 +167,7 @@ class OrderView(viewsets.ModelViewSet):
 				rooms = query_room.filter(
 					order__date_in__lt=order_out, 
 					order__date_out__gt=order_in, 
-					
+					order__is_booking = True
 					).annotate(num_orders=Count('name_room'))
 				busy_room = []
 
@@ -267,8 +269,8 @@ class OrderView(viewsets.ModelViewSet):
 			query_room = HostelRoom.objects.all()
 			rooms = query_room.filter(
 				order__date_in__lt=order_out, 
-				order__date_out__gt=order_in, 
-				
+				order__date_out__gt=order_in,
+				order__is_booking = True			
 				).annotate(num_orders=Count('name_room'))
 			busy_room = []
 
@@ -277,7 +279,7 @@ class OrderView(viewsets.ModelViewSet):
 				if free <=0: 
 					busy_room.append(room.id)
 
-			interval_free_room = query_room.exclude(id__in=busy_room).filter(roomimages__image_main= True, active='True').order_by('-roomimages__image_main')
+			interval_free_room = query_room.exclude(id__in=busy_room).filter(roomimages__image_main= True, active='True')
 			free_rooms_serializer = FreeRoomSerializer(interval_free_room, many=True)
 			return Response(free_rooms_serializer.data, status=status.HTTP_200_OK)			
 
@@ -323,9 +325,12 @@ class OrderView(viewsets.ModelViewSet):
 
 
 class ManagerViewSet(viewsets.ReadOnlyModelViewSet):
-	queryset  = Order.objects.all()
+	queryset  = Order.objects.all().order_by('-id')
 	serializer_class = ManagerOrderSerializer
-	permission_classes = (IsManagerUser,)
+	permission_classes = (IsAuthenticated, IsManagerUser,)
+	filter_backends = (filters.DjangoFilterBackend,)
+	filter_class = ManagerFilter
+	filter_fields = ('id',)
 
 	@list_route(methods=['post'], permission_classes=[IsManagerUser])
 	def payment(self, request):
@@ -352,12 +357,36 @@ class ManagerViewSet(viewsets.ReadOnlyModelViewSet):
 				state = 'ok',
 				ref = 'ref',
 				)
-			order.payment_type = 'Cash'
+			order.payment_type = pay_way
 			order.payment_id = transaction.id
 			order.is_booking = True
 			order.payment = True
 			order.save()
 			return Response({"sucess": "Payment receive"})
+
+	@list_route(methods=['post'], permission_classes=[IsManagerUser])
+	def deselect_order(self, request):
+		serializer = DeselectPaymentSerializer(data=request.data)
+		user = request.user.id
+		if serializer.is_valid(raise_exception=True):
+			order_id = serializer.data['id']
+			deselected_reason = serializer.data['deselected_reason']
+			try:
+				order = Order.objects.get(pk=order_id, payment = False)
+				manager = ExtUser.objects.get(pk = user, is_manager=True)
+			except Order.DoesNotExist:
+				return Response({"error": "DoesNotExist"})
+			transaction = DeselectedOrders.objects.create(
+				order = order,
+				manager = manager,
+				deselected_reason = deselected_reason
+				)
+
+			order.is_booking = False
+			order.deselected = True
+			order.save()
+			return Response({"success": "Order Deselected"}, status = status.HTTP_201_CREATED)
+
 
 
 
