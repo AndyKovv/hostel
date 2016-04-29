@@ -1,0 +1,23 @@
+Content-Type: text/plain; charset="utf-8"
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
+Subject: [http://localhost:8000] Please Confirm Your E-mail Address
+From: webmaster@localhost
+To: nasty@gmai.com
+Date: Fri, 29 Apr 2016 09:15:57 -0000
+Message-ID: <20160429091557.13249.80344@andy-linux>
+
+Hello from http://localhost:8000!
+
+You're receiving this e-mail because user nasty@gmai.com at http://localhost:8000 has given yours as an e-mail address to connect their account.
+
+To confirm this is correct, go to http://192.168.1.101:8000/verifyEmail/ko1jygjcbwcopwo0iz3e89yrpwmeqeehzocriv19vaynhfptlnwvspwuonw529xp/
+-------------------------------------------------------------------------------------------------------------------------------------------
+Вы получили это сообщение потому что пользователь nasty@gmai.com на http://localhost:8000 использует Ваш почтовый адрес для регистрации аккаунта.
+
+Для подтверждения регистрации перейдите по сылке http://192.168.1.101:8000/verifyEmail/ko1jygjcbwcopwo0iz3e89yrpwmeqeehzocriv19vaynhfptlnwvspwuonw529xp/
+
+
+Thank you from http://localhost:8000!
+http://localhost:8000
+-------------------------------------------------------------------------------

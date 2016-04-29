@@ -328,9 +328,10 @@ class ManagerViewSet(viewsets.ReadOnlyModelViewSet):
 	queryset  = Order.objects.all().order_by('-id')
 	serializer_class = ManagerOrderSerializer
 	permission_classes = (IsAuthenticated, IsManagerUser,)
-	filter_backends = (filters.DjangoFilterBackend,)
+	filter_backends = (filters.DjangoFilterBackend, filters.SearchFilter,)
 	filter_class = ManagerFilter
-	filter_fields = ('id',)
+	filter_fields = ('id','date_in',)
+	search_fields = ('person_firstname', 'person_middlename', 'person_lastname')
 
 	@list_route(methods=['post'], permission_classes=[IsManagerUser])
 	def payment(self, request):

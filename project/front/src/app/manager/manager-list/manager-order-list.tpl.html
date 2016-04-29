@@ -1,9 +1,44 @@
 
-<table>
+<table class="table">
+    <thead style="text-align:center;">
+        <tr>
+            <th>Order Number Filter</th>
+            <th>Client Initials</th>
+            <th>Date Filter</th>
+            <th>Reset Filter</th>
+        </tr>
+    </thead>
+
     <tbody>
         <tr>
-            <td><input type="text" ng-model="filter.number_order" ng-change="orderFilter(filter)"></td>
-                <td><a class="btn btn-primary waves-effect waves-light" ng-click="orderFilter(filter)">Pay</a></td>
+            <td>
+                <div class="input-field" >
+                <input type="text" id="filter_order_number" ng-model="filter.number_order" ng-change="orderFilter(filter)">
+                <label for="filter_order_number" >Number Of Order</label>
+                </div>
+            </td>
+            <td>
+                <div class="input-field" >
+                <input type="text" id="person_information" ng-model="filter.person_info" ng-change="orderFilter(filter)">
+                <label for="person_information" >Name, SecondName, LastName</label>
+                </div>
+            </td>
+            <td>
+                 <div class="text-center">
+                        <span class="order-info">Date arival</span>
+                              <quick-datepicker  ng-model='filter.date_in' disable-timepicker='true' 
+                              placeholder="Date In" on-change="orderFilter(filter)" style="margin-right:30px;" name="order_in">
+                              </quick-datepicker>
+                
+                        <span class="order-info">Date  dispatch</span>
+                                 <quick-datepicker ng-model='filter.date_out' disable-timepicker='true' 
+                                 placeholder="Date Out" on-change="orderFilter(filter)" name="order_out">
+                                </quick-datepicker>
+                    </div>
+            </td>
+            <td>
+            <a class="btn btn-danger waves-effect waves-light" ng-click="resetFilters()">Reset filters</a>
+            </td>
         </tr>
     </tbody>
 </table>

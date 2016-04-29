@@ -1,5 +1,5 @@
 angular.module('managerModule')
-	.factory('ManagerService', [ '$http', '$q', '$cookies',  function ($http, $q, $cookies ){
+	.factory('ManagerService', [ '$http', '$q', '$filter', '$cookies',  function ($http, $q, $filter, $cookies ){
 		return{
 			getManagerOrders: function(){
 				var deferred = $q.defer();
@@ -52,11 +52,20 @@ angular.module('managerModule')
 			},
 			filterOrder: function(filter){
 				var deferred = $q.defer();
+				if(filter.date_in && filter.date_out){
+					var date_in_date = $filter('date')(filter.date_in, 'yyyy-MM-dd')  
+					var date_out_date = $filter('date')(filter.date_out, 'yyyy-MM-dd')
+					   
+				}
 				$http({
 					url: '/api/manager/',
 					method: 'GET',
 					params:{
 						id: filter.number_order,
+						search: filter.person_info,
+						date_in_0: date_in_date,
+						date_in_1: date_out_date,
+						
 						},
 					headers: {'X-CSRFToken': $cookies['csrftoken']},
 				})

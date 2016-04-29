@@ -239,7 +239,7 @@ angular
     .state('manager_order_list',{
       url: '^/order_list/',
       resolve:{
-        getManagerOrders: ['ManagerService', function(ManagerService){
+        managerOrders: ['ManagerService', function(ManagerService){
           return ManagerService.getManagerOrders();
         }]
       },

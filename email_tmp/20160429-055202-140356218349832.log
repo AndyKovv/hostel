@@ -1,0 +1,103 @@
+Content-Type: multipart/alternative;
+ boundary="===============2143490577035710242=="
+MIME-Version: 1.0
+Subject: Daily Time Table
+From: timetable_manager@hostel.te.ua
+To: manager-room@hostel.te.ua
+Date: Fri, 29 Apr 2016 05:52:02 -0000
+Message-ID: <20160429055202.3702.94735@andy-linux>
+
+--===============2143490577035710242==
+MIME-Version: 1.0
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+
+text mess
+--===============2143490577035710242==
+Content-Type: text/html; charset="utf-8"
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
+
+<body>
+	<table>
+		<tr>
+		<td>#</td>
+			<td>Номер кімнати</td>
+				<td>Ім’я</td>
+				<td>Прзівище</td>
+			<td>По батькові</td>
+		<td>Телефон</td>
+		</tr>
+		
+		<tr>
+		<td>1</td>
+		<td>Room #1</td>
+		<td>Andriy</td>
+		<td>Kovalov</td>
+		<td>Oleksandrovich</td>
+		<td>111111111111</td>
+		</tr>
+		
+		<tr>
+		<td>2</td>
+		<td>Room #1</td>
+		<td>Andriy</td>
+		<td>kovandy</td>
+		<td>Oleksandrovich</td>
+		<td>111111111111</td>
+		</tr>
+		
+		<tr>
+		<td>3</td>
+		<td>Room #2</td>
+		<td>Andriy</td>
+		<td>Olek</td>
+		<td>Oleksandrovich</td>
+		<td>111111111111</td>
+		</tr>
+		
+		<tr>
+		<td>4</td>
+		<td>Room #4</td>
+		<td>Ansdsad</td>
+		<td>Asdnaebfrshjbf</td>
+		<td>Oleksanger</td>
+		<td>032214444489</td>
+		</tr>
+		
+		<tr>
+		<td>5</td>
+		<td>Room #2</td>
+		<td>Andriy</td>
+		<td>kovandy</td>
+		<td>Oleksandrovich</td>
+		<td>333333333333</td>
+		</tr>
+		
+		<tr>
+		<td>6</td>
+		<td>Room #4</td>
+		<td>Andriy</td>
+		<td>Olek</td>
+		<td>Kovalovvvvvv</td>
+		<td>333333333333</td>
+		</tr>
+		
+	</table> <br>
+
+	<table>
+		<tr>
+		<td>#</td>
+			<td>Номер кімнати</td>
+				<td>Ім’я</td>
+				<td>Прзівище</td>
+			<td>По батькові</td>
+		<td>Телефон</td>
+		</tr>
+		
+	</table>
+
+</body>
+--===============2143490577035710242==--
+
+-------------------------------------------------------------------------------
