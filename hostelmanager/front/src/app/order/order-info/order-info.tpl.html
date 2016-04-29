@@ -1,0 +1,78 @@
+<div class="modal-header text-center">
+        <button type="button" class="close" data-dismiss="modal" ng-click="close();"style="color:red;">X</button>
+            <h4><i class="fa fa-info-circle" aria-hidden="true"></i> Order Info</h4> 
+
+
+</div>
+
+<div class="modal-body">
+<div class="row text-center">
+	<div class="col-xs-12 col-sm-12 col-lg-12">
+  <input type="hidden" ng-model="order_info.unique_href">
+	<h5 class="h5-responsive">Order: &nbsp; <b><span ng-bind="order_info.id" ></span></b> &nbsp; from  &nbsp;
+			<span ng-bind="order_info.order_date | date : 'MM/dd/yyyy'"></span>
+</div>
+   	<div class="row col-xs-12 col-sm-12 col-lg-12 padding-zero" >
+    
+        <div class="input-field col-xs-2 col-sm-2 col-lg-2" >
+        <i class="material-icons prefix">date_range</i>
+         <input id="date_arival" date-formater type="text" style="color: #0099CC;" disabled ng-model="order_info.date_in">
+          <label for="date_arival" class="active">Date arrival</label>
+        </div>
+
+        <div class="input-field col-xs-2 col-sm-2 col-lg-2" >
+         <i class="material-icons prefix">date_range</i>
+          <input id="date_departue"  date-formater type="text" style="color: #0099CC;"  disabled ng-model="order_info.date_out">
+          <label for="date_departue" class="active">Date departure </label>
+        </div>
+
+        <div class="input-field col-xs-4 col-sm-4 col-lg-4" >
+         <i class="material-icons prefix">phone</i>
+          <input id="phone_number"  type="tel" style="color: #0099CC;" ng-model="order_info.person_phonenumber"  disabled>
+          <label for="phone_number" class="active">Phone number </label>
+        </div>
+
+        <div class="input-field col-xs-4 col-sm-4 col-lg-4" >
+         <i class="material-icons prefix">email</i>
+          <input name="email" id="email" type="email" style="color: #0099CC;" ng-model="order_info.person_email" disabled>
+          <label for="email" class="active">Email </label>
+        </div>
+   
+     </div>
+     
+      <div class="row col-xs-12 col-sm-12 col-lg-12 padding-zero" >
+      <!-- About user form --> 
+      <div class="input-field col-xs-4 col-sm-4 col-lg-4" >
+       <i class="material-icons prefix">account_circle</i>
+          <input name="first_name" id="first_name" type="text" style="color: #0099CC;"  ng-model="order_info.person_firstname" required disabled>
+          <label for="first_name" class="active">First Name</label>
+       </div>
+       <div class="input-field col-xs-4 col-sm-4 col-lg-4">
+        <i class="material-icons prefix">account_circle</i>
+          <input name="middle_name" id="middle_name" type="text" style="color: #0099CC;" ng-model="order_info.person_middlename" required disabled>
+          <label for="middle_name" class="active">Middle Name</label>
+        </div>
+
+        <div class="input-field col-xs-4 col-sm-4 col-lg-4" >
+         <i class="material-icons prefix">account_circle</i>
+          <input name="last_name" id="last_name" type="text" style="color: #0099CC;" ng-model="order_info.person_lastname" required disabled>
+          <label for="last_name" class="active">Last Name</label>
+        </div>
+        
+       
+      </div>
+      <div class="row col-xs-12 col-sm-12 col-lg-12 padding-zero">
+      	<div class="input-field col-xs-7 col-sm-7 col-lg-7" >
+         <i class="material-icons prefix">location_on</i>
+          <input name="address" id="address" type="text" style="color: #0099CC;" ng-model="order_info.room_address" required disabled>
+          <label for="address" class="active">Address</label>
+        </div>
+        <div class="col-xs-3 col-sm-3 col-lg-3">
+        	 <a class="btn btn-border-success waves-effect" ng-if="order_info.payment" style="width:80%;">PAYMENT OK</a>
+        	 <a class="btn btn-border-success waves-effect" ng-if="!order_info.payment">PAYMENT FALSE</a>
+        </div>
+        <div class="col-xs-2 col-sm-2 col-lg-2">
+        	 <a class="btn btn-border-primary waves-effect max-h-45" ng-click="genPdf(order_info)"><i class="material-icons">print</i></a>
+        	 
+        </div>
+        </div>

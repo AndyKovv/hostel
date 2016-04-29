@@ -1,0 +1,62 @@
+<div class="row">
+     <div class="col-xs-12 col-sm-12 col-lg-12">
+<table class="table table-striped">
+        <thead>
+            <tr>
+                <th colspan="8" style="text-align:center;"><h5 class="h5-responsive"> Order <span ng-bind="order_confirm.id"></span>
+                      form <span ng-bind="order_confirm.order_time_in | date : 'MM/dd/yyyy'"></span></h5>
+
+                </th>
+                
+            </tr>
+        </thead>
+        <tbody style="font-size:11pt;">
+            <tr>
+                <td>Date arrival:</td>
+                    <td><span ng-bind="order_confirm.date_in"></span></td>
+                <td>Date out:</td>
+                    <td><span ng-bind="order_confirm.date_out"></span></td>
+                <td>Phone number:</td>
+                    <td><span ng-bind="order_confirm.person_phonenumber"></span></td>
+                <td>Email:</td>
+                    <td><span ng-bind="order_confirm.person_email"></span></td>
+            </tr>
+            <tr>
+                <td>First Name:</td>
+                    <td colspan="2"><span ng-bind="order_confirm.person_firstname"></span></td>
+                <td>Middle Name:</td>
+                <td colspan="2"><span ng-bind="order_confirm.person_middlename"></span></td>
+                <td>Last Name:</td>
+                <td><span ng-bind="order_confirm.person_lastname"></span></td>
+                
+            </tr>
+            <tr>
+
+                <td colspan="7" style="text-align:right; font-size:13pt;">Ammount:</td>
+                <td style="text-align: center; font-size: 13pt; border: 3px solid rgb(228, 54, 54);"><span ng-bind="order_confirm.amount"></span>
+                    <i class="fa">&#8372;</i></td>
+            </tr>
+        </tbody>
+     </table>
+     </div>
+</div>
+<div class="row text-right">
+<div class="col-xs-12 col-sm-12 col-lg-12">
+<form method="POST" action="https://api.privatbank.ua/p24api/ishop">
+          <input type="hidden" name="amt" value="{{order_confirm.amount}}" />
+          <input type="hidden" name="ccy" value="UAH" />
+          <input type="hidden" name="merchant" value="118128" />
+          <input type="hidden" name="merchant" value="118128" />
+          <input type="hidden" name="order" value="{{order_confirm.id}}" />
+          <input type="hidden" name="details" value="Room:{{order_confirm.room}}" />
+          <input type="hidden" name="ext_details" value="{{order_confirm.person_firstname}}
+                                                         {{order_confirm.person_middlename}}
+                                                         {{order_confirm.person_lastname}}" />
+          <input type="hidden" name="pay_way" value="privat24" />
+         <input type="hidden" name="return_url" value="http://localhost:8000/api/privat24/" />
+          <input type="hidden" name="server_url" value="http://localhost:8000/" />
+          <button type="submit"><img src="/static/image/img/privat24_button.png" border="0" class="privat-img"/></button>
+</form>
+</div>
+</div>
+

@@ -1,0 +1,78 @@
+<!DOCTYPE document SYSTEM "rml.dtd">
+<document filename="hello.pdf">
+    
+    <template showBoundary="1"  >
+        <!--define a 'frame' into which the content will flow.-->
+        <pageTemplate id="main">
+
+        <pageGraphics>
+        <setFont name="Helvetica-Bold" size="17"/>
+            <drawCentredString x="297.5" y="780">
+            Order {{id}} from {{date}}
+            </drawCentredString>
+            <lineMode width="3"/>
+             <lines>
+               0.1in 10.5in 8.2in 10.5in
+              </lines>
+            <fill color="black"/>
+
+            <drawCentredString x="297.5" y="720">
+            This is order document,  please print it for identify you on reseption.
+            </drawCentredString>
+
+            <drawRightString x="640" y="530">
+            Amount: {{amount}} UAH
+            </drawRightString>
+
+        
+
+
+        </pageGraphics>
+             <frame id="first"  x1="8" y1="500" width="582" height="200"/>
+        </pageTemplate>
+    </template>
+  
+    <stylesheet>
+        <!-- define a text style -->
+        <paraStyle name="textstyle1" fontName="Helvetica" fontSize="24" leading="24" />
+        <blockTableStyle id="myBlockStyle">
+        <lineStyle kind="LINEBELOW" colorName="silver"/>
+        </blockTableStyle>
+    </stylesheet>
+     <story>
+       <!--The elements in this section will fill up the frames -->
+       <!--defined in the <template> section above.             -->
+       <!--The text inside double hashes is replaced dynamically-->
+       <!--inside Default.aspx-->
+        <blockTable colWidths="2.6cm, 3.0cm, 3.0cm, 3.0cm, 3cm, 4.9cm"
+          rowHeights="1.2cm,1.2cm,1.2cm, 1.2cm"
+         style="myBlockStyle">
+ <tr>
+        <td>Date arrival:</td><td>{{date_in}}</td>
+          <td>Date departure:</td><td>{{date_out}}</td>
+            <td>Phone Number:</td><td>{{phone_number}}</td>
+</tr>
+ <tr>
+        <td>First Name:</td><td>{{first_name}}</td>
+          <td>Middle name:</td><td>{{middle_name}}</td>
+            <td>Last Name:</td><td>{{last_name}}</td>
+</tr>
+ <tr>
+        <td>Address:</td><td>{{address}}</td>
+          <td></td><td></td>
+            <td></td><td></td>
+</tr>
+
+<tr>
+        
+          <td>Payment:</td><td>{{payment}}</td>
+          <td>Room:</td><td>{{room_name}}</td>
+            <td>Signature:</td><td>_________________</td>
+</tr>
+
+
+
+</blockTable>
+     
+    </story>
+</document>

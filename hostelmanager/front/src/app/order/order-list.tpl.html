@@ -1,0 +1,50 @@
+<div class="modal-header text-center">
+        <button type="button" class="close" data-dismiss="modal" ng-click="close();" style="color:red;">X</button>
+            <h4><i class="fa fa-list"></i> List of Orders</h4>                
+
+</div>
+
+<div class="modal-body" >
+    <div class="row">
+        <div class="col-sm-12 col-md-12 col-lg-12 ">
+            <table class="table table-hover" ng-if="!orders.error">
+            <thead>
+                     <tr>
+                        <th>№</th>
+                        <th>Order</th>
+                        <th>Room</th>
+                        <th>Date in</th>
+                        <th>Date out</th>
+                        <th>Name</th>
+                        <th>Email</th>
+                        <th>Phone</th>
+                        <th>Payment</th>
+                     </tr>
+            </thead>
+            <tbody ng-repeat = "order in filteredOrders">
+                <tr>
+                    <td><span>{{$index +1 }}</span></td>
+                        <td><a ui-sref="mainpage.orderinfo({orderInformationToken: order.unique_href})"><span ng-bind="order.id"></span></a></td>
+                            <td><a ui-sref="mainpage.detail({roomId: order.room})"><span ng-bind="order.room_name"></span></a></td>
+                                <td><span ng-bind="order.date_in | date : 'MM/dd/yyyy'"></span></td>
+                    <td><span ng-bind="order.date_out | date : 'MM/dd/yyyy'" ></span></td>
+                        <td><span ng-bind="order.person_firstname + ' ' + order.person_middlename + ' ' + order.person_lastname"></span></td>
+                                <td><span ng-bind="order.person_email"></span></td>
+                    <td><span ng-bind="order.person_phonenumber"></span></td>
+                            <td ng-if="order.payment"><i class="fa fa-check custom-success-text" aria-hidden="true"></i></td>
+                                <td ng-if="!order.payment"><i class="fa fa-times custom-error-text" aria-hidden="true"></i></td>
+                </tr>
+            </tbody>
+    </table>
+        <div class="text-center" ng-if="orders.error"><h4 class="h4-responsive">There are no Orders</h4></div>
+</div>
+</div>
+<div class="row text-center" ng-if="!orders.error">
+<uib-pagination 
+      ng-model="currentPage"
+      total-items="orders.length"
+      max-size="maxSize"  
+      boundary-links="true">
+    </uib-pagination>
+</div>
+</div>

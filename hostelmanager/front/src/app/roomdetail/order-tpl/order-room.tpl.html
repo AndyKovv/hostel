@@ -1,0 +1,55 @@
+     <!-- Order Template -->
+     <h6><span>Order form</span></h6> 
+     <form name="orderForm" role="form" ng-submit="orderRoom(orderForm)"> 
+     <div class="row" class="col-xs-12 col-sm-12 col-lg-12">
+     <!-- Disabled date form -->
+        <div class="input-field col-xs-2 col-sm-2 col-lg-2" >
+          <input id="date_arival" date-formater type="text" class="validate" disabled ng-model="date.order_in">
+          <label for="date_arival" class="active">Date arrival</label>
+        </div>
+
+        <div class="input-field col-xs-2 col-sm-2 col-lg-2" >
+          <input id="date_departue"  date-formater type="text" class="validate" disabled ng-model="date.order_out">
+          <label for="date_departue" class="active">Date departure </label>
+        </div>
+
+        <div class="input-field col-xs-4 col-sm-4 col-lg-4" >
+          <input id="phone_number"  type="tel" class="validate" ng-model="user.phone_number" 
+          ui-mask="+99(999) 999-9999" add-default-placeholder required>
+          <label for="phone_number" ng-class='{active: user.phone_number}'>Phone number </label>
+        </div>
+
+        <div class="input-field col-xs-4 col-sm-4 col-lg-4" >
+          <input name="email" id="email" type="email" ng-model="user.email" required ng-pattern="/^.+@.+\..+$/" 
+              class="validate">
+          <label for="phone_number" ng-class='{active: user.email}'>Email </label>
+        </div>
+   
+     </div>
+      
+      <div class="row" >
+      <!-- About user form --> 
+      <div class="input-field col-xs-4 col-sm-4 col-lg-4" >
+          <input name="first_name" id="first_name" type="text" class="validate"  ng-model="user.user_firstname" required>
+          <label for="first_name" ng-class='{active: user.user_firstname}'>First Name</label>
+       </div>
+       <div class="input-field col-xs-4 col-sm-4 col-lg-4">
+          <input name="middle_name" id="middle_name" type="text" class="validate" ng-model="user.user_middlename" required>
+          <label for="middle_name" ng-class='{active: user.user_middlename}'>Middle Name</label>
+        </div>
+
+        <div class="input-field col-xs-4 col-sm-4 col-lg-4" >
+          <input name="last_name" id="last_name" type="text" class="validate" ng-model="user.user_lastname" required>
+          <label for="last_name" ng-class='{active: user.user_lastname}'>Last Name</label>
+        </div>
+               
+        <!--/. About user form -->
+      </div>
+       <button type="submit" class="btn btn-primary waves-effect waves-light" ng-disabled="orderForm.$invalid || orderForm.$send">Order Romm</button>
+         
+     </form>
+
+     
+
+    
+      <!--/ Order Template -->

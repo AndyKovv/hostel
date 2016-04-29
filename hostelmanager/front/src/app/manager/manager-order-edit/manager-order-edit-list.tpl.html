@@ -1,0 +1,83 @@
+<div class="modal-body">
+<div class="row">
+<div class="col-xs-12 col-sm-12 col-lg-12">
+<table class="table table-bordered">
+        <thead>
+            <tr>
+                <th colspan="6" style="text-align:center;">Order Information</th>
+            </tr>
+             <tr>
+            <th colspan="6" style="text-align:center;"> Order <span ng-bind="order.id"></span> FROM 
+            <span ng-bind="order.order_time_in | date : 'MM/dd/yyyy'"></span> </th> 
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td><b>Date arrive</b></td>
+                    <td><span ng-bind="order.date_in"></span></td>
+                <td><b>Date departure</b></td>
+                     <td><span ng-bind="order.date_out"></span></td>
+                <td><b>Phone number</b></td>
+                    <td><span ng-bind="order.person_phonenumber"></span></td>
+            </tr>
+            <tr>
+                <td><b>Person First Name </b></td>
+                    <td><span ng-bind="order.person_firstname"></span></td>
+                 <td><b>Person Middle Name </b></td>
+                <td><span ng-bind="order.person_middlename"></span></td>
+                 <td><b>Person Last Name </b></td>
+                <td><span ng-bind="order.person_lastname"></span></td>
+            </tr>
+            <tr>
+                <td><b>Payment</b></td>
+                <td ng-if="order.payment"><span><i class="fa fa-check custom-success-text" aria-hidden="true"></i></td>
+                <td ng-if="!order.payment"><span><i class="fa fa-times custom-error-text" aria-hidden="true"></i>
+                
+                    <td><b>Booking</b></td>
+                    <td ng-if="order.is_booking"><span><i class="fa fa-check custom-success-text" aria-hidden="true"></i></td>
+                    <td ng-if="!order.is_booking"><span><i class="fa fa-times custom-error-text" aria-hidden="true"></i></td>
+                
+                        <td><b>Deselected</b></td>
+                        <td ng-if="order.deselected"><span><i class="fa fa-check custom-success-text" aria-hidden="true"></i></td>
+                        <td ng-if="!order.deselected"><span><i class="fa fa-times custom-error-text" aria-hidden="true"></i></td>
+            </tr>
+            <tr ng-if="order.payment">
+                <td><b>Payment Type </b></td>
+                    <td><span ng-bind="order.payment_type"></span></td>
+                 <td><b>Payment Date </b></td>
+                <td><span ng-bind="order.payment_date"></span></td>
+                 <td><b>Manager</b></td>
+                <td><span ng-bind="order.manager_take_order"></span></td>
+            </tr>
+            <tr>
+                <td colspan="5" style="text-align:right; font-size: 15px;">
+                <span >Ammount:</span>
+                </td>
+                <td colspan="1" style="text-align:center; font-size: 15px;">
+                <b><span class="custom-error-text" ng-bind="order.amount">UAH</span></b>
+                </td>
+            </tr>
+        </tbody>
+</table>
+</div>
+</div>
+<div class="row text-center" ng-show="!order.payment && !order.deselected">
+    <div class="col-xs-6 col-sm-6 col-lg-6">
+           <div class="input-field" >
+                <input name="deselect_order" id="deselect_order" type="text" ng-model="deselected_reason" required class="validate">
+                <label for="deselect_order" >Deselected reason</label>  
+            </div>
+        <a class="btn btn-warning waves-effect waves-light" ng-disabled="deselect_order.$pristine" ng-click="orderDeselect(order)">Pay</a>       
+    </div>
+    <div class="col-xs-6 col-sm-6 col-lg-6">
+            <input class="with-gap" name="manager_payment" ng-model="payment_type.pay_way" type="radio" id="pay_way_cash" value="cash" />
+            <label for="pay_way_cash">Cash</label>
+        
+            <input class="with-gap" name="manager_payment" ng-model="payment_type.pay_way" type="radio" id="pay_way_privat24" value="Privat24 Card"/>
+            <label for="pay_way_privat24">Card Privat24</label><br>
+                
+            <a class="btn btn-primary waves-effect waves-light" ng-click="addPayment(order)">Pay</a>
+    </div>
+</div>
+</div>
+    

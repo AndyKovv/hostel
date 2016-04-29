@@ -1,0 +1,160 @@
+     
+    <!--/ Modal header /--> 
+    <div class="modal-header" >
+              <button type="button" class="close" data-dismiss="modal" ng-click="close()"style="color:red;">X</button>
+                <h3 class="modal-title"> <span ng-bind="room.name_room"></span></h3>    
+    </div>
+    <!--/ Modal header /-->
+
+<!--/ Modal body -->
+<div class="modal-body">
+    <div class="row">
+
+         <!--First column: carousel gallery-->
+        <div class="col-xs-6 col-sm-6 col-lg-4">
+
+          <!-- Carousel -->
+           <div id="room-gal" class="carousel slide carousel-fade carousel-thumbnails carousel-gallery" style="margin-top: 0px;">
+
+            <!--Main image-->
+            <div class="col-xs-8 col-sm-8">
+              <!-- Wrapper for slides -->
+                <div class="carousel-inner detail-room z-depth-1 hoverable" role="listbox">
+
+                   <!--/. Image Big  -->    
+                     <div id="imgitem" ng-class='{active: $first}' class="item" ng-repeat= "images in room.roomimages | orderBy: '-image_main'">
+                            <img ng-src="{{images.image_medium}}" alt="slide{{$index}}">
+                      </div>
+                 </div>
+
+                <!-- /.carousel-inner -->
+                </div>
+                <!--/.Main image-->
+
+                        <!-- Indicators -->
+                        <div class="col-xs-4 col-sm-4">
+                            <ul  class="carousel-indicators">
+                                <li data-target="#room-gal" data-slide-to="{{$index}}" ng-class='{active: $first}'
+                                             ng-repeat= "thumb in room.roomimages | orderBy: '-image_main'" >
+                                        <img ng-src="{{thumb.image_thumb}}" class="img-responsive z-depth-1 hoverable">
+                                </li>
+                            </ul>
+                        </div>
+                        <!-- Indicators -->
+
+            </div>
+          <!-- /.carousel -->
+
+                    </div>
+                    <!--Third column: product description-->
+                    <div class="col-xs-6 col-sm-6 col-lg-8">
+                     <table class="table detail-td">
+                       <tbody>
+                          <tr>
+                              <td>Description: </td>
+                              <td><span ng-bind="room.description_full"></span></td>
+                              
+                          </tr>
+
+                          <tr>
+                              <td>Beds:</td>
+                              <td><span ng-bind="room.places_in_room"></span></td>
+                              
+                          </tr>
+
+                          <tr>
+                              <td>Price: </td>
+                              <td><b><span ng-bind="room.price_room"></b></span></td>
+                              
+                          </tr>
+                          <tr>
+                              <td>Location:</td>
+                              <td><a ng-click="mapShow()"><span ng-bind="room.location_room"></span>
+                               <i class="fa fa-map-o left"></i></a></td>
+                              
+                          </tr>
+                        </tbody>
+                     </table>
+                     
+                      
+                     
+                      
+                      <!--
+                        <a class="btn btn-flat waves-effect waves-teal" ng-click="mapShow()"><i class="fa fa-map-o right"></i>Show on map</a>                 
+                        -->
+                    </div>
+                    <!--/.Third column: product description-->
+              
+              </div>
+    <div class="row">
+        <!---/ Order header /-->
+          <div class="col-xs-6 col-sm-6 col-md-6 col-lg-7 ">
+                 <h6><span>Chek free place</span></h6>  
+                 <!---/ Calender group /-->
+                    <div class="text-center">
+                        <span class="order-info">Date arival</span>
+                              <quick-datepicker init-value="{{redirect_init_date_in}}" ng-model='date.order_in' disable-timepicker='true' 
+                              placeholder="Date In" on-change="freePlaceInRoom(date)" style="margin-right:30px;">
+                              </quick-datepicker>
+                
+                        <span class="order-info">Date  dispatch</span>
+                                 <quick-datepicker init-value="{{redirect_init_date_out}}" ng-model='date.order_out' disable-timepicker='true' 
+                                 placeholder="Date Out" on-change="freePlaceInRoom(date)" >
+                                </quick-datepicker>
+                    </div>
+               
+            </div>  
+
+                <!---/ Button group /-->
+                <div class="col-xs-6 col-sm-6 col-md-6 col-lg-5 text-center" ng-switch="status_place" class="animate-if">
+                
+                        <div ng-switch-when="Free">
+                             <a class="btn btn-border-success waves-effect" style="width:97%;" ng-click="showOrderForm()">Order!</a>
+                        </div>
+            
+                            <div ng-switch-when="Occupied">
+                                <a class="btn btn-border-danger waves-effect" style="width:97%;" ng-click="showAdditionalRoom()">Occupied click to see free room</a>
+                            </div>
+            
+                                <div ng-switch-when="Wrong">
+                                    <a class="btn btn-border-warning waves-effect" style="width:97%;">Please enter right interval</a>
+                                </div> 
+                                    <div ng-switch-default></div>                    
+                </div>
+    </div>
+
+      <div class="row ">
+        <div class="col-xs-12 col-sm-12 col-lg-12">
+            <div ng-include="'static/view/roomdetail/order-tpl/additional-room-template.tpl.html'" ng-if="render_additional" class="animate-if"></div>
+        </div>
+      </div>
+    <div class="row ">
+        <!---/ Include order template/-->
+              
+              <div class="col-xs-12 col-sm-12 col-lg-12">
+                    <div ng-include = "'static/view/roomdetail/order-tpl/order-room.tpl.html'" ng-if="orderadd" class="animate-if" ></div>
+                </div>
+    </div>
+
+    
+    <div class="row detail-map" >
+    <!---/. Goodle maps directive /-->          
+              <div ng-if="render" class="col-xs-12 col-sm-12 col-lg-12">
+
+                         <ui-gmap-google-map center='map.center' zoom='map.zoom' refresh='render'>
+                                    <ui-gmap-marker coords="marker.coords" idkey="marker.id">
+                                        </ui-gmap-marker>
+                         </ui-gmap-google-map>
+              </div>
+
+    </div>
+    <div class="row" >
+      <div class="col-xs-12 col-sm-12 col-lg-12">
+                    <div ng-include = "'static/view/roomdetail/payment-confirm/payment-confirm.tpl.html'" ng-if="order_ok" class="animate-if" ></div>
+                </div>
+    </div>
+
+<!--/ Modal body -->
+</div>
+
+         

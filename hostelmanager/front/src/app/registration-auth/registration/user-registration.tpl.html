@@ -1,0 +1,73 @@
+
+                <div class="modal-header text-center" ng-hide="registration_success">
+                    <h4><i class="fa fa-user"></i> Register with:</h4>
+                    <a class="btn-floating btn-large fb-bg waves-effect waves-light"><i class="fa fa-facebook"> </i></a>
+                    <a class="btn-floating btn-large gplus-bg waves-effect waves-light"><i class="fa fa-google-plus"> </i></a>
+                
+                </div>
+                <!--/.Header-->
+
+                <!--Body-->
+                <div class="modal-body">
+                
+                    <div class="row" ng-hide="registration_success">
+                        <div class="col-md-12">
+                            <!--Form-->
+                            <form name="registrationForm" role="form" ng-submit="mainRegister(registrationForm)" novalidate> 
+                                <h4 class="text-center">or:</h4>
+
+                                <div class="input-field">
+                                    <i class="material-icons prefix">email</i>
+                                    <input id="icon_email" type="email" class="validate" name="email" ng-model="main_reg.email">
+                                    <label for="icon_email">Your email</label>
+                                </div>
+
+                                <div class="input-field">
+                                    <i class="material-icons prefix">lock</i>
+                                    <input id="password1" type="password" class="validate" name="password1" ng-model="main_reg.password1">
+                                    <label for="password">Password</label>
+                                </div>
+
+                                <div class="input-field">
+                                    <i class="material-icons prefix">lock</i>
+                                    <input id="password-rep" type="password" class="validate" name="password2" ng-model="main_reg.password2" 
+                                            pw-match="main_reg.password1">
+                                    <label for="password-rep">Repeat password</label>
+                                </div>
+                                <div class="text-center" ng-show="registrationForm.$invalid">
+                                        <span class="custom-error-text" ng-show="registrationForm.password2.$error.pwchek">Password not match</span>
+                                    </div>
+                                     <div class="text-center" ng-show="registrationForm.$invalid">
+                                        <span class="custom-error-text" ng-show="registrationForm.password2.$error.regchek">Password must contain at least one big Lettet an onne numeric and be > 6 characters</span>
+                                    </div>
+
+                                <div class="text-center">
+                                    <button type="submit" class="btn btn-primary btn-lg waves-effect waves-light" >Sign up</button>
+                                
+                                </div>
+                            <div class="alert alert-danger text-center" ng-repeat="error in errors" style="align:center;">{{error}}</div>
+
+                            </form>
+                            <!--/.Form-->
+                        </div>
+                    </div>
+        <div ng-if="registration_success" class="text-center">
+            <h5 class="h5-responsive">Registration <span class="text-success">success</span></h5>
+            <h5 class="h5-responsive">Please confirm emal address to use all site opportunity</h5>
+           <a class="btn btn-primary btn-lg waves-effect waves-light" 
+                        email-button="main_reg.email" ng-model="redirect_email">Go Email</a>
+        </div>
+
+                 
+                </div>
+                <!--/.Body-->
+
+                <!--Footer-->
+                <div class="modal-footer" ng-hide="registration_success">
+                    
+                    <div class="options">
+                    <p>Already have an account? <a ui-sref="mainpage.login" ng-click="close()">Login</a></p>
+                    </div>
+                </div>
+
+                <!--/.Footer-->
