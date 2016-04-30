@@ -154,7 +154,7 @@ USE_L10N = True
 USE_TZ = True
 
 AUTH_USER_MODEL = 'hostel.ExtUser'
-
+SESSION_SAVE_EVERY_REQUEST = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangohostelmanager.com/en/1.9/howto/static-files/
 

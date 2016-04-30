@@ -1,8 +1,12 @@
            <!-- User additional information /template/  -->
           <div class="modal-header text-center">
                                 <button type="button" class="close" data-dismiss="modal" ng-click="close();"style="color:red;">X</button>
-                                    <h5 class="h5-responsive">Please enter additional information to you profile</h5>
-                                    <h5 class="h5-responsive">With this can be <b style="color:#ff0033;">easy</b> to use our service</h5>
+                                    <h5 class="h5-responsive"><span translate="REGISTRATION_INFO_HEADER"></span></h5>
+                                    <h5 class="h5-responsive">
+                                        <span translate="REGISTRATION_INFO_HEADER2"></span>
+                                        <b style="color:#ff0033;"><span translate="REGISTRATION_INFO_HEADER3"></span></b>
+                                        <span translate="REGISTRATION_INFO_HEADER4"></span>
+                                    </h5>
                           </div>
 
           <div class="modal-body" >
@@ -15,46 +19,56 @@
                                 <i class="material-icons prefix">account_circle</i>
                                     <input id="icon_prefix_1" type="text" class="validate" name="user_firstname" ng-model="register.user_firstname" 
                                     rus-eng-name required>
-                                <label for="icon_prefix_1">First Name</label>
+                                <label for="icon_prefix_1"><span translate="USER_FIRST_NAME"></span></label>
                                 
                             </div>
-                             <div class="text-center"><span class="custom-error-text " 
-                             ng-show="userInfoForm.user_firstname.$error.namecheck">
-                                First must contain only charasters and be more than 2 letter</span></div>
+                             <div class="text-center">
+                                  <span class="custom-error-text" ng-show="userInfoForm.user_firstname.$error.namecheck" 
+                                        translate="USER_FIRST_NAME_ERROR_MESSAGE">
+                                  </span>
+                              </div>
 
                              <div class="input-field col-md-12 col-lg-12">
                                 <i class="material-icons prefix">account_circle</i>
                                     <input id="icon_prefix_2" type="text" name="user_middlename" class="validate" ng-model="register.user_middlename" 
                                       rus-eng-name required>
-                                <label for="icon_prefix_2">Middle Name</label>
+                                <label for="icon_prefix_2"><span translate="USER_MIDDLE_NAME"></span></label>
                             </div>
-                            <div class="text-center"><span class="custom-error-text " ng-show="userInfoForm.user_middlename.$error.namecheck">
-                                                      Middle name must contain only charasters and more then 2 letter</span></div>
+                            <div class="text-center">
+                                <span class="custom-error-text " ng-show="userInfoForm.user_middlename.$error.namecheck" 
+                                    translate="USER_MIDDLE_NAME_ERROR_MESSAGE">
+                                </span>
+                            </div>
 
                              <div class="input-field col-md-12 col-lg-12">
                                 <i class="material-icons prefix">account_circle</i>
                                     <input id="icon_prefix_3" type="text" class="validate" name="user_lastname" ng-model="register.user_lastname" 
                                     rus-eng-name required>
-                                <label for="icon_prefix_3">Last Name</label>
+                                <label for="icon_prefix_3"><span translate="USER_LAST_NAME"></span></label>
                             </div>
 
-                            <div class="text-center"><span class="custom-error-text " ng-show="userInfoForm.user_lastname.$error.namecheck">
-                                                      Last name must contain only charasters and more then 2 letter</span></div>
+                            <div class="text-center">
+                                <span class="custom-error-text " ng-show="userInfoForm.user_lastname.$error.namecheck" 
+                                translate="USER_LAST_NAME_ERROR_MESSAGE">
+                                </span>
+                            </div>
 
                             <div class="input-field col-md-12 col-lg-12">
                                   <i class="material-icons prefix">phone</i>
                                     <input id="icon_telephone" type="tel" class="validate" ng-model="register.phone_number" required 
                                     ui-mask="+99(999) 999-9999" add-default-placeholder >
-                                <label for="icon_telephone" class="active">Telephone</label>
+                                <label for="icon_telephone" class="active"><span translate="USER_PHONE"></span></label>
                             </div>
                             <div class="text-center">
-                            <b ng-show="userInfoForm.$invalid" class="custom-error-text"> All fields must be entered</b>
+                                  <b ng-show="userInfoForm.$invalid" class="custom-error-text"><span translate="USER_ERROR_ENTER_FIELD"></span></b>
                              </div>
                                                     
                         </div>
                         <div class="text-center">
-                            <button type="submit" class="btn btn-success waves-effect waves-light" ng-disabled="userInfoForm.$invalid">Success</button>
-                            </div> 
+                            <button type="submit" class="btn btn-success waves-effect waves-light" ng-disabled="userInfoForm.$invalid">
+                              <span translate="USER_PROFILE_UPD_BUTTON"></span>
+                            </button>
+                        </div> 
                </form>
             </div>
             </div>

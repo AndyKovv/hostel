@@ -15,6 +15,7 @@ describe('HostelApp', function(){
     beforeEach(module('userAccount'));
     beforeEach(module('managerModule'));
     beforeEach(module('dry'));
+    beforeEach(module('translateModule'));
 
     var $stateProvider, $urlRouterProvider, $locationProvider, $httpProvider, $state, $resolve;
     beforeEach(inject(function(_$state_, _$resolve_){

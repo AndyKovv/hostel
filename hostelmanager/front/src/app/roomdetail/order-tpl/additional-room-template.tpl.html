@@ -1,6 +1,6 @@
  <!--Multi-item panel-->
 <div class="card-panel horizontal-listing no-padding comments-section">
-    <h5 class="text-center title">Free room</h5>
+    <h5 class="text-center title"><span translate="ADDITIONAL_ROOM_HEADER"></h5>
     <hr>
     <div class="container-fluid-additionalroom">
 
@@ -12,7 +12,10 @@
                 </div>
             </div>
             <div class="col-sm-10">
-                <a ui-sref="mainpage.detail({roomId: room.id})" ng-click="redirectFreeRoom()"><h5 class="title"><span ng-bind="room.name_room"></span> <i class="fa fa-reply"> Watch </i> Price: <span ng-bind="room.price_room"></span></h5></a>
+                <a ui-sref="mainpage.detail({roomId: room.id})" ng-click="redirectFreeRoom()">
+                <h5 class="title"><span ng-bind="room.name_room"></span>
+                <i class="fa fa-reply"><span translate="ADDITIONAL_ROOM_WATCH"></span></i>
+                <span translate="ADDITIONAL_ROOM_PRICE"></span><span ng-bind="room.price_room"></span></h5></a>
                 <i class="fa fa-map-marker" aria-hidden="true"></i><span ng-bind="room.location_room"></span>
                 <p><span ng-bind="room.description_short"></span></p>
             </div>

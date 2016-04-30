@@ -18,10 +18,7 @@ $scope.additionalRegister = function(userInfoForm){
 				$uibModalInstance.close();
 				//Update profile data
 				dryAuth.userData();
-		}),
-		function(){
-			
-		}
+		});
 	}
 
 };
@@ -36,12 +33,10 @@ $scope.mainRegister = function(registrationForm){
 			password2 : $scope.main_reg.password2,
 
 		}
-		;
+		
 		djangoAuth.register(data).then(function(response){
 			$scope.registration_success = true;
-			
-			//$uibModalInstance.close();
-			
+					
 		}, function(data){
 			$scope.errors = data.email;
 		});

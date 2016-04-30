@@ -41,47 +41,38 @@
                             </ul>
                         </div>
                         <!-- Indicators -->
-
             </div>
           <!-- /.carousel -->
-
-                    </div>
+                </div>
                     <!--Third column: product description-->
                     <div class="col-xs-6 col-sm-6 col-lg-8">
                      <table class="table detail-td">
                        <tbody>
                           <tr>
-                              <td>Description: </td>
+                              <td><span translate="ROOM_DETAIL_DESCRIPTION"></span></td>
                               <td><span ng-bind="room.description_full"></span></td>
                               
                           </tr>
 
                           <tr>
-                              <td>Beds:</td>
+                              <td><span translate="ROOM_DETAIL_BEDS"></span></td>
                               <td><span ng-bind="room.places_in_room"></span></td>
                               
                           </tr>
 
                           <tr>
-                              <td>Price: </td>
+                              <td><span translate="ROOM_DETAIL_PRICE"></span></td>
                               <td><b><span ng-bind="room.price_room"></b></span></td>
                               
                           </tr>
                           <tr>
-                              <td>Location:</td>
+                              <td><span translate="ROOM_DETAIL_LOCATION"></span></td>
                               <td><a ng-click="mapShow()"><span ng-bind="room.location_room"></span>
                                <i class="fa fa-map-o left"></i></a></td>
                               
                           </tr>
                         </tbody>
                      </table>
-                     
-                      
-                     
-                      
-                      <!--
-                        <a class="btn btn-flat waves-effect waves-teal" ng-click="mapShow()"><i class="fa fa-map-o right"></i>Show on map</a>                 
-                        -->
                     </div>
                     <!--/.Third column: product description-->
               
@@ -89,17 +80,17 @@
     <div class="row">
         <!---/ Order header /-->
           <div class="col-xs-6 col-sm-6 col-md-6 col-lg-7 ">
-                 <h6><span>Chek free place</span></h6>  
+                 <h6><span translate="ROOM_DETAIL_CHEK_FREE_PLACE"></span></h6>  
                  <!---/ Calender group /-->
                     <div class="text-center">
-                        <span class="order-info">Date arival</span>
+                        <span class="order-info" translate="ROOM_DETAIL_DATE_ARIVAL"></span>
                               <quick-datepicker init-value="{{redirect_init_date_in}}" ng-model='date.order_in' disable-timepicker='true' 
-                              placeholder="Date In" on-change="freePlaceInRoom(date)" style="margin-right:30px;">
+                              placeholder="___/___/___" on-change="freePlaceInRoom(date)" style="margin-right:30px;">
                               </quick-datepicker>
                 
-                        <span class="order-info">Date  dispatch</span>
+                        <span class="order-info" translate="ROOM_DETAIL_DATE_DISPATCH"></span>
                                  <quick-datepicker init-value="{{redirect_init_date_out}}" ng-model='date.order_out' disable-timepicker='true' 
-                                 placeholder="Date Out" on-change="freePlaceInRoom(date)" >
+                                 placeholder="___/___/___" on-change="freePlaceInRoom(date)" >
                                 </quick-datepicker>
                     </div>
                
@@ -109,15 +100,17 @@
                 <div class="col-xs-6 col-sm-6 col-md-6 col-lg-5 text-center" ng-switch="status_place" class="animate-if">
                 
                         <div ng-switch-when="Free">
-                             <a class="btn btn-border-success waves-effect" style="width:97%;" ng-click="showOrderForm()">Order!</a>
+                             <a class="btn btn-border-success waves-effect" style="width:97%;" ng-click="showOrderForm()">
+                             <span translate="ROOM_DETAIL_ORDER_BT"></span></a>
                         </div>
             
                             <div ng-switch-when="Occupied">
-                                <a class="btn btn-border-danger waves-effect" style="width:97%;" ng-click="showAdditionalRoom()">Occupied click to see free room</a>
+                                <a class="btn btn-border-danger waves-effect" style="width:97%;" ng-click="showAdditionalRoom()">
+                                <span translate="ROOM_DETAIL_ORDEROCCUP_BT"></span> </a>
                             </div>
             
                                 <div ng-switch-when="Wrong">
-                                    <a class="btn btn-border-warning waves-effect" style="width:97%;">Please enter right interval</a>
+                                    <a class="btn btn-border-warning waves-effect" style="width:97%;"> <span translate="ROOM_DETAIL_INTERVAL_BT"></span> </a>
                                 </div> 
                                     <div ng-switch-default></div>                    
                 </div>

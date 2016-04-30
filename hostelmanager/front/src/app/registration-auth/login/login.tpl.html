@@ -1,7 +1,7 @@
 
                 <div class="modal-header text-center">
                 <button type="button" class="close" data-dismiss="modal" ng-click="close();"style="color:red;">X</button>
-                    <h4><i class="fa fa-user"></i> Login</h4><br>
+                    <h4><i class="fa fa-user"></i><span translate="USER_REGISTER_LOGIN"></span></h4><br>
                     <a class="btn-floating btn-large gplus-bg waves-effect waves-light" ui-sref="googlelogin"><i class="fa fa-google-plus"> </i></a>
                     <a class="btn-floating btn-large fb-bg waves-effect waves-light"><i class="fa fa-facebook"> </i></a>
                     <a class="btn-floating btn-large vk-bg waves-effect waves-light" ui-sref="vklogin"><i class="fa fa-vk"></i></a>
@@ -15,42 +15,48 @@
                       
                                 <div class="input-field" >
                                     <i class="material-icons prefix">email</i>
-                                     <input name="email" id="email" type="email" ng-model="model.email" required ng-pattern="/^.+@.+\..+$/" 
+                                    <input name="email" id="email" type="email" ng-model="model.email" required ng-pattern="/^.+@.+\..+$/" 
                                     class="validate">
-                                    <label for="email" >Email</label>  
-                                    </div>
-                                    <div class="text-center">
-                                     <span ng-show="LoginForm.email.$error.pattern" style="color:red;" >Not Email please enter a valid email</span>                             
-                                     </div>                   
+                                    <label for="email"><span translate="ORDER_INP_EMAIL"></span></label>  
+                                </div>
+                                <div class="text-center">
+                                     <span ng-show="LoginForm.email.$error.pattern" style="color:red;" translate="LOGIN_ERR_EMAIL"></span>              
+                                </div>                   
                                
                                 <div class="input-field">
                                     <i class="material-icons prefix">lock</i>
                                     <input name="password" id="password" type="password"  ng-model="model.password" class="validate" required>
-                                    <label for="password">Password</label>
+                                    <label for="password"><span translate="USER_REGISTER_PASSWORD1"></span></label>
                                 </div>
-                               <div class="text-center">
-                                                                
-                                </div>  
-
-                                    <div class="alert alert-danger text-center" ng-repeat="error in errors.non_field_errors" style="align:center;">{{error}}</div>
-                                <div class="text-center">
-                                <button type="submit" class="btn btn-primary waves-effect waves-light" ng-disabled="LoginForm.$invalid">Login</button>
-
+                               
+                                <div class="alert alert-danger text-center" ng-repeat="error in errors.non_field_errors" style="align:center;">{{error}}
                                 </div>
+                               
+                            <div class="text-center">
+                                 <button type="submit" class="btn btn-primary waves-effect waves-light" ng-disabled="LoginForm.$invalid">
+                                    <span translate="USER_REGISTER_LOGIN"></span>
+                                 </button>
                             </div>
+                                </div>
                             </div>
                         </form>
                     </div>
                 </form>
             </div>
                 <!--Footer-->
-                <div class="modal-footer">
-                    <div class="options">
-                    <p>Not a member? <a ui-sref="mainpage.register" ng-click="close()">Sign Up</a></p>
-                    
-                    <p>Forgot <a ui-sref="mainpage.passw_reset" ng-click="close()">Password?</a></p>
-                    </div>
-                </div>
+        <div class="modal-footer">
+          <div class="options">
+            <p>
+                <span translate="LOGIN_NOT_A_MEMBER"></span>
+                <a ui-sref="mainpage.register" ng-click="close()"><span translate="USER_SING_UP_BT"></span></a>
+            </p>
+            
+            <p>
+                <span translate="USER_REGISTER_FORGOT"></span>
+                <a ui-sref="mainpage.passw_reset" ng-click="close()"><span translate="USER_REGISTER_PASSWORD"></span></a>
+            </p>
+          </div>
+        </div>
                 <!--/.Footer-->
           
             <!-- /.Modal content-->

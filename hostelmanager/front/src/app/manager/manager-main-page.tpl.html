@@ -1,15 +1,15 @@
  <!--Multi-item panel-->
 <div class="card-panel horizontal-listing no-padding comments-section" ng-cloack>
-    <h5 class="text-center title">Manager Page</h5>
+    <h5 class="text-center title"><span translate="MANAGER_MAIN_PAGE_HEADER"></span></h5>
         <div class="text-center">
-                        <span class="order-info">Date arival</span>
+                        <span class="order-info" translate="ROOM_DETAIL_DATE_ARIVAL"></span>
                               <quick-datepicker  ng-model='date.order_in' disable-timepicker='true' 
-                              placeholder="Date In" on-change="filterFreeRoom(date)" style="margin-right:30px;" name="order_in">
+                              placeholder="___/___/___/" on-change="filterFreeRoom(date)" style="margin-right:30px;" name="order_in">
                               </quick-datepicker>
                 
-                        <span class="order-info">Date  dispatch</span>
+                        <span class="order-info" translate="ROOM_DETAIL_DATE_DISPATCH"></span>
                                  <quick-datepicker ng-model='date.order_out' disable-timepicker='true' 
-                                 placeholder="Date Out" on-change="filterFreeRoom(date)" name="order_out">
+                                 placeholder="___/___/___/" on-change="filterFreeRoom(date)" name="order_out">
                                 </quick-datepicker>
                     </div>
     <hr>
@@ -27,14 +27,16 @@
                 </div>
             </div>
             <div class="col-sm-10 col-lg-10">
-                <a ui-sref="mainpage.detail({roomId: room.id})" ng-click="redirectFreeRoom()"><h5 class="title"><span ng-bind="room.name_room"></span> <i class="fa fa-reply"> Watch </i> Price: <span ng-bind="room.price_room"></span></h5></a>
+                <a ui-sref="mainpage.detail({roomId: room.id})" ng-click="redirectFreeRoom()"><h5 class="title"><span ng-bind="room.name_room"></span> <i class="fa fa-reply"><span translate="ADDITIONAL_ROOM_WATCH"></span></i>
+                <span translate="ADDITIONAL_ROOM_PRICE"></span>
+                <span ng-bind="room.price_room"></span></h5></a>
                 <i class="fa fa-map-marker" aria-hidden="true"></i><span ng-bind="room.location_room"></span>
                 <p><span ng-bind="room.description_short"></span></p>
             </div>
             <div class="row">
 
                  <button type="submit" class="btn btn-primary waves-effect waves-light" ng-disabled="!button_enable"
-                  ng-click="orderRoomManager(room)" ng-disabled="">Order Romm</button>
+                  ng-click="orderRoomManager(room)" ><span translate="ORDER_BT_ORDER"></span></button>
             </div>
 
         </div>

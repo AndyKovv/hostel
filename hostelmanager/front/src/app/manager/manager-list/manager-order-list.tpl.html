@@ -1,43 +1,35 @@
 
 <table class="table">
-    <thead style="text-align:center;">
-        <tr>
-            <th>Order Number Filter</th>
-            <th>Client Initials</th>
-            <th>Date Filter</th>
-            <th>Reset Filter</th>
-        </tr>
-    </thead>
-
-    <tbody>
+   <tbody>
         <tr>
             <td>
                 <div class="input-field" >
                 <input type="text" id="filter_order_number" ng-model="filter.number_order" ng-change="orderFilter(filter)">
-                <label for="filter_order_number" >Number Of Order</label>
+                <label for="filter_order_number" ><span translate="MANAGER_ORDER_FILTER_ORDER"></span></label>
                 </div>
             </td>
             <td>
                 <div class="input-field" >
                 <input type="text" id="person_information" ng-model="filter.person_info" ng-change="orderFilter(filter)">
-                <label for="person_information" >Name, SecondName, LastName</label>
+                <label for="person_information" ><span translate="MANAGER_ORDER_FILTER_USER"></span></label>
                 </div>
             </td>
             <td>
                  <div class="text-center">
-                        <span class="order-info">Date arival</span>
+                        <span class="order-info" translate="PAYMENT_DATE_ARRIVAL"></span>
                               <quick-datepicker  ng-model='filter.date_in' disable-timepicker='true' 
-                              placeholder="Date In" on-change="orderFilter(filter)" style="margin-right:30px;" name="order_in">
+                              placeholder="___/___/___/" on-change="orderFilter(filter)" style="margin-right:30px;" name="order_in">
                               </quick-datepicker>
                 
-                        <span class="order-info">Date  dispatch</span>
+                        <span class="order-info" translate="PAYMENT_DATE_DEPARTURE"></span>
                                  <quick-datepicker ng-model='filter.date_out' disable-timepicker='true' 
-                                 placeholder="Date Out" on-change="orderFilter(filter)" name="order_out">
+                                 placeholder="___/___/___/" on-change="orderFilter(filter)" name="order_out">
                                 </quick-datepicker>
                     </div>
             </td>
             <td>
-            <a class="btn btn-danger waves-effect waves-light" ng-click="resetFilters()">Reset filters</a>
+            <a class="btn btn-danger waves-effect waves-light" ng-click="resetFilters()">
+            <span translate="MANAGER_ORDER_RESET_FILTER_BT"></span></a>
             </td>
         </tr>
     </tbody>
@@ -48,17 +40,17 @@
         <thead>
             <tr>
                 <th>#</th>
-                <th>Order #</th>
-                <th>Client in</th>
-                <th>Client out</th>
-                <th>Client First Name</th>
-                <th>Client Middle Name</th>
-                <th>Client Last Name</th>
-                <th>Manager</th>
-                <th>Order date in</th>
-                <th>Booking</th>
-                <th>Payment</th>
-                <th>Deselected</th>
+                <th><span translate="PAYMENT_CONFIRM_ORDER"></span> #</th>
+                <th><span translate="PAYMENT_DATE_ARRIVAL"></span></th>
+                <th><span translate="PAYMENT_DATE_DEPARTURE"></span></th>
+                <th><span translate="USER_FIRST_NAME"></span></th>
+                <th><span translate="USER_MIDDLE_NAME"></span></th>
+                <th><span translate="USER_LAST_NAME"></span></th>
+                <th><span translate="MANAGER_MANAGER_ORDER"></span></th>
+                <th><span translate="MANAGER_ORDER_DATE"></span></th>
+                <th><span translate="MANAGER_ORDER_BOOKING"></span></th>
+                <th><span translate="ORDER_PAYMENT"></span></th>
+                <th><span translate="MANAGER_ORDER_DESELECTED"></span></th>
 
             </tr>
         </thead>
