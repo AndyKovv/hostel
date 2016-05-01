@@ -139,6 +139,19 @@ class RoomViewSet(viewsets.ReadOnlyModelViewSet):
 	queryset = HostelRoom.objects.filter(active='True', roomimages__image_main='True')
 	serializer_class = HostelRoomSerializer
 
+def chek_free_place(order_in, order_out):
+	query_room = HostelRoom.objects.all()
+	rooms = query_room.filter(
+					order__date_in__lt=order_out, 
+					order__date_out__gt=order_in, 
+					order__is_booking = True
+					).annotate(num_orders=Count('name_room'))
+	busy_room = []
+	for room in rooms:
+		free = room.places_in_room - room.num_orders
+		if free <=0: 
+			busy_room.append(room.id)
+	return busy_room
 	
 	
 
@@ -162,23 +175,9 @@ class OrderView(viewsets.ModelViewSet):
 			free_place = place_in_room - live_in_interval
 
 			if free_place <=0:
-				
-				query_room = HostelRoom.objects.all()
-				rooms = query_room.filter(
-					order__date_in__lt=order_out, 
-					order__date_out__gt=order_in, 
-					order__is_booking = True
-					).annotate(num_orders=Count('name_room'))
-				busy_room = []
+				busy_room = chek_free_place(order_in, order_out)									
 
-				for room in rooms:
-					free = room.places_in_room - room.num_orders
-					if free <=0: 
-						busy_room.append(room.id)
-
-				#import pdb
-				#pdb.set_trace()
-				interval_free_room = query_room.exclude(id__in=busy_room).filter(roomimages__image_main= True, active='True').order_by('-roomimages__image_main')
+				interval_free_room = HostelRoom.objects.exclude(id__in=busy_room).filter(roomimages__image_main= True, active='True').order_by('-roomimages__image_main')
 				free_serializer = FreeRoomSerializer(interval_free_room, many=True)
 				return Response(free_serializer.data, status=status.HTTP_200_OK)			
 
@@ -266,20 +265,9 @@ class OrderView(viewsets.ModelViewSet):
 			order_in = serializer.data['order_in']
 			order_out = serializer.data['order_out']
 							
-			query_room = HostelRoom.objects.all()
-			rooms = query_room.filter(
-				order__date_in__lt=order_out, 
-				order__date_out__gt=order_in,
-				order__is_booking = True			
-				).annotate(num_orders=Count('name_room'))
-			busy_room = []
+			busy_room = chek_free_place(order_in, order_out)
 
-			for room in rooms:
-				free = room.places_in_room - room.num_orders
-				if free <=0: 
-					busy_room.append(room.id)
-
-			interval_free_room = query_room.exclude(id__in=busy_room).filter(roomimages__image_main= True, active='True')
+			interval_free_room = HostelRoom.objects.exclude(id__in=busy_room).filter(roomimages__image_main= True, active='True')
 			free_rooms_serializer = FreeRoomSerializer(interval_free_room, many=True)
 			return Response(free_rooms_serializer.data, status=status.HTTP_200_OK)			
 

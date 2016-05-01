@@ -4,13 +4,14 @@
         <div class="text-center">
                         <span class="order-info" translate="ROOM_DETAIL_DATE_ARIVAL"></span>
                               <quick-datepicker  ng-model='date.order_in' disable-timepicker='true' 
-                              placeholder="___/___/___/" on-change="filterFreeRoom(date)" style="margin-right:30px;" name="order_in">
+                              placeholder="___/___/___/" on-change="filterFreeRoom(date)" style="margin-right:30px;" name="order_in" 
+                              class="calenendar-manager">
                               </quick-datepicker>
                 
                         <span class="order-info" translate="ROOM_DETAIL_DATE_DISPATCH"></span>
-                                 <quick-datepicker ng-model='date.order_out' disable-timepicker='true' 
-                                 placeholder="___/___/___/" on-change="filterFreeRoom(date)" name="order_out">
-                                </quick-datepicker>
+                              <quick-datepicker ng-model='date.order_out' disable-timepicker='true' 
+                              placeholder="___/___/___/" on-change="filterFreeRoom(date)" name="order_out" class="calenendar-manager">
+                              </quick-datepicker>
                     </div>
     <hr>
     <div class="container-fluid-manager">

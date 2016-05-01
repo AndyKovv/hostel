@@ -279,5 +279,8 @@ h6 span { background:#fff; padding:0 10px; }
     max-height: 3.27em;
 }
 
+.calenendar-manager .quickdate-popup{
+    position: absolute;
+}
 
 

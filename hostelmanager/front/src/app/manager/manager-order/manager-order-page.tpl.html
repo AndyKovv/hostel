@@ -46,6 +46,11 @@
           <label for="last_name"><span translate="USER_LAST_NAME"></span></label>
         </div>
       </div>
+      <div class="row" ng-if="!order_success">
+          <div class="alert alert-danger text-center" ng-repeat="error in errors.non_field_errors" style="align:center;">
+          <span translate="MANAGER_ORDER_ORDER_ERROR"></span>
+          </div>
+      </div>
       <div class="row text-center">
        <button type="submit" class="btn btn-primary waves-effect waves-light" ng-disabled="orderRoomManagerForm.$invalid" >
           <span translate="ORDER_BT_ORDER"></span></button>

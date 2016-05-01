@@ -122,6 +122,7 @@ angular.module('translateModule', ['pascalprecht.translate']).config(['$translat
         					MANAGER_ORDER_FILTER_USER: 'Name, Middle Name, Last Name',
         					MANAGER_ORDER_RESET_FILTER_BT: 'Reset all filters',
         					MANAGER_ORDER_DATE: 'Order date',
+        					MANAGER_ORDER_ORDER_ERROR: 'No free place',
 
 
 
@@ -256,6 +257,7 @@ angular.module('translateModule', ['pascalprecht.translate']).config(['$translat
 	       				MANAGER_ORDER_FILTER_USER: 'Прізвище, Ім’я, По Батькові',
 	       				MANAGER_ORDER_RESET_FILTER_BT: 'Анулювати всі фільтри',
 	       				MANAGER_ORDER_DATE: 'Дата замовлення',
+	       				MANAGER_ORDER_ORDER_ERROR: ' Немає вільних місць',
 	       				MAIN_MAP: 'адреса',
 
 
@@ -389,7 +391,9 @@ angular.module('translateModule', ['pascalprecht.translate']).config(['$translat
 	  				MANAGER_ORDER_FILTER_USER: 'Имя, Фамилия, Отчество',
 	  				MANAGER_ORDER_RESET_FILTER_BT: 'Анулировать все фильтра',
 	  				MANAGER_ORDER_DATE: 'Дата заказа',
+	  				MANAGER_ORDER_ORDER_ERROR: 'Нет свободных мест',
 	  				MAIN_MAP: 'адрес',
+
 
 
 
