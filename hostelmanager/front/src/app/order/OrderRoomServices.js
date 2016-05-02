@@ -1,3 +1,6 @@
+(function(){
+ 'use strict';
+/* jshint sub:true */
 angular.module('OrderRoom').factory('OrderRoomService',[ '$http', '$q', '$cookies',  function ($http, $q, $cookies ) {
 		return {
 
@@ -7,7 +10,7 @@ angular.module('OrderRoom').factory('OrderRoomService',[ '$http', '$q', '$cookie
 			},
 		
 			chekFreePlaces: function(data){
-				var deferred = $q.defer()
+				var deferred = $q.defer();
 				$http({
 					url:'/api/orders/manager_filter/',
 					method: 'POST',
@@ -18,7 +21,7 @@ angular.module('OrderRoom').factory('OrderRoomService',[ '$http', '$q', '$cookie
 					deferred.resolve(data);
 				}).
 				error(function(data){
-					deferred.reject()
+					deferred.reject();
 				});
 				return deferred.promise;
 			},
@@ -51,7 +54,7 @@ angular.module('OrderRoom').factory('OrderRoomService',[ '$http', '$q', '$cookie
 				})
 				.success(function(data, status, headers, config){
 					
-					deferred.resolve(data)
+					deferred.resolve(data);
 				})
 				.error(function(data, status, headers, config){
 					deferred.reject(data);
@@ -97,3 +100,5 @@ angular.module('OrderRoom').factory('OrderRoomService',[ '$http', '$q', '$cookie
 		};
 	
 }]);
+
+})();

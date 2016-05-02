@@ -1,5 +1,5 @@
-'use strict';
-
+(function(){
+ 'use strict';
 angular.module('userAccount')
   .controller('userAccountCtrl', ['$rootScope', '$scope', '$location', '$state', '$timeout', '$uibModalInstance', 'toastr', 'djangoAuth', 
     function ($rootScope, $scope, $location, $state, $timeout, $uibModalInstance, toastr,  djangoAuth) {
@@ -12,7 +12,7 @@ $scope.update = {
 		user_middlename: $rootScope.user.user_middlename,
 		user_lastname: $rootScope.user.user_lastname,
 		phone_number : $rootScope.user.phone_number,
-	}
+	};
 
 $scope.updProfileData = function(profileForm){
 	if(profileForm.$valid){
@@ -21,7 +21,7 @@ $scope.updProfileData = function(profileForm){
 			user_middlename: $scope.update.user_middlename,
 			user_lastname: $scope.update.user_lastname,
 			phone_number: $scope.update.phone_number,
-		}
+		};
 	
 		djangoAuth.updateProfile(data).then(function(response){
 			$scope.update_success = true;
@@ -30,9 +30,9 @@ $scope.updProfileData = function(profileForm){
 					
 		});
 	}
-}
+};
 
-$scope.pwupdate = {old_passw: '', new_passw1: '', new_passw2: ''}
+$scope.pwupdate = {old_passw: '', new_passw1: '', new_passw2: ''};
 $scope.changeUserPassword = function(changePasswForm){
 
 	if(changePasswForm.$valid){
@@ -40,7 +40,7 @@ $scope.changeUserPassword = function(changePasswForm){
 			old_password: $scope.pwupdate.old_passw,
 			new_password1: $scope.pwupdate.new_passw1,
 			new_password2: $scope.pwupdate.new_passw2,
-		}
+		};
 		
 		djangoAuth.changePassword(data).then(function(){
 			djangoAuth.logout();
@@ -52,10 +52,12 @@ $scope.changeUserPassword = function(changePasswForm){
 
 	}
 
-}
+};
 
 $scope.close = function(){
 $uibModalInstance.close();
-}
+};
 
 }]);
+
+})();

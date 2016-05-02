@@ -11,7 +11,7 @@
     <div class="row">
 
          <!--First column: carousel gallery-->
-        <div class="col-xs-6 col-sm-6 col-lg-4">
+        <div class="col-xs-12 col-sm-6 col-lg-4">
 
           <!-- Carousel -->
            <div id="room-gal" class="carousel slide carousel-fade carousel-thumbnails carousel-gallery" style="margin-top: 0px;">
@@ -45,7 +45,7 @@
           <!-- /.carousel -->
                 </div>
                     <!--Third column: product description-->
-                    <div class="col-xs-6 col-sm-6 col-lg-8">
+                    <div class="col-xs-12 col-sm-6 col-lg-8">
                      <table class="table detail-td">
                        <tbody>
                           <tr>
@@ -79,13 +79,13 @@
               </div>
     <div class="row">
         <!---/ Order header /-->
-          <div class="col-xs-6 col-sm-6 col-md-6 col-lg-7 ">
+          <div class="col-xs-12 col-sm-12 col-md-12 col-lg-7 ">
                  <h6><span translate="ROOM_DETAIL_CHEK_FREE_PLACE"></span></h6>  
                  <!---/ Calender group /-->
                     <div class="text-center">
                         <span class="order-info" translate="ROOM_DETAIL_DATE_ARIVAL"></span>
                               <quick-datepicker init-value="{{redirect_init_date_in}}" ng-model='date.order_in' disable-timepicker='true' 
-                              placeholder="___/___/___" on-change="freePlaceInRoom(date)" style="margin-right:30px;">
+                              placeholder="___/___/___" on-change="freePlaceInRoom(date)">
                               </quick-datepicker>
                 
                         <span class="order-info" translate="ROOM_DETAIL_DATE_DISPATCH"></span>
@@ -97,7 +97,7 @@
             </div>  
 
                 <!---/ Button group /-->
-                <div class="col-xs-6 col-sm-6 col-md-6 col-lg-5 text-center" ng-switch="status_place" class="animate-if">
+                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-5 text-center" ng-switch="status_place" class="animate-if">
                 
                         <div ng-switch-when="Free">
                              <a class="btn btn-border-success waves-effect" style="width:97%;" ng-click="showOrderForm()">
@@ -118,14 +118,14 @@
 
       <div class="row ">
         <div class="col-xs-12 col-sm-12 col-lg-12">
-            <div ng-include="'static/view/roomdetail/order-tpl/additional-room-template.tpl.html'" ng-if="render_additional" class="animate-if"></div>
+            <div ng-include="'roomdetail/order-tpl/additional-room-template.tpl.html'" ng-if="render_additional" class="animate-if"></div>
         </div>
       </div>
     <div class="row ">
         <!---/ Include order template/-->
               
               <div class="col-xs-12 col-sm-12 col-lg-12">
-                    <div ng-include = "'static/view/roomdetail/order-tpl/order-room.tpl.html'" ng-if="orderadd" class="animate-if" ></div>
+                    <div ng-include = "'roomdetail/order-tpl/order-room.tpl.html'" ng-if="orderadd" class="animate-if" ></div>
                 </div>
     </div>
 
@@ -143,7 +143,7 @@
     </div>
     <div class="row" >
       <div class="col-xs-12 col-sm-12 col-lg-12">
-                    <div ng-include = "'static/view/roomdetail/payment-confirm/payment-confirm.tpl.html'" ng-if="order_ok" class="animate-if" ></div>
+                    <div ng-include = "'roomdetail/payment-confirm/payment-confirm.tpl.html'" ng-if="order_ok" class="animate-if" ></div>
                 </div>
     </div>
 

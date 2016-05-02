@@ -1,3 +1,5 @@
+(function(){
+ 'use strict';
 angular.module('directive-hostel').directive('pwMatch', [function(){
 	return{
 		require: 'ngModel',
@@ -27,7 +29,9 @@ angular.module('directive-hostel').directive('pwMatch', [function(){
 			});
 
 		}
-	}
+	};
 
 
 }]);
+
+})();

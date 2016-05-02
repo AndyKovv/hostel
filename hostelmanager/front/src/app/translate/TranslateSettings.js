@@ -1,3 +1,6 @@
+(function(){
+ 'use strict';
+
 angular.module('translateModule', ['pascalprecht.translate']).config(['$translateProvider',  function($translateProvider){
 	   var translationsEN = {
 	   	// Index.html
@@ -423,3 +426,6 @@ angular.module('translateModule', ['pascalprecht.translate']).config(['$translat
       .determinePreferredLanguage();
      $translateProvider.fallbackLanguage('en');
 }]);
+
+
+})();

@@ -68,22 +68,26 @@
 </div>
 <div class="row text-center" ng-show="!order.payment && !order.deselected">
     <div class="col-xs-6 col-sm-6 col-lg-6">
+        <form name="deselectedForm">
            <div class="input-field" >
                 <input name="deselect_order" id="deselect_order" type="text" ng-model="deselected_reason" required class="validate">
                 <label for="deselect_order" ><span translate="MANAGER_DESELECTED_REASON"></label>  
             </div>
-        <a class="btn btn-warning waves-effect waves-light" ng-disabled="deselect_order.$pristine" ng-click="orderDeselect(order)">
+        <a class="btn btn-warning waves-effect waves-light" ng-disabled="deselectedForm.$invalid" ng-click="orderDeselect(order)">
             <span translate="MANAGER_DESELECT_BT"></span>
-        </a>       
+        </a>
+        </form>       
     </div>
     <div class="col-xs-6 col-sm-6 col-lg-6">
-            <input class="with-gap" name="manager_payment" ng-model="payment_type.pay_way" type="radio" id="pay_way_cash" value="cash" />
+        <form name="paymentForm" class="radio-btn-manager">
+            <input class="with-gap" name="manager_payment" ng-model="payment_type.pay_way" type="radio" id="pay_way_cash" value="cash" required />
             <label for="pay_way_cash"><span translate="MANAGER_PAYMENT_METHOD1"></span></label>
         
             <input class="with-gap" name="manager_payment" ng-model="payment_type.pay_way" type="radio" id="pay_way_privat24" value="Privat24 Card"/>
-            <label for="pay_way_privat24"><span translate="MANAGER_PAYMENT_METHOD1"></span></label><br>
+            <label for="pay_way_privat24"><span translate="MANAGER_PAYMENT_METHOD2"></span></label><br>
                 
-            <a class="btn btn-primary waves-effect waves-light" ng-click="addPayment(order)"><span translate="MANAGER_PAY_BT"></span></a>
+            <a class="btn btn-primary waves-effect waves-light button-pay-manager" ng-click="addPayment(order)" ng-disabled="paymentForm.$invalid"> <span translate="MANAGER_PAY_BT"></span></a>
+        </form>
     </div>
 </div>
 </div>

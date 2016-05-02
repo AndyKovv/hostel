@@ -1,4 +1,6 @@
-'use strict';
+(function(){
+ 'use strict';
+
 
 angular.module('directive-hostel').directive('emailButton',[ '$window', function($window){
 return{
@@ -13,11 +15,13 @@ return{
 			}
 
 		elem.bind('click', function(){
-			cleanDomen()
+			cleanDomen();
 			
 		});
 	}
 
-}
+};
 
 }]);
+
+})();

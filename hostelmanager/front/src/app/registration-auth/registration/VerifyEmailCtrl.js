@@ -1,4 +1,5 @@
-'use strict';
+(function(){
+ 'use strict';
 
 angular.module('registrationAuth')
 .controller('VerifyEmailCtrl', ['$scope', '$stateParams', '$timeout', '$state', 'toastr', 'djangoAuth', 
@@ -10,3 +11,5 @@ angular.module('registrationAuth')
 	});
 
 }]);
+
+})();

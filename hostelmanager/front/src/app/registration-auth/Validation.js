@@ -1,4 +1,5 @@
-'use strict';
+(function(){
+ 'use strict';
 
 angular.module('registrationAuth')
   .service('Validate', function Validate() {
@@ -27,7 +28,7 @@ angular.module('registrationAuth')
                     }else if(this.message[e]){
                         messages.push(this.message[e]);
                     }else{
-                        messages.push("Error: " + e)
+                        messages.push("Error: " + e);
                     }
                 }
             }
@@ -46,5 +47,6 @@ angular.module('registrationAuth')
                 }
             }
         }
-    }
+    };
 });
+})();

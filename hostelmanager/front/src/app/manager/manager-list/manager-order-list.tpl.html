@@ -1,4 +1,4 @@
-
+<div class="row">
 <table class="table">
    <tbody>
         <tr>
@@ -18,12 +18,14 @@
                  <div class="text-center">
                         <span class="order-info" translate="PAYMENT_DATE_ARRIVAL"></span>
                               <quick-datepicker  ng-model='filter.date_in' disable-timepicker='true' 
-                              placeholder="___/___/___/" on-change="orderFilter(filter)" style="margin-right:30px;" name="order_in">
+                              placeholder="___/___/___/" on-change="orderFilter(filter)" style="margin-right:30px;" name="order_in"
+                              class="calenendar-manager">
                               </quick-datepicker>
                 
                         <span class="order-info" translate="PAYMENT_DATE_DEPARTURE"></span>
                                  <quick-datepicker ng-model='filter.date_out' disable-timepicker='true' 
-                                 placeholder="___/___/___/" on-change="orderFilter(filter)" name="order_out">
+                                 placeholder="___/___/___/" on-change="orderFilter(filter)" name="order_out"
+                                 class="calenendar-manager">
                                 </quick-datepicker>
                     </div>
             </td>
@@ -34,7 +36,8 @@
         </tr>
     </tbody>
 </table>
-    
+ </div>
+ <div class="row">   
 
 <table class="table table-hover">
         <thead>
@@ -56,7 +59,7 @@
         </thead>
         <tbody>
       
-            <tr ng-repeat="order in list_orders">
+            <tr ng-repeat="order in filteredOrders">
                 <td>{{$index + 1}}</td>
                 <td><a ng-click="managerPayment(order)"><span ng-bind="order.id"></span></a></td>
                 <td><span ng-bind="order.date_in | date : 'MM/dd/yyyy'"></span></td>
@@ -80,3 +83,14 @@
                     
         </tbody>
     </table>
+    </div>
+    <div class="row text-center">
+        
+    <uib-pagination 
+          ng-model="currentPage"
+          total-items="list_orders.length"
+          max-size="maxSize"  
+          boundary-links="true">
+    </uib-pagination>
+
+    </div>

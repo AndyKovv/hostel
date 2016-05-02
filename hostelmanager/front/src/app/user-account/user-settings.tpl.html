@@ -15,7 +15,7 @@
     <!-- User profile form-->
       <div class="row"> 
           <form name="profileForm" role="form" ng-submit="updProfileData(profileForm)"  novalidate> 
-            <div ng-include = "'static/view/user-account/template/profile-form.tpl.html'" class="animate-if" ></div>
+            <div ng-include = "'user-account/template/profile-form.tpl.html'" class="animate-if" ></div>
           </form>
       </div>
   </uib-tab>
@@ -26,7 +26,7 @@
     <!--- Password form -->
       <div class="row">
       <form name="changePasswForm" role="form" ng-submit="changeUserPassword(changePasswForm)" novalidate> 
-           <div ng-include = "'static/view/user-account/template/change-passw.tpl.html'" class="animate-if" ></div>
+           <div ng-include = "'user-account/template/change-passw.tpl.html'" class="animate-if" ></div>
         </form>
       </div>
 

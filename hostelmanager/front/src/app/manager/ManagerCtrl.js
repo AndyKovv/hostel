@@ -1,4 +1,5 @@
-'use strict';
+(function(){
+ 'use strict';
 
 angular.module('managerModule')
 	.controller('ManagerCtrl', ['$rootScope', '$scope', 'toastr', '$uibModal', 'getAllRooms', 'OrderRoomService', 
@@ -19,7 +20,7 @@ $scope.filterFreeRoom = function(date){
 		var data = {
 			order_in: order_in,
 			order_out: order_out,
-			}
+			};
 			
 			//Fire the request to api
 			OrderRoomService.chekFreePlaces(data)
@@ -33,7 +34,7 @@ $scope.filterFreeRoom = function(date){
 			toastr.error('Wrong interval');
 		}
 	}
-}
+};
 
 $scope.orderRoomManager = function(room){
 	if(room){
@@ -56,9 +57,11 @@ $scope.orderRoomManager = function(room){
 				}
 			},
 			controller: 'ManagerOrderCtrl',
-			templateUrl: 'static/view/manager/manager-order/manager-order-page.tpl.html',
+			templateUrl: 'manager/manager-order/manager-order-page.tpl.html',
 			size: 'lg',
-		})
+		});
 	}
-}
+};
 }]);
+
+})();

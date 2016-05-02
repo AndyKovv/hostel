@@ -1,4 +1,5 @@
-'use strict';
+(function(){
+ 'use strict';
 
 angular.module('registrationAuth')
 	.controller('PasswordResetCtrl', ['$scope', '$stateParams', '$uibModalInstance', '$timeout', 'djangoAuth', 'toastr',
@@ -10,7 +11,8 @@ angular.module('registrationAuth')
 		if(passwordResetForm.$valid){
 			var data = {
 				email : $scope.pw_reset.email,
-			}
+			};
+
 			djangoAuth.resetPassword(data).then(function(data){
 				$scope.errors = data.error;
 				
@@ -18,7 +20,7 @@ angular.module('registrationAuth')
 			});
 
 		}
-	}
+	};
 
 	$scope.passwConfirm = function(passwordConfimForm){
 		if(passwordConfimForm.$valid){
@@ -27,17 +29,19 @@ angular.module('registrationAuth')
 			uid: $stateParams.firstToken,
 			token : $stateParams.passwordResetToken,
 			new_password1 : $scope.passw_confirm.passw1,
-			new_password2 : $scope.passw_confirm.passw2,
-		}
+			new_password2 : $scope.passw_confirm.passw2
+		};
 			djangoAuth.confirmReset(data).then(function(data){
-				$timeout(function(){toastr.success(success_message)}, 5000);
+				$timeout(function(){toastr.success(success_message);}, 5000);
 				$uibModalInstance.close();
 
 			});
 
 		}
-	}
+	};
 
 
 
 }]);
+
+})();

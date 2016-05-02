@@ -17,101 +17,14 @@
   <!-- Font Awesome -->
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
 
-  <!-- Bootstrap core CSS -->
+ <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
+
+<link href="{% static "css/main.min.css" %}" rel="stylesheet">
   
-  <link href="{% static "mainpage/css/bootstrap.min.css" %}" rel="stylesheet">
+  <script src="{% static "js/vendor.min.js" %}"></script>
+  <script src="{% static "js/main.min.js" %}"></script>
  
-
-  <!-- Material Design Bootstrap -->
-  <link href="{% static "mainpage/css/mdb2.min.css" %}" rel="stylesheet">
-  <link href="{% static "bower_components/angular-material/angular-material.css" %}" rel="stylesheet">
-  <link href="{% static "bower_components/angular-ui-bootstrap/dist/ui-bootstrap-csp.css" %}" rel="stylesheet">
-  <link href="{% static "bower_components/ngQuickDate/dist/ng-quick-date.css" %}" rel="stylesheet">
-  
-  <!-- Toast Css -->
-  <link href="{% static "bower_components/angular-toastr/dist/angular-toastr.min.css" %}" rel="stylesheet">
-  
-   <!-- Template style -->
-  <link href="{% static "mainpage/css/style.css" %}" rel="stylesheet">
-  
-  <!-- SCRIPTS -->
-
-  <!-- JQuery -->
-  <script type="text/javascript" src="{% static "bower_components/jquery/dist/jquery.min.js" %}"></script>
-  <script type="text/javascript" src="{% static "bower_components/lodash/dist/lodash.min.js" %}"></script>
-  <script type="text/javascript" src="{% static "bower_components/file-saver/FileSaver.min.js" %}"></script>
-  
-  <!-- ANGULAR SCRIPTS -->
-  <script type="text/javascript" src="{% static "bower_components/angular/angular.min.js" %}"></script> 
-  <script type="text/javascript" src="{% static "bower_components/angular-ui-router/release/angular-ui-router.min.js" %}"></script>
-  <script type="text/javascript" src="{% static "bower_components/angular-resource/angular-resource.min.js" %}"></script>
-  <script type="text/javascript" src="{% static "bower_components/angular-animate/angular-animate.min.js" %}"></script>
-  <script type="text/javascript" src="{% static "bower_components/angular-aria/angular-aria.min.js" %}"></script>
-  <script type="text/javascript" src="{% static "bower_components/angular-cookies/angular-cookies.min.js" %}"></script>
-  <script type="text/javascript" src="{% static "bower_components/angular-messages/angular-messages.min.js" %}"></script>
-  <script type="text/javascript" src="{% static "bower_components/angular-sanitize/angular-sanitize.min.js" %}"></script>
-  <script type="text/javascript" src="{% static "bower_components/angular-material/angular-material.min.js" %}"></script>
-  
-  <!--/. Angular translate /-->
-  <script type="text/javascript" src="{% static "bower_components/angular-translate/angular-translate.min.js" %}"></script>
-  <script type="text/javascript" src="{% static "translate/TranslateSettings.js" %}"></script>
-  <!--/. Ui-bootstrap /-->
-  <script type="text/javascript" src="{% static "bower_components/angular-ui-bootstrap/dist/ui-bootstrap.js" %}"></script>
-  <script type="text/javascript" src="{% static "bower_components/angular-ui-bootstrap/dist/ui-bootstrap-tpls.js" %}"></script>
-  <script type="text/javascript" src="{% static "bower_components/angular-ui-bootstrap/dist/ui-bootstrap-tpls.js" %}"></script>
-   
-  <!--/. Google Maps Directive /-->
-  <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyD7gca_XV2K1bT5Rb5mWlBpfjYTetkPpMI&callback"
-  type="text/javascript"></script>
- 
-  <script type="text/javascript" src="{% static "bower_components/angular-simple-logger/dist/angular-simple-logger.min.js" %}"></script>
-  <script type="text/javascript" src="{% static "bower_components/angular-google-maps/dist/angular-google-maps.min.js" %}"></script>
-  
-  <!---/. DatePicker  /-->
-  <script type="text/javascript" src="{% static "bower_components/ngQuickDate/dist/ng-quick-date.js" %}"></script>
-  <script type="text/javascript" src="{% static "bower_components/angular-ui-mask/dist/mask.min.js" %}"></script>
-  <!---/. Toast /-->
-  <script type="text/javascript" src="{% static "bower_components/angular-toastr/dist/angular-toastr.tpls.min.js" %}"></script>
-
-  <!-- ANGULAR CORE -->
-   <script src="{% static "app.js" %}"></script>
-   <script src="{% static "main/MainPageCtr.js" %}"></script>
-   <script src="{% static "main/mainServices.js" %}"></script>   
-   <script src="{% static "roomdetail/RoomdetailCtrl.js" %}"></script>   
-   <script src="{% static "registration-auth/login/loginCtrl.js" %}"></script>   
-   <script src="{% static "registration-auth/login/LogoutCtrl.js" %}"></script>   
-   <script src="{% static "registration-auth/authService.js" %}"></script>   
-   <script src="{% static "registration-auth/MasterCtrl.js" %}"></script> 
-   <script src="{% static "registration-auth/Validation.js" %}"></script> 
-   <script src="{% static "registration-auth/forgot-password/PasswordResetCtrl.js" %}"></script> 
-   <script src="{% static "order/OrderListCtrl.js" %}"></script> 
-   <script src="{% static "order/OrderRoomServices.js" %}"></script>
-   <script src="{% static "order/order-info/OrderInfoCtrl.js" %}"></script>
-   <script src="{% static "manager/ManagerCtrl.js" %}"></script>
-   <script src="{% static "manager/ManagerService.js" %}"></script>
-   <script src="{% static "manager/manager-order/ManagerOrderCtrl.js" %}"></script>
-   <script src="{% static "manager/manager-list/ManagerOrderListCtrl.js" %}"></script>
-   <script src="{% static "manager/manager-order-edit/ManagerOrderEditCtrl.js" %}"></script>
-
-
-  <script src="{% static "registration-auth/registration/RegistrationCtrl.js" %}"></script> 
-  <script src="{% static "registration-auth/registration/VerifyEmailCtrl.js" %}"></script> 
-  <script src="{% static "user-account/UserAccountCtrl.js" %}"></script>
-  <script src="{% static "dry/DryFactory.js" %}"></script> 
-   <!--/. Directive /--> 
-   <script src="{% static "directive/dateFormater.js" %}"></script>
-   <script src="{% static "directive/pwMatch.js" %}"></script>
-   <script src="{% static "directive/rusEngName.js" %}"></script>
-   <script src="{% static "directive/emailButton.js" %}"></script>
-  
-
-  <!-- Bootstrap core JavaScript -->
-  <script type="text/javascript" src="{% static "mainpage/js/bootstrap.min.js" %}"></script>
-
-  <!-- Material Design Bootstrap -->
-  <script type="text/javascript" src="{% static "mainpage/js/mdb.js" %}"></script>
- 
-  
+  <!--- copied-->
      <script>
               new WOW().init();
               </script>

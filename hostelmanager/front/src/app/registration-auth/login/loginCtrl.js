@@ -1,4 +1,5 @@
-'use strict';
+(function(){
+ 'use strict';
 
 angular.module('registrationAuth')
 .controller('LoginCtrl', ['$scope', '$state', 'djangoAuth', 'Validate', '$uibModalInstance', 
@@ -21,10 +22,13 @@ $scope.login = function(formData){
 	}
 
 
-}
+};
+
 $scope.close = function(){
 	$uibModalInstance.close();
 	
-}
+};
 
 }]);
+
+})();

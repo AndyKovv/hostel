@@ -1,4 +1,7 @@
-angular.module('directive-hostel').directive('rusEngName', function () {
+(function(){
+ 'use strict';
+
+angular.module('directive-hostel').directive('rusEngName', [function () {
 	return{
 		require: 'ngModel',
 		link: function(scope, elem, attr, ctrl){
@@ -13,5 +16,7 @@ angular.module('directive-hostel').directive('rusEngName', function () {
 			ctrl.$parsers.push(validateName);
 		}
 
-	}
-});
+	};
+}]);
+
+})();

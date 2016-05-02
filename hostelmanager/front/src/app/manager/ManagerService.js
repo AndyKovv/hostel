@@ -1,3 +1,6 @@
+(function(){
+ 'use strict';
+/* jshint sub:true */
 angular.module('managerModule')
 	.factory('ManagerService', [ '$http', '$q', '$filter', '$cookies',  function ($http, $q, $filter, $cookies ){
 		return{
@@ -52,11 +55,8 @@ angular.module('managerModule')
 			},
 			filterOrder: function(filter){
 				var deferred = $q.defer();
-				if(filter.date_in && filter.date_out){
-					var date_in_date = $filter('date')(filter.date_in, 'yyyy-MM-dd')  
-					var date_out_date = $filter('date')(filter.date_out, 'yyyy-MM-dd')
-					   
-				}
+				var date_in_date = $filter('date')(filter.date_in, 'yyyy-MM-dd');  
+				var date_out_date = $filter('date')(filter.date_out, 'yyyy-MM-dd');
 				$http({
 					url: '/api/manager/',
 					method: 'GET',
@@ -80,3 +80,4 @@ angular.module('managerModule')
 		};
 
 }]);
+})();

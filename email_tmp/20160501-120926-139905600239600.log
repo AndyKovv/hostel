@@ -1,0 +1,23 @@
+Content-Type: text/plain; charset="utf-8"
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
+Subject: [http://localhost:8000] Please Confirm Your E-mail Address
+From: webmaster@localhost
+To: Jon@yandex.ru
+Date: Sun, 01 May 2016 12:09:26 -0000
+Message-ID: <20160501120926.6591.81061@andy-linux>
+
+Hello from http://localhost:8000!
+
+You're receiving this e-mail because user Jon@yandex.ru at http://localhost:8000 has given yours as an e-mail address to connect their account.
+
+To confirm this is correct, go to http://localhost:8000/verifyEmail/s8lkclnl5x1fi8hvcenfuhyhuci1rpejxtko5hxrwz1tbxvjdtkhrtv8aw67obhm/
+-------------------------------------------------------------------------------------------------------------------------------------------
+Вы получили это сообщение потому что пользователь Jon@yandex.ru на http://localhost:8000 использует Ваш почтовый адрес для регистрации аккаунта.
+
+Для подтверждения регистрации перейдите по сылке http://localhost:8000/verifyEmail/s8lkclnl5x1fi8hvcenfuhyhuci1rpejxtko5hxrwz1tbxvjdtkhrtv8aw67obhm/
+
+
+Thank you from http://localhost:8000!
+http://localhost:8000
+-------------------------------------------------------------------------------

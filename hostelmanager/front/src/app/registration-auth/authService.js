@@ -1,8 +1,9 @@
-'use strict';
-
+(function(){
+ 'use strict';
+/* jshint sub:true */
 
 angular.module('registrationAuth')
-  .service('djangoAuth', function djangoAuth($q, $http, $cookies, $rootScope) {
+  .service('djangoAuth',['$q', '$http', '$cookies', '$rootScope', function djangoAuth($q, $http, $cookies, $rootScope) {
     // AngularJS will instantiate a singleton by calling "new" on this function
     var service = {
         /* START CUSTOMIZATION HERE */
@@ -21,7 +22,7 @@ angular.module('registrationAuth')
                 $http.defaults.headers.common.Authorization = 'Token ' + $cookies.token;
             }
             // Continue
-            params = args.params || {}
+            params = args.params || {};
             args = args || {};
             var deferred = $q.defer(),
                 url = this.API_URL + args.url,
@@ -46,14 +47,14 @@ angular.module('registrationAuth')
                 if(data){
                     data.status = status;
                 }
-                if(status == 0){
-                    if(data == ""){
+                if(status === 0){
+                    if(data === ""){
                         data = {};
                         data['status'] = 0;
                         data['non_field_errors'] = ["Could not connect. Please try again."];
                     }
                     // or if the data is null, then there was a timeout.
-                    if(data == null){
+                    if(data === null){
                         // Inject a non field error alerting the user
                         // that there's been a timeout error.
                         data = {};
@@ -152,19 +153,19 @@ angular.module('registrationAuth')
             // Set force to true to ignore stored value and query API
             restrict = restrict || false;
             force = force || false;
-            if(this.authPromise == null || force){
+            if(this.authPromise === null || force){
                 this.authPromise = this.request({
                     'method': "GET",
                     'url': "/user/"
 
-                })
+                });
                 
             }
             var da = this;
             var getAuthStatus = $q.defer();
-            if(this.authenticated != null && !force){
+            if(this.authenticated !== null && !force){
                 // We have a stored value which means we can pass it back right away.
-                if(this.authenticated == false && restrict){
+                if(this.authenticated === false && restrict){
                     getAuthStatus.reject("User is not logged in.");
                 }else{
                     getAuthStatus.resolve();
@@ -195,8 +196,9 @@ angular.module('registrationAuth')
             this.use_session = sessions;
             return this.authenticationStatus();
         }
-
-    }
+    };
   
     return service;
-  });
+  }]);
+
+})();

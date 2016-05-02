@@ -1,4 +1,7 @@
-angular.module('directive-hostel').directive('dateFormater', function($filter){
+(function(){
+ 'use strict';
+
+angular.module('directive-hostel').directive('dateFormater',['$filter', function($filter){
 	return {
 		require: 'ngModel',
 		link: function(scope, element, attrs, ngModelCtrl){
@@ -9,8 +12,7 @@ angular.module('directive-hostel').directive('dateFormater', function($filter){
 				
 			});
 		}
-	}
+	};
+}]);
 
-
-
-});
+})();

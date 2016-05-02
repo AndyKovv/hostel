@@ -1,5 +1,5 @@
-
-'use strict';
+(function(){
+ 'use strict';
 
 angular.module('registrationAuth')
   .controller('MasterCtrl',['$scope', '$location', '$rootScope', '$state', 'djangoAuth', 'dryAuth', 
@@ -39,3 +39,5 @@ $rootScope.$on('$stateChangeSuccess', function(event, toState, toParams, fromSta
 
   });
   }]);
+  
+})();

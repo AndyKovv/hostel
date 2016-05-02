@@ -87,8 +87,9 @@ TEMPLATES = [
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
         'DIRS': [
 
-                '/var/www/hostel.te.ua/hostelmanager/front/src/',
+                
                 '/var/www/hostel.te.ua/hostelmanager/hostel/templates/',
+                '/var/www/hostel.te.ua/hostelmanager/hostel/templates/hostel/',
         ],
         'APP_DIRS': True,
         'OPTIONS': {
@@ -164,11 +165,11 @@ STATICFILES_DIRS = (
     os.path.join(BASE_DIR, "static"),
     '/var/www/hostel.te.ua/hostelmanager/static/',
     '/var/www/hostel.te.ua/hostelmanager/front/',
-    '/var/www/hostel.te.ua/hostelmanager/front/src/app/',
-    '/var/www/hostel.te.ua/hostelmanager/media/roomimage/',
+    #'/var/www/hostel.te.ua/hostelmanager/front/src/app/',
+    #'/var/www/hostel.te.ua/hostelmanager/media/roomimage/',
     ('image', '/var/www/hostel.te.ua/hostelmanager/media/mainimage/'),
     ('pictures', '/var/www/hostel.te.ua/hostelmanager/media/roomimage/'),
-    ('view', '/var/www/hostel.te.ua/hostelmanager/front/src/app/'),
+    #('view', '/var/www/hostel.te.ua/hostelmanager/front/src/app/'),
 
     #'/var/www/hostel.te.ua/hostelhostelmanager/media/mainimage/',
 )

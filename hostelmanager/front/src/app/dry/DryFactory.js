@@ -1,3 +1,7 @@
+(function(){
+ 'use strict';
+
+
 angular.module('dry').factory('dryAuth', [ '$rootScope', 'djangoAuth', 
 	function ($rootScope, djangoAuth) {
 	return{
@@ -21,5 +25,6 @@ angular.module('dry').factory('dryAuth', [ '$rootScope', 'djangoAuth',
 			return $rootScope.authenticated;
 		},
 
-	}
+	};
 }]);
+})();

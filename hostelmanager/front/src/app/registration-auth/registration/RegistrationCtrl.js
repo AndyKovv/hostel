@@ -1,4 +1,5 @@
-'use strict';
+(function(){
+ 'use strict';
 
 angular.module('registrationAuth').controller('RegistrationCtrl', [ '$rootScope', '$scope', 'djangoAuth', 'dryAuth', '$uibModalInstance', 
 	function($rootScope, $scope, djangoAuth, dryAuth, $uibModalInstance){
@@ -11,8 +12,8 @@ $scope.additionalRegister = function(userInfoForm){
 			user_firstname : $scope.register.user_firstname,
 			user_middlename: $scope.register.user_middlename,
 			user_lastname: $scope.register.user_lastname,
-			phone_number: $scope.register.phone_number,
-		}
+			phone_number: $scope.register.phone_number
+		};
 		
 		djangoAuth.updateProfile(data).then(function(){
 				$uibModalInstance.close();
@@ -30,9 +31,9 @@ $scope.mainRegister = function(registrationForm){
 	var data = {
 			email : $scope.main_reg.email,
 			password1 : $scope.main_reg.password1,
-			password2 : $scope.main_reg.password2,
+			password2 : $scope.main_reg.password2
 
-		}
+		};
 		
 		djangoAuth.register(data).then(function(response){
 			$scope.registration_success = true;
@@ -45,5 +46,8 @@ $scope.mainRegister = function(registrationForm){
 
 $scope.close = function(){
 	$uibModalInstance.close();
-}
+};
+
 }]);
+
+})();

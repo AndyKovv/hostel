@@ -4,16 +4,48 @@
     "start": "http-server -a 127.0.0.1 -p 8000"
   },
   "dependencies": {
-    "angular-bootstrap-datetimepicker": "^1.0.1"
+    "angular-bootstrap-datetimepicker": "^1.0.1",
+    "async": "^2.0.0-rc.3"
   },
   "devDependencies": {
+    "browser-sync": "^2.12.5",
+    "glob": "^7.0.3",
+    "gulp": "^3.9.1",
+    "gulp-angular-templatecache": "^1.8.0",
+    "gulp-autoprefixer": "^3.1.0",
+    "gulp-css-adjust-url-path": "^1.0.2",
+    "gulp-css-url-adjuster": "^0.2.3",
+    "gulp-imagemin": "^2.4.0",
+    "gulp-jshint": "^2.0.0",
+    "gulp-minify-css": "^1.2.4",
+    "gulp-rename": "^1.2.2",
+    "gulp-rigger": "^0.5.8",
+    "gulp-sass": "^2.3.1",
+    "gulp-sourcemaps": "^2.0.0-alpha",
+    "gulp-uglify": "^1.5.3",
+    "gulp-uncss": "^1.0.5",
+    "gulp-watch": "^4.3.5",
     "jasmine-core": "^2.4.1",
+    "jshint": "^2.9.2",
     "karma": "^0.13.22",
     "karma-chrome-launcher": "^0.2.3",
     "karma-jasmine": "^0.3.8",
     "karma-ng-html2js-preprocessor": "^0.2.2",
     "karma-phantomjs-launcher": "^1.0.0",
     "ng-html2js": "^2.0.0",
-    "phantomjs-prebuilt": "^2.1.7"
-  }
+    "phantomjs-prebuilt": "^2.1.7",
+    "ssh2-streams": "^0.1.3"
+  },
+  "name": "hostelfront",
+  "version": "1.0.0",
+  "description": "hostel.te.ua project",
+  "main": "index.js",
+  "directories": {
+    "test": "test"
+  },
+  "keywords": [
+    "hostel"
+  ],
+  "author": "andy.kovv@gmail.com",
+  "license": "ISC"
 }

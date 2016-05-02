@@ -1,3 +1,7 @@
+(function(){
+	
+ 'use strict';
+
 angular.module('managerModule')
 	.controller('ManagerOrderCtrl', ['$rootScope', '$scope', '$filter', '$timeout', 'toastr', '$uibModalInstance', 'OrderRoomService', 'chosen_room', 'price_room', 'date_in', 'date_out', 
 		function($rootScope, $scope, $filter, $timeout, toastr,  $uibModalInstance, OrderRoomService, chosen_room, price_room, date_in, date_out){
@@ -7,7 +11,7 @@ angular.module('managerModule')
 					email: $rootScope.user.email,
 					order_in: date_in,
 					order_out: date_out
-				}
+				};
 
 				$scope.orderSendManager = function(orderRoomManagerForm){
 					
@@ -24,7 +28,7 @@ angular.module('managerModule')
         					date_in:  date_in,
         					date_out: date_out,
         					amount: $scope.amount_room,
-						}
+						};
 						OrderRoomService.orderRoom(data).then(function(data){
 								$scope.order_success = data.id ? true : false;
 								if($scope.order_success){
@@ -35,5 +39,7 @@ angular.module('managerModule')
 								}
 							});	
 					}
-				}
-		}]);
+				};
+}]);
+
+})();

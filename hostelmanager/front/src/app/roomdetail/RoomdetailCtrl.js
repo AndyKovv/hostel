@@ -1,12 +1,11 @@
-'use strict';
-
+(function(){
+ 'use strict';
 angular.module('mainPage')
 .controller('DetailPageCtrl', ['$rootScope', '$scope', '$timeout',  '$uibModalInstance', 'OrderRoomService', 'djangoAuth', 'getRoom', 
- function ($rootScope, $scope, $timeout, $uibModalInstance, OrderRoomService, djangoAuth, getRoom) {
+ function ($rootScope, $scope, $timeout, $uibModalInstance, OrderRoomService, djangoAuth, getRoom){
  var authenticated = $rootScope.authenticated;
  
 $scope.room = getRoom;
-
 
 //Send Date to redirect page
 $scope.redirect_init_date_in = $rootScope.additional_date_in;
@@ -33,7 +32,7 @@ $scope.map = {center: {latitude:latitude, longitude: longitude}, zoom: 16 };
       	longitude : longitude
 
       }
-  }
+  };
 };
 
 //Redirecting to chosen free room
@@ -43,20 +42,20 @@ $scope.redirectFreeRoom = function(){
 		$uibModalInstance.close();
 		}, 500);		
 	*/
-}
+};
 
 //Close modal
 $scope.close = function(){
 	$uibModalInstance.close();
 	delete $rootScope.additional_date_in;
 	delete $rootScope.additional_date_out;	
-}
+};
 
 //Show additional room form
 $scope.showAdditionalRoom = function(){
 		$scope.render_additional = true;
     	//$scope.additionalrooms = $scope.additionalRoom;	
-}
+};
 
 
 //Show order room form
@@ -83,7 +82,7 @@ if(date.order_in && date.order_out){
 			order_in: order_in,
 			order_out: order_out,
 			room_id: $scope.room.id
-			}
+			};
 			
 			//Fire the request to api
 			OrderRoomService.chekFreePlace(data)
@@ -106,7 +105,7 @@ if(date.order_in && date.order_out){
 			$scope.status_place = 'Wrong';
 		}
 	}
-}
+};
 
 
 $rootScope.user = $rootScope.user ? $rootScope.user : '';
@@ -116,7 +115,7 @@ $rootScope.user = $rootScope.user ? $rootScope.user : '';
         		user_middlename :$rootScope.user.user_middlename,
         		user_lastname: $rootScope.user.user_lastname,
         		phone_number : $rootScope.user.phone_number,
-}
+};
 
 $scope.orderRoom = function(orderForm){
 	if(orderForm.$valid){
@@ -134,7 +133,7 @@ $scope.orderRoom = function(orderForm){
         		date_out: order_out,
         		amount: $scope.room.price_room,
 
-    }
+    };
     
     	OrderRoomService.orderRoom(data).then(function(data){
     		$scope.success_order = true;
@@ -145,6 +144,9 @@ $scope.orderRoom = function(orderForm){
     	});
 
 	}
-}
+};
 
 }]);
+
+})();
+

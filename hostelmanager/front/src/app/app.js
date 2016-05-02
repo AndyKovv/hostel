@@ -1,13 +1,6 @@
-'use strict';
+(function(){
+ 'use strict';
 
-/**
- * @ngdoc overview
- * @name angularApp
- * @description
- * # angularApp
- *
- * Main module of the application.
- */
 angular
   .module('hostelApp', [
     'ngResource',
@@ -27,9 +20,11 @@ angular
     'translateModule',
     'dry',
     
+    
 
 
-  ]).config( function($stateProvider, $urlRouterProvider, $locationProvider, $httpProvider){
+  ]).config(['$stateProvider', '$urlRouterProvider', '$locationProvider', '$httpProvider',
+       function($stateProvider, $urlRouterProvider, $locationProvider, $httpProvider){
 
    
 
@@ -46,7 +41,7 @@ angular
             return Rooms.query().$promise;
           }]
       },
-      templateUrl:'static/view/main/main.tpl.html',
+      templateUrl:'main/main.tpl.html',
       controller : 'MainPageCtrl',
    })
     .state('mainpage.detail',{
@@ -65,7 +60,7 @@ angular
                   return getRoom;
                 }
               },
-              templateUrl: 'static/view/roomdetail/room-detail.tpl.html',
+              templateUrl: 'roomdetail/room-detail.tpl.html',
               controller: 'DetailPageCtrl',
               size: 'lg',
               windowTopClass: 'hoverable'
@@ -84,7 +79,7 @@ angular
        onEnter:['$state', '$uibModal', 'dryAuth', function($state, $uibModal, dryAuth){
         if(!dryAuth.chekStatus()){
           $uibModal.open({
-              templateUrl: 'static/view/registration-auth/registration/user-registration.tpl.html',
+              templateUrl: 'registration-auth/registration/user-registration.tpl.html',
               controller: 'RegistrationCtrl',
               size: 'md',
               windowTopClass: 'hoverable'
@@ -104,7 +99,7 @@ angular
       onEnter:['$state', '$uibModal', 'dryAuth', function($state, $uibModal, dryAuth){
           if(!dryAuth.chekStatus()){
             $uibModal.open({
-              templateUrl: 'static/view/registration-auth/forgot-password/password-reset-form.tpl.html',
+              templateUrl: 'registration-auth/forgot-password/password-reset-form.tpl.html',
               controller: 'PasswordResetCtrl',
               size: 'md',
             }).result.finally(function(){
@@ -122,7 +117,7 @@ angular
       onEnter:['$state', '$uibModal', 'dryAuth', function($state, $uibModal, dryAuth){
         if(!dryAuth.chekStatus()){
           $uibModal.open({  
-            templateUrl: 'static/view/registration-auth/forgot-password/password-reset-confirm-form.tpl.html',
+            templateUrl: 'registration-auth/forgot-password/password-reset-confirm-form.tpl.html',
             controller: 'PasswordResetCtrl',
             size: 'md',
           }).result.finally(function(){
@@ -140,7 +135,7 @@ angular
       onEnter:['$uibModal', '$state', 'dryAuth', function($uibModal, $state, dryAuth){
         if(!dryAuth.chekStatus()){
           $uibModal.open({
-            templateUrl: 'static/view/registration-auth/login/login.tpl.html',
+            templateUrl: 'registration-auth/login/login.tpl.html',
             controller: 'LoginCtrl'
          })
           .result.finally(function(){
@@ -159,7 +154,7 @@ angular
         function($uibModal, $state, dryAuth ){
              if(dryAuth.chekStatus()){
                 $uibModal.open({
-                  templateUrl: 'static/view/user-account/user-settings.tpl.html',
+                  templateUrl: 'user-account/user-settings.tpl.html',
                   controller: 'userAccountCtrl',
                   size: 'md',
                 })
@@ -189,7 +184,7 @@ angular
                     return getOrdersList;
                 }
             },
-            templateUrl: 'static/view/order/order-list.tpl.html',
+            templateUrl: 'order/order-list.tpl.html',
             controller: 'OrderListCtrl',
             size: 'lg',
           })
@@ -216,7 +211,7 @@ angular
               return getOrderInfo;
             }
           },
-          templateUrl: 'static/view/order/order-info/order-info.tpl.html',
+          templateUrl: 'order/order-info/order-info.tpl.html',
           controller: 'OrderInfoCtrl',
           size: 'lg',
 
@@ -238,7 +233,7 @@ angular
         redirectTo: 'mainpage',
       },
       controller: 'ManagerCtrl',
-      templateUrl: 'static/view/manager/manager-main-page.tpl.html'
+      templateUrl: 'manager/manager-main-page.tpl.html'
     })
     .state('manager_order_list',{
       url: '^/order_list/',
@@ -251,14 +246,14 @@ angular
         authenticated: true,
         redirectTo: 'mainpage'
       },
-      templateUrl: 'static/view/manager/manager-list/manager-order-list.tpl.html',
+      templateUrl: 'manager/manager-list/manager-order-list.tpl.html',
       controller: 'ManagerOrderListCtrl',
 
     })      
     .state('googlelogin',{
       url:'^/accounts/google/login/',
       controller: function($window){
-        $window.location.href="/accounts/google/login/"
+        $window.location.href='/accounts/google/login/';
       }
       
     })
@@ -280,14 +275,14 @@ angular
      });
 
     $locationProvider.html5Mode({
-  enabled: true,
+     enabled: true,
+    });
 
-});
-
-  });
+  }]);
   
  angular.module('mainPage', ['uiGmapgoogle-maps','ui.mask', 'ui.bootstrap','ngQuickDate', 'toastr'])
- .config(function(ngQuickDateDefaultsProvider, toastrConfig){
+ .config(['ngQuickDateDefaultsProvider', 'toastrConfig', 'uiGmapGoogleMapApiProvider', 
+    function(ngQuickDateDefaultsProvider, toastrConfig, uiGmapGoogleMapApiProvider){
  ngQuickDateDefaultsProvider.set({
     closeButtonHtml: "<i class='fa fa-times'></i>",
     buttonIconHtml: "<i class='fa fa-calendar right'></i>",
@@ -305,8 +300,13 @@ angular
     preventOpenDuplicates: false,
     target: 'body'
   });
+    uiGmapGoogleMapApiProvider.configure({
+        key: 'AIzaSyD7gca_XV2K1bT5Rb5mWlBpfjYTetkPpMI',
+        libraries: 'weather,geometry,visualization'
+    });
 
- });
+ }]);
+})();
 
  angular.module('registrationAuth', ['toastr', 'ui.bootstrap']);
  angular.module('OrderRoom', ['ui.bootstrap']);
@@ -314,4 +314,7 @@ angular
  angular.module('dry', []);
  angular.module('userAccount', []);
  angular.module('managerModule', []);
+ 
+
+ 
 
