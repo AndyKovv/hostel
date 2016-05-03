@@ -28,6 +28,9 @@ router.register(r'manager', views.ManagerViewSet)
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
+    url(r'^accounts/social/signup/$', RedirectView.as_view(url='/login/', permanent=True), name='redirect'),
+    url(r'^accounts/profile/$', RedirectView.as_view(url='/', permanent=True), name='profile-redirect'),
+    url(r'^accounts/', include('allauth.urls')),
     url(r'^api/', include(router.urls)),
     url(r'^api/password/reset/$', views.PasswordResetView.as_view(), name='rest_password_reset'),
     url(r'^api/password/reset/confirm/$', views.PasswordResetConfirmView.as_view(), name='rest_password_reset_confirm'),
@@ -35,7 +38,6 @@ urlpatterns = [
     url(r'^api/login/$', views.LoginView.as_view(), name='rest_login'),
     url(r'^api/logout/$', views.LogoutView.as_view(), name='rest_logout'),
     url(r'^api/user/$', views.UserDetailsView.as_view(), name='rest_user_details'),
-    url(r'^accounts/', include('allauth.urls')),
     url(r'^api/registration/$', views.RegisterView.as_view(), name='rest_register'),
     url(r'^api/registration/verify-email/$', views.VerifyEmailView.as_view(), name='rest_verify_email'),
     url(r'^api/password/change/$', views.PasswordChangeView.as_view(), name='rest_password_change'),

@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!DOCTYPE document SYSTEM "rml.dtd">
+<document filename="hello.pdf">
+ <docinit>
+    <registerCidFont faceName="HeiseiMin-W3" />
+    
+  </docinit>
+    
+    <template showBoundary="1"  >
+        <!--define a 'frame' into which the content will flow.-->
+        <pageTemplate id="main">
+
+        <pageGraphics>
+        <setFont name="HeiseiMin-W3" size="14"/>
+            <drawCentredString x="297.5" y="780">
+            Заказ №{{id}} от {{date}}
+            </drawCentredString>
+            <lineMode width="3"/>
+             <lines>
+               0.1in 10.5in 8.2in 10.5in
+              </lines>
+            <fill color="black"/>
+    
+            <drawCentredString x="297.5" y="715">
+            Пожалуйста,  распечатайте документ.
+            </drawCentredString>
+
+           
+            <drawRightString x="630" y="510">
+            Сумма: {{amount}} ГРН.
+            </drawRightString>
+
+        
+
+
+        </pageGraphics>
+             <frame id="first"  x1="8" y1="480" width="582" height="200"/>
+        </pageTemplate>
+    </template>
+  
+    <stylesheet>
+        <!-- define a text style -->
+        <paraStyle name="textstyle1" fontName="HeiseiMin-W3" fontSize="24" leading="24" />
+        <blockTableStyle id="myBlockStyle">
+        <blockFont name="HeiseiMin-W3" size="10"/>
+        <lineStyle kind="LINEBELOW" colorName="silver"/>
+        </blockTableStyle>
+    </stylesheet>
+     <story>
+       <!--The elements in this section will fill up the frames -->
+       <!--defined in the <template> section above.             -->
+       <!--The text inside double hashes is replaced dynamically-->
+       <!--inside Default.aspx-->
+        <blockTable colWidths="2.6cm, 3.0cm, 3.0cm, 3.0cm, 3cm, 4.9cm"
+          rowHeights="1.2cm,1.2cm,1.2cm, 1.2cm"
+         style="myBlockStyle">
+ <tr>
+        <td>Дата Пр.:</td><td>{{date_in}}</td>
+          <td>Дата От.:</td><td>{{date_out}}</td>
+            <td>Tелефон:</td><td>{{phone_number}}</td>
+</tr>
+ <tr>
+        <td>Имя:</td><td>{{first_name}}</td>
+          <td>Фамилия:</td><td>{{middle_name}}</td>
+            <td>Отчество:</td><td>{{last_name}}</td>
+</tr>
+ <tr>
+        <td>Адрес:</td><td>{{address}}</td>
+          <td></td><td></td>
+            <td></td><td></td>
+</tr>
+
+<tr>
+        
+          <td>Оплата:</td><td>{{payment}}</td>
+          <td>Комната:</td><td>{{room_name}}</td>
+            <td>Подпись:</td><td>_________________</td>
+</tr>
+
+
+
+</blockTable>
+     
+    </story>
+</document>

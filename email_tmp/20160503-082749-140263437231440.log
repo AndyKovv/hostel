@@ -1,0 +1,23 @@
+Content-Type: text/plain; charset="utf-8"
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
+Subject: [http://localhost:8000] Please Confirm Your E-mail Address
+From: webmaster@localhost
+To: player94.94@mail.ru
+Date: Tue, 03 May 2016 08:27:49 -0000
+Message-ID: <20160503082749.10942.42171@andy-linux>
+
+Hello from http://localhost:8000!
+
+You're receiving this e-mail because user player94.94@mail.ru at http://localhost:8000 has given yours as an e-mail address to connect their account.
+
+To confirm this is correct, go to http://localhost:8000/verifyEmail/98afpxjjva0baoqjrhr80xalbuubksldy4wztuixiqzqsvtltz8emdap1eqdb1ra/
+-------------------------------------------------------------------------------------------------------------------------------------------
+Вы получили это сообщение потому что пользователь player94.94@mail.ru на http://localhost:8000 использует Ваш почтовый адрес для регистрации аккаунта.
+
+Для подтверждения регистрации перейдите по сылке http://localhost:8000/verifyEmail/98afpxjjva0baoqjrhr80xalbuubksldy4wztuixiqzqsvtltz8emdap1eqdb1ra/
+
+
+Thank you from http://localhost:8000!
+http://localhost:8000
+-------------------------------------------------------------------------------

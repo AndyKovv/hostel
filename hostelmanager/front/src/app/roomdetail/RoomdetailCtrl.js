@@ -17,7 +17,8 @@ $scope.render = false;
 $scope.orderadd = false;
 //Render additional form 
 $scope.render_additional = false;
-
+//Reder chose form
+$scope.date_chose = true;
 
 $scope.mapShow = function(){
 	//Coords render to map
@@ -61,6 +62,7 @@ $scope.showAdditionalRoom = function(){
 //Show order room form
 $scope.showOrderForm = function(){
 $scope.orderadd = true;
+
 $scope.render_additional = false;
 
 };
@@ -137,7 +139,8 @@ $scope.orderRoom = function(orderForm){
     
     	OrderRoomService.orderRoom(data).then(function(data){
     		$scope.success_order = true;
-    		
+    		$scope.render = false;
+    		$scope.date_chose = false;
     		$scope.orderadd = false;
     		$scope.order_ok = true;
     		$scope.order_confirm = data;

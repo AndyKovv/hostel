@@ -44,6 +44,7 @@ INSTALLED_APPS = [
     'allauth.socialaccount',
     'allauth.socialaccount.providers.google',
     'allauth.socialaccount.providers.vk',
+    'allauth.socialaccount.providers.facebook',
     'rest_framework',
     'rest_framework.authtoken',
     'hostel',
@@ -64,7 +65,10 @@ MIDDLEWARE_CLASSES = [
     'django.contrib.auth.middleware.SessionAuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'django.middleware.common.BrokenLinkEmailsMiddleware',
 ]
+
+ADMINS = [('Andy', 'andy.kovv@gmail.com'), ('Admin', 'admin@hostel.te.ua')]
 
 CRON_CLASSES = [
     'hostel.cronjobs.UnpaymentOrder',
@@ -193,4 +197,63 @@ REST_FRAMEWORK = {
         'rest_framework.authentication.TokenAuthentication',
     )
 }
+
+LOGGING = {
+    'version': 1,
+    'disable_existing_loggers': False,
+
+    'filters': {
+    'require_debug_false': {
+        '()': 'django.utils.log.RequireDebugFalse',
+        }
+    },
+    'formatters': {
+        'verbose': {
+            'format' : "[%(asctime)s] %(levelname)s [%(name)s:%(lineno)s] %(message)s",
+            'datefmt' : "%d/%b/%Y %H:%M:%S"
+        },
+        'simple': {
+            'format': '%(levelname)s %(message)s'
+        },
+    },
+    'handlers': {
+        'mail_admins_error': {
+        'level': 'ERROR',
+        #'filters': ['require_debug_false'],
+        'class': 'django.utils.log.AdminEmailHandler',
+        'include_html': True
+        },
+        'mail_admins_warning':{
+        'level': 'WARNING',
+        #'filters': ['require_debug_false'],
+        'class': 'django.utils.log.AdminEmailHandler',
+        'include_html': True
+        },
+        'file': {
+            'level': 'WARNING',
+            'class': 'logging.FileHandler',
+            'filename': '/var/www/hostel.te.ua/hostelmanager/debug.log',
+            'formatter': 'verbose'
+        },
+    },
+    'loggers': {
+        'django': {
+            'handlers':['file'],
+            'propagate': True,
+            'level':'DEBUG',
+        },
+        'django.request': {
+            'handlers': ['mail_admins_error'],
+            'level': 'ERROR',
+            'propagate': False,
+        },
+         'django.request': {
+            'handlers': ['mail_admins_warning'],
+            'level': 'WARNING',
+            'propagate': False,
+        },
+      
+    }
+}
+
 

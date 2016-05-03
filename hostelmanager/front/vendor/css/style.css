@@ -260,6 +260,15 @@ h6 span { background:#fff; padding:0 10px; }
     color: #0099CC;
 }
 
+.element-fade-in-out {
+  transition: 1s linear all;  
+  opacity: 1;
+}
+
+.element-fade-in-out.ng-hide {
+  opacity: 0;
+}
+
 .padding-zero{
     padding-left: 0px;
     padding-right: 0px;
@@ -321,7 +330,7 @@ h6 span { background:#fff; padding:0 10px; }
   text-align: center;
   width: 250px;
   display: none;
-  position:absolute;
+  position:fixed;
   padding: 5px;
   margin-left: -8.5em;
   margin-top: -19em;
@@ -329,9 +338,16 @@ h6 span { background:#fff; padding:0 10px; }
 }
 
 @media (max-width: 800px) {
-  .order-table {
+  .order-table-smal-hide {
     visibility: hidden !important;
     display: none !important;
   }
+}
+
+@media (min-width: 800px){
+    .small-order-show {
+        visibility: hidden !important;
+        display: none !important;
+    }
 }
 

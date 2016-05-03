@@ -13,7 +13,6 @@ from django.conf import settings
 from django.core.exceptions import ObjectDoesNotExist
 from django.utils.translation import ugettext_lazy as _
 from django.db.models import Count
-#from django.views.generic import TemplateView
 from django.views.generic.base import TemplateResponseMixin, View, TemplateView
 from django.shortcuts import redirect, render 
 from django.views.decorators.csrf import csrf_exempt
@@ -22,6 +21,7 @@ from django.contrib.sites.shortcuts import get_current_site
 from django.core.mail import send_mail
 from django.template.loader import render_to_string, get_template
 from django.template import Template, Context
+from django.utils.translation import get_language, get_language_from_request
 
 
 #DjangoRestFramework
@@ -283,8 +283,16 @@ class OrderView(viewsets.ModelViewSet):
 
 		serializer = OrderInfoSerializer(order)
 		if serializer:
+			#import pdb
+			#pdb.set_trace()
+			lang =get_language_from_request(request)
+			if lang == 'uk':
+				t = get_template('templated_pdf/order_uk.rml')
+			elif lang == 'ru':
+				t = get_template('templated_pdf/order_ru.rml')
+			else:
+				t = get_template('templated_pdf/order.rml')
 
-			t = get_template('templated_pdf/order.rml')
 			c = Context({
 				"id" : serializer.data['id'],
 				"date": serializer.data['order_date'],

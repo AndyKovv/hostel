@@ -252,16 +252,22 @@ angular
     })      
     .state('googlelogin',{
       url:'^/accounts/google/login/',
-      controller: function($window){
+      controller:[ '$window', function($window){
         $window.location.href='/accounts/google/login/';
-      }
+      }]
       
     })
     .state('vklogin',{
       url:'^/accounts/vk/login/',
-      controller: function($window){
+      controller:['$window', function($window){
         $window.location.href ="/accounts/vk/login/";
-      }
+      }]
+    })
+    .state('facebooklogin',{
+      url:'^/accounts/facebook/login/',
+      controller:['$window', function($window){
+        $window.location.href ="/accounts/facebook/login/";
+      }]
     })
     .state('logout', {
       url:'logout/',

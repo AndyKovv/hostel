@@ -1,0 +1,22 @@
+Content-Type: text/plain; charset="utf-8"
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
+Subject: Order information
+From: orders@hostel.te.ua
+To: player94.94@mail.ru
+Date: Tue, 03 May 2016 13:47:26 -0000
+Message-ID: <20160503134726.18894.63760@andy-linux>
+
+Thank you for ordering room. Your order number is 172.
+      You can see your order in account, or go to link http://localhost:8000/orderinfo/c81021366780b7011e16/
+
+If you didn't do order, please resend the letter to admin@hostel.te.ua
+With best Regards http://localhost:8000 team.
+----------------------------------------------------------------------
+Спасибо за заказ постели в нашем хостеле. Ваш номер заказа 172.
+        Вы можете увидеть ваш заказ в аккаунте, или перейдите по сылке http://localhost:8000/orderinfo/c81021366780b7011e16/.
+Если вы не делали заказ у нас на сайте, пожалуйста перешлите письмо по адресу admin@hostel.te.ua
+С лучшими пожеланиями http://localhost:8000 команда.
+
+
+-------------------------------------------------------------------------------

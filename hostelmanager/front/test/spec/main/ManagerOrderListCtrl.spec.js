@@ -48,7 +48,7 @@ describe('ManagerOrderListCtrl', function(){
 	});
 	it('should get payment form client $scope.managerPayment', function(){
 		$scope.managerPayment(order);
-		$httpBackend.expectGET('static/view/manager/manager-order-edit/manager-order-edit-list.tpl.html').respond(200);
+		$httpBackend.expectGET('manager/manager-order-edit/manager-order-edit-list.tpl.html').respond(200);
 		$httpBackend.flush();
 	});
 	it('should test $scope.startTimer', function(){

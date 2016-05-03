@@ -1,6 +1,6 @@
 <div class="row">
      <div class="col-xs-12 col-sm-12 col-lg-12">
-<table class="table table-striped order-table">
+<table class="table table-striped order-table-smal-hide">
         <thead>
             <tr>
                 <th colspan="8" style="text-align:center;">
@@ -21,7 +21,7 @@
                     <td><span ng-bind="order_confirm.date_out"></span></td>
                 <td><span translate="PAYMENT_PHONE_NUMBER"></span></td>
                     <td><span ng-bind="order_confirm.person_phonenumber"></span></td>
-                <td><span translate="PAYMENT_EMAIL"></span>:</td>
+                <td><span translate="PAYMENT_EMAIL"></span></td>
                     <td><span ng-bind="order_confirm.person_email"></span></td>
             </tr>
             <tr>
@@ -43,6 +43,53 @@
      </table>
      </div>
 </div>
+
+<div class="small-order-show">
+  <ul>
+    <li style="text-align:center;">
+        <span translate="PAYMENT_CONFIRM_ORDER"></span>
+          <span ng-bind="order_confirm.id"></span>
+            <span translate="PAYMENT_CONFIRM_FROM"></span>
+              <span ng-bind="order_confirm.order_time_in | date : 'MM/dd/yyyy'"></span>
+    </li>
+    <li>
+        <b><span translate="PAYMENT_DATE_ARRIVAL"></span></b>
+          <span ng-bind="order_confirm.date_in"></span>
+    </li>
+
+    <li>
+             <b><span translate="PAYMENT_DATE_DEPARTURE"></span></b>
+               <span ng-bind="order_confirm.date_out"></span>
+    </li>
+    <li>
+        <b><span translate="PAYMENT_PHONE_NUMBER"></span></b>
+          <span ng-bind="order_confirm.person_phonenumber"></span>
+    </li>
+    <li>
+           <b> <span translate="PAYMENT_EMAIL"></span></b>
+              <span ng-bind="order_confirm.person_email"></span>
+    </li>
+    <li>
+        <b><span translate="PAYMENT_FIRST_NAME"></span></b>
+          <span ng-bind="order_confirm.person_firstname"></span>
+    </li>
+    <li>
+            <b><span translate="PAYMENT_MIDDLE_NAME"></span></b>
+               <span ng-bind="order_confirm.person_middlename"></span>
+    </li>
+    <li>
+                  <b><span translate="PAYMENT_LAST_NAME"></span></b>
+                    <span ng-bind="order_confirm.person_lastname"></span>
+                
+    </li>
+    <li>
+           <b> <span translate="PAYMENT_AMMOUNT"></span></b>
+                <span ng-bind="order_confirm.amount" style="font-size: 13pt; color:red;"></span>
+                    <i class="fa">&#8372;</i>
+    </li>
+  </ul>
+</div>
+
 <div class="row text-right">
 <div class="col-xs-12 col-sm-12 col-lg-12">
 <form method="POST" action="https://api.privatbank.ua/p24api/ishop">
