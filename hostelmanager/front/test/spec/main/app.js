@@ -137,6 +137,10 @@ describe('HostelApp', function(){
         expect($state.href("manager_order_list")).toEqual('/order_list/');
       });
 
+      it('should test mainpage.error_payment', function(){
+        expect($state.href("mainpage.error_payment")).toEqual('/error_payment/');
+      });
+
 
 
 });

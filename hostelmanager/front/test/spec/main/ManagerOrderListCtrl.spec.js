@@ -51,12 +51,7 @@ describe('ManagerOrderListCtrl', function(){
 		$httpBackend.expectGET('manager/manager-order-edit/manager-order-edit-list.tpl.html').respond(200);
 		$httpBackend.flush();
 	});
-	it('should test $scope.startTimer', function(){
-		$httpBackend.expectGET('/api/manager/').respond(200);
-		$scope.startTimer();
-		$interval.flush(10000);
-		$httpBackend.flush();
-	});
+
 	it('should test $scope.resetFilters', function(){
 		$scope.resetFilters();
 		expect($scope.filter.number_order).toEqual('');

@@ -30,6 +30,8 @@ urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url(r'^accounts/social/signup/$', RedirectView.as_view(url='/login/', permanent=True), name='redirect'),
     url(r'^accounts/profile/$', RedirectView.as_view(url='/', permanent=True), name='profile-redirect'),
+    url(r'^accounts/signup/$', RedirectView.as_view(url='/login/', permanent=True), name='profile-redirect-singup'),
+    url(r'^accounts/social/login/cancelled/', RedirectView.as_view(url='/login/', permanent=True), name='profile-redirect-cancelled'),    
     url(r'^accounts/', include('allauth.urls')),
     url(r'^api/', include(router.urls)),
     url(r'^api/password/reset/$', views.PasswordResetView.as_view(), name='rest_password_reset'),

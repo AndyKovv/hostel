@@ -21,13 +21,13 @@ beforeEach(module('uiGmapgoogle-maps.directives.api'));
 beforeEach(module('ngQuickDate'));
 beforeEach(module('ui.mask'));
 
-var $httpBackend, $scope, ctrl, $rootScope, uibModal, $state;
+var $httpBackend, $scope, ctrl, $rootScope, uibModal, $state, $uibModalInstance;
 
 beforeEach(inject(function(_$httpBackend_, _$rootScope_, $controller, _$uibModal_){
     
     $rootScope = _$rootScope_;
     uibModal = _$uibModal_;
-   
+    $uibModalInstance = jasmine.createSpyObj('$uibModalInstance', ['close', 'dismiss']);
     spyOn(uibModal, 'open');
 
     
@@ -37,6 +37,7 @@ beforeEach(inject(function(_$httpBackend_, _$rootScope_, $controller, _$uibModal
 	$scope = $rootScope.$new();
 	ctrl = $controller('MainPageCtrl', { 
         $scope : $scope,
+        $uibModalInstance : $uibModalInstance,
         $rootScope: $rootScope,
         $uibModal: uibModal,
         allRooms : { data: ['room1', 'room2']},

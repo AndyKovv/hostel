@@ -39,7 +39,9 @@ angular.module('registrationAuth')
 
 		}
 	};
-
+	$scope.close = function(){
+		$uibModalInstance.close();
+	};
 
 
 }]);

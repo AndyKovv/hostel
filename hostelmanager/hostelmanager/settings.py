@@ -24,9 +24,9 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = 'q)35vtcyvkux@g^*5kqt=%z3&x82xmz41yy2vyrge%c71)+kf3'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['www.hostel.te.ua']
 
 
 # Application definition
@@ -50,7 +50,8 @@ INSTALLED_APPS = [
     'hostel',
     'geoposition',
     'django_cron',
-
+    
+   
 
 
 
@@ -65,7 +66,7 @@ MIDDLEWARE_CLASSES = [
     'django.contrib.auth.middleware.SessionAuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    'django.middleware.common.BrokenLinkEmailsMiddleware',
+    
 ]
 
 ADMINS = [('Andy', 'andy.kovv@gmail.com'), ('Admin', 'admin@hostel.te.ua')]
@@ -82,9 +83,14 @@ AUTHENTICATION_BACKENDS = (
 
 ROOT_URLCONF = 'hostelmanager.urls'
 
-#EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
-EMAIL_BACKEND = 'django.core.mail.backends.filebased.EmailBackend'
-EMAIL_FILE_PATH = '/var/www/hostel.te.ua/email_tmp'
+
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST='smtp.zoho.com'
+EMAIL_PORT=587
+EMAIL_HOST_USER = 'admin@hostel.te.ua'
+EMAIL_HOST_PASSWORD = 'Lmk87868@'
+DEFAULT_FROM_EMAIL = 'admin@hostel.te.ua'
+EMAIL_USE_TLS = True
 
 TEMPLATES = [
     {
@@ -92,8 +98,8 @@ TEMPLATES = [
         'DIRS': [
 
                 
-                '/var/www/hostel.te.ua/hostelmanager/hostel/templates/',
-                '/var/www/hostel.te.ua/hostelmanager/hostel/templates/hostel/',
+                '/home/AndyKovv/hostelmanager/hostel/templates/',
+                '/home/AndyKovv/hostelmanager/hostel/templates/hostel/',
         ],
         'APP_DIRS': True,
         'OPTIONS': {
@@ -106,6 +112,8 @@ TEMPLATES = [
         },
     },
 ]
+	    
+
 
 WSGI_APPLICATION = 'hostelmanager.wsgi.application'
 
@@ -116,12 +124,23 @@ WSGI_APPLICATION = 'hostelmanager.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'hostel',
-        'USER': 'root',
-        'PASSWORD': 'root',
-        'HOST': 'localhost',
-        'PORT': '3306',
+        'NAME': 'AndyKovv$hostel',
+        'USER': 'AndyKovv',
+        'PASSWORD': 'A668Gi88@',
+        'HOST': 'AndyKovv.mysql.pythonanywhere-services.com',
         
+        
+    }
+}
+    
+CACHES = {
+    'default': {
+        'BACKEND': 'django.core.cache.backends.filebased.FileBasedCache',
+        'LOCATION': '/home/AndyKovv/hostelmanager/cache',
+        'TIMEOUT': 60,
+        'OPTIONS': {
+            'MAX_ENTRIES': 1000
+        }
     }
 }
 
@@ -159,25 +178,14 @@ USE_L10N = True
 USE_TZ = True
 
 AUTH_USER_MODEL = 'hostel.ExtUser'
-SESSION_SAVE_EVERY_REQUEST = True
+
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangohostelmanager.com/en/1.9/howto/static-files/
 
 STATIC_URL = '/static/'
+STATIC_ROOT = '/home/AndyKovv/hostelmanager/static/'
 
-STATICFILES_DIRS = (
-    os.path.join(BASE_DIR, "static"),
-    '/var/www/hostel.te.ua/hostelmanager/static/',
-    '/var/www/hostel.te.ua/hostelmanager/front/',
-    #'/var/www/hostel.te.ua/hostelmanager/front/src/app/',
-    #'/var/www/hostel.te.ua/hostelmanager/media/roomimage/',
-    ('image', '/var/www/hostel.te.ua/hostelmanager/media/mainimage/'),
-    ('pictures', '/var/www/hostel.te.ua/hostelmanager/media/roomimage/'),
-    #('view', '/var/www/hostel.te.ua/hostelmanager/front/src/app/'),
-
-    #'/var/www/hostel.te.ua/hostelhostelmanager/media/mainimage/',
-)
-MEDIA_ROOT = '/var/www/hostel.te.ua/hostelmanager/media/roomimage/'
+MEDIA_ROOT = '/home/AndyKovv/hostelmanager/media/roomimage/'
 #MEDIA_URL = '/var/www/hostel.te.ua/hostelmanager/media/roomimage/'
 
 
@@ -195,9 +203,20 @@ REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': (
         'rest_framework.authentication.SessionAuthentication',
         'rest_framework.authentication.TokenAuthentication',
-    )
+    ),
+    'DEFAULT_RENDERER_CLASSES': (
+        'rest_framework.renderers.JSONRenderer',
+    ),
+    'DEFAULT_THROTTLE_CLASSES': (
+        'rest_framework.throttling.AnonRateThrottle',
+        'rest_framework.throttling.UserRateThrottle'
+    ),
+    'DEFAULT_THROTTLE_RATES': {
+        'anon': '2000/day',
+        'user': '1000/day'
+    }
 }
-
+    
 LOGGING = {
     'version': 1,
     'disable_existing_loggers': False,
@@ -219,35 +238,24 @@ LOGGING = {
     'handlers': {
         'mail_admins_error': {
         'level': 'ERROR',
-        #'filters': ['require_debug_false'],
+        'filters': ['require_debug_false'],
         'class': 'django.utils.log.AdminEmailHandler',
         'include_html': True
         },
         'mail_admins_warning':{
         'level': 'WARNING',
-        #'filters': ['require_debug_false'],
+        'filters': ['require_debug_false'],
         'class': 'django.utils.log.AdminEmailHandler',
         'include_html': True
         },
-        'file': {
-            'level': 'WARNING',
-            'class': 'logging.FileHandler',
-            'filename': '/var/www/hostel.te.ua/hostelmanager/debug.log',
-            'formatter': 'verbose'
-        },
-    },
+     },
     'loggers': {
-        'django': {
-            'handlers':['file'],
-            'propagate': True,
-            'level':'DEBUG',
-        },
-        'django.request': {
+       'django.request': {
             'handlers': ['mail_admins_error'],
             'level': 'ERROR',
             'propagate': False,
         },
-         'django.request': {
+        'django.request': {
             'handlers': ['mail_admins_warning'],
             'level': 'WARNING',
             'propagate': False,
@@ -255,5 +263,7 @@ LOGGING = {
       
     }
 }
+
+
 
 

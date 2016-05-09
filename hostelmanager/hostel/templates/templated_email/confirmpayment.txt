@@ -1,11 +1,11 @@
 Thank you for ordering room. Your order number is {{ order_id }}.
-      You can see your order in account, or go to link {{order_link}}
+      You can see your order in account, or go to link http://www.{{order_link}}
 
 If you didn't do order, please resend the letter to admin@hostel.te.ua
-With best Regards {{site}} team.
+With best Regards http://www.{{site}} team.
 ----------------------------------------------------------------------
 Спасибо за заказ постели в нашем хостеле. Ваш номер заказа {{ order_id }}.
-        Вы можете увидеть ваш заказ в аккаунте, или перейдите по сылке {{order_link}}.
+Вы можете увидеть ваш заказ в аккаунте, или перейдите по сылке http://www.{{order_link}}.
 Если вы не делали заказ у нас на сайте, пожалуйста перешлите письмо по адресу admin@hostel.te.ua
-С лучшими пожеланиями {{site}} команда.
+С лучшими пожеланиями http://www.{{site}} команда.
 

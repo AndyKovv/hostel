@@ -55,10 +55,14 @@ $scope.map = {center: {latitude:latitude, longitude: longitude}, zoom: 16 };
         }
       },
       templateUrl: 'main/show-map.tpl.html',
-      controller: ['$scope', 'map', 'marker', 'render', function($scope, map, marker, render){
+      controller: ['$scope', '$uibModalInstance', 'map', 'marker', 'render',
+         function($scope, $uibModalInstance, map, marker, render){
         $scope.render = true;
         $scope.map = map;
         $scope.marker = marker;
+        $scope.close = function(){
+          $uibModalInstance.close();
+        };
       }],
       size: 'md',
 

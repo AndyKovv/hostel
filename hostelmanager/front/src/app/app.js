@@ -204,7 +204,6 @@ angular
       },
       onEnter:['$state', '$uibModal', 'getOrderInfo',
       function($state, $uibModal, getOrderInfo){
-        
         $uibModal.open({
           resolve:{
             getOrderInfo:function(){
@@ -218,7 +217,21 @@ angular
         }).result.finally(function(){
           $state.go('^');
         });
-       
+      }]
+    })
+    .state('mainpage.error_payment', {
+      url: 'error_payment/',
+      onEnter: ['$state', '$uibModal', function(){
+        $uibModal.open({
+          templateUrl: 'order/payment/error-payment.tpl.html',
+          controller: ['$scope', '$uibModalInstance', function($scope, $uibModalInstance){
+            $scope.close = function(){
+              $uibModalInstance.close();
+            };
+          }]  
+        }).result.finally(function(){
+          $state.go('^');
+        });
       }]
     })
     .state('manager_main',{

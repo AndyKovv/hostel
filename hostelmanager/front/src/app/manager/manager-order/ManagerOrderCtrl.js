@@ -34,11 +34,17 @@ angular.module('managerModule')
 								if($scope.order_success){
 									$uibModalInstance.close();
 									$timeout(function(){
-										toastr.success('Order confirm');
+										toastr.success('Замовлення прийнято');
 									}, 5000);
+								}else{
+									toastr.success('Немає вільних місць');
 								}
 							});	
 					}
+				};
+
+				$scope.close = function(){
+					$uibModalInstance.close();
 				};
 }]);
 

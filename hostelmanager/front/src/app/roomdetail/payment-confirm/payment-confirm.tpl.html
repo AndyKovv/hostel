@@ -95,16 +95,15 @@
 <form method="POST" action="https://api.privatbank.ua/p24api/ishop">
           <input type="hidden" name="amt" value="{{order_confirm.amount}}" />
           <input type="hidden" name="ccy" value="UAH" />
-          <input type="hidden" name="merchant" value="118128" />
-          <input type="hidden" name="merchant" value="118128" />
+          <input type="hidden" name="merchant" value="118617" />
           <input type="hidden" name="order" value="{{order_confirm.id}}" />
           <input type="hidden" name="details" value="Room:{{order_confirm.room}}" />
           <input type="hidden" name="ext_details" value="{{order_confirm.person_firstname}}
                                                          {{order_confirm.person_middlename}}
                                                          {{order_confirm.person_lastname}}" />
           <input type="hidden" name="pay_way" value="privat24" />
-         <input type="hidden" name="return_url" value="http://localhost:8000/api/privat24/" />
-          <input type="hidden" name="server_url" value="http://localhost:8000/" />
+         <input type="hidden" name="return_url" value="http://www.hostel.te.ua/api/privat24/" />
+          <input type="hidden" name="server_url" value="http://www.hostel.te.ua/" />
           <button type="submit"><img src="/static/image/img/privat24_button.png" border="0" class="privat-img"/></button>
 </form>
 </div>

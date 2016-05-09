@@ -9,7 +9,7 @@ angular.module('managerModule')
 			$scope.filteredOrders = [];
   			$scope.currentPage = 1;
   			$scope.numPerPage = 20;
-  			$scope.maxSize = 20;
+  			$scope.maxSize = 10;
 
   			 
 			var interval;
@@ -25,7 +25,7 @@ angular.module('managerModule')
        			});
        			/* jshint expr: true */
        			$rootScope.authenticated ? interval : $interval.cancel(interval);
-       				 }, 10000);
+       				 }, 5000);
 			};
 			
 			$scope.startTimer();
@@ -67,13 +67,15 @@ angular.module('managerModule')
 				};
 
 				 $scope.$watch('currentPage + numPerPage + list_orders', function() {
-		 	    var begin = (($scope.currentPage - 1) * $scope.numPerPage);
-		 	    var end = begin + $scope.numPerPage;
-		 	    if(angular.isArray($scope.list_orders) && $scope.list_orders.length > 0 ){
-		 	    $scope.filteredOrders = $scope.list_orders.slice(begin, end);
-		 	    }
-		 	  });
+		 	    	var begin = (($scope.currentPage - 1) * $scope.numPerPage);
+		 	    	var end = begin + $scope.numPerPage;
+		 	    	$scope.$watch('list_orders', function(newValue, oldValue){
 
-			
+		 	    		if(angular.isArray($scope.list_orders) && $scope.list_orders.length > 0 ){
+		 	    			$scope.filteredOrders = $scope.list_orders.slice(begin, end);
+		 	   			}
+		 	    	}, true);
+		 	});
+					
 	}]);
 })();

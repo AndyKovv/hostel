@@ -1,38 +1,38 @@
-PIP: > ```backports-abc==0.4 backports-abc
-PIP: > ```click==6.6 click
-PIP: > ```defusedxml==0.4.1 defusedxml
-PIP: > ```Django==1.9.4 Django
-PIP: > ```django-allauth==0.25.2 django-allauth
-PIP: > ```django-appconf==1.0.1 django-appconf
-PIP: > ```django-common-helpers==0.8.0 django-common-helpers
-PIP: > ```django-cron==0.4.6 django-cron
-PIP: > ```django-filter==0.13.0 django-filter
-PIP: > ```django-geoposition==0.2.2 django-geoposition
-PIP: > ```django-image-cropping==1.0.3 django-image-cropping
-PIP: > ```django-templated-email==0.4.9 django-templated-email
-PIP: > ```djangorestframework==3.3.3 djangorestframework
-PIP: > ```djangorestframework-jwt==1.7.2 djangorestframework-jwt
-PIP: > ```djangorestframework-xml==1.3.0 djangorestframework-xml
-PIP: > ```easy-thumbnails==2.3 easy-thumbnails
-PIP: > ```Jinja2==2.8 Jinja2
-PIP: > ```livereload==2.4.1 livereload
-PIP: > ```Markdown==2.6.6 Markdown
-PIP: > ```MarkupSafe==0.23 MarkupSafe
-PIP: > ```MySQL-python==1.2.3 MySQL-python
-PIP: > ```mysqlclient==1.3.7 mysqlclient
-PIP: > ```oauthlib==1.0.3 oauthlib
-PIP: > ```Pillow==3.1.1 Pillow
-PIP: > ```Pmw==2.0.0 Pmw
-PIP: > ```preppy==2.3.5 preppy
-PIP: > ```PyJWT==1.4.0 PyJWT
-PIP: > ```PyMySQL==0.7.2 PyMySQL
-PIP: > ```pyRXP==2.1.1 pyRXP
-PIP: > ```python3-openid==3.0.10 python3-openid
-PIP: > ```PyYAML==3.11 PyYAML
-PIP: > ```reportlab==3.3.6 reportlab
-PIP: > ```requests==2.9.1 requests
-PIP: > ```requests-oauthlib==0.6.1 requests-oauthlib
-PIP: > ```rlextra==3.3.6 rlextra
-PIP: > ```six==1.10.0 six
-PIP: > ```StringGenerator==0.1.9 StringGenerator
-PIP: > ```tornado==4.3 tornado
+insbackports-abc==0.4
+click==6.6
+defusedxml==0.4.1
+Django==1.9.4
+django-allauth==0.25.2
+django-appconf==1.0.1
+django-common-helpers==0.8.0
+django-cron==0.4.6
+django-filter==0.13.0
+django-geoposition==0.2.2
+django-image-cropping==1.0.3
+django-templated-email==0.4.9
+djangorestframework==3.3.3
+djangorestframework-jwt==1.7.2
+djangorestframework-xml==1.3.0
+easy-thumbnails==2.3
+Jinja2==2.8
+livereload==2.4.1
+Markdown==2.6.6 
+MarkupSafe==0.23
+MySQL-python==1.2.3
+mysqlclient==1.3.7
+oauthlib==1.0.3
+Pillow==3.1.1
+Pmw==2.0.0
+preppy==2.3.5
+PyJWT==1.4.0
+PyMySQL==0.7.2
+pyRXP==2.1.1
+python3-openid==3.0.10
+PyYAML==3.11
+reportlab==3.3.3
+requests==2.9.1
+requests-oauthlib==0.6.1
+rlextra==3.3.6
+six==1.10.0
+StringGenerator==0.1.9
+tornado==4.3 

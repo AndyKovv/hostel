@@ -111,7 +111,7 @@ class HostelRoom(models.Model):
 class RoomImage(models.Model):
 	
 	#last created directory
-	last_folder = max(glob.iglob('/var/www/hostel.te.ua/hostelmanager/media/roomimage/*/'), key=os.path.getctime)
+	last_folder = max(glob.iglob('/home/AndyKovv/hostelmanager/media/roomimage/*/'), key=os.path.getctime)
 	
 	#import pdb
 	#pdb.set_trace()
@@ -125,7 +125,7 @@ class RoomImage(models.Model):
 				filename = '{}.{}'.format(SG(r'[\u\d]{6}').render(), ext) # set filename as random string
 
 				if len(count_dir) > 8: #count files in the last created folder
-						path_to_dirs = str('/var/www/hostel.te.ua/hostelmanager/media/roomimage/')
+						path_to_dirs = str('/home/AndyKovv/hostelmanager/media/roomimage/')
 						new_folder = SG(r'[\u\d]{6}').render() # Create new name
 						new_path = path_to_dirs + new_folder + '/' + filename #Create new path
 				
@@ -290,4 +290,11 @@ class DeselectedOrders(models.Model):
 	order = models.ForeignKey(Order)
 	manager = models.ForeignKey(ExtUser)
 	deselected_reason = models.CharField(max_length=255)
+	
+class Blocked_Ip(models.Model):
+	ip = models.GenericIPAddressField(protocol='both', unpack_ipv4=True)
+	block_time_in = models.DateTimeField(auto_now_add=True)
+	block_time_out = models.DateTimeField(auto_now_add=True)
+	catch_times = models.IntegerField(default = '1')
+	block_forever = models.BooleanField(default=False)
 	

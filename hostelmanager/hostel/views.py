@@ -18,7 +18,7 @@ from django.shortcuts import redirect, render
 from django.views.decorators.csrf import csrf_exempt
 from django.http import HttpResponse, HttpResponseRedirect
 from django.contrib.sites.shortcuts import get_current_site
-from django.core.mail import send_mail
+from django.core.mail import send_mail, get_connection
 from django.template.loader import render_to_string, get_template
 from django.template import Template, Context
 from django.utils.translation import get_language, get_language_from_request
@@ -27,7 +27,7 @@ from django.utils.translation import get_language, get_language_from_request
 #DjangoRestFramework
 from rest_framework import viewsets
 from rest_framework import status
-from rest_framework.decorators import detail_route, list_route, api_view, parser_classes, permission_classes
+from rest_framework.decorators import detail_route, list_route, api_view, parser_classes, permission_classes, throttle_classes
 from rest_framework.parsers import FormParser
 from rest_framework.views import APIView
 from rest_framework.response import Response
@@ -52,9 +52,10 @@ from allauth.account.views import ConfirmEmailView
 from allauth.account import app_settings as allauth_settings
 
 from .utils import jwt_encode
-from hostel.permissions import IsManagerUser, IsCustomAdminUser
+from hostel.permissions import IsManagerUser, IsCustomAdminUser, BlackListIp
 from hostel.models import HostelRoom, RoomImage, Order, TokenModel, ExtUser, TransactionPrivat24, AdditionalPayment, DeselectedOrders
 from hostel.filters import ManagerFilter
+from hostel.throttles import InspectionThrottle
 from hostel.serializers import (HostelRoomSerializer, OrderSerializer, ChekRoomSerializer, FreeRoomSerializer,
 									 VerifyEmailSerializer, OrderKeySerializer, OrderInfoSerializer, ManagerRoomSerializer,
 									  ManagerOrderSerializer, ManagerPaymentSerializer, DeselectPaymentSerializer)
@@ -69,7 +70,7 @@ class Privat_24(APIView):
 
 
 	def build_signature(self, payment):
-		password = '94f3qkAmXhjXEsoGPC7iX6KnVm1727Eq'
+		password = 'Cvv6P7abbS7r513AvALZHVoH4c1z2D6p'
 		test_str = ("%s%s" % (payment, password))
 		md = md5(test_str.encode('utf-8')).hexdigest()
 		sha = sha1(md.encode('utf-8')).hexdigest()
@@ -119,8 +120,12 @@ class Privat_24(APIView):
 				order.payment_type = 'Privat24'
 				order.payment_id = transaction.id
 				order.is_booking = True
-				order.payment = True
+				if order.room.price_room == order.amount:
+					order.payment = True
+				else:
+					order.payment = False
 				order.save()
+				
 				unique_href = order.unique_href
 				mail_link = site + '/orderinfo/' + unique_href + '/' 
 				msg_plain = render_to_string('templated_email/confirmpayment.txt', {
@@ -128,10 +133,17 @@ class Privat_24(APIView):
 					'order_link': mail_link,
 					'site': site
 					})
-				send_mail(_("Order information"), msg_plain, 'orders@hostel.te.ua', [order.person_email])
+				connection = get_connection(host = 'smtp.zoho.com',
+					port = 587,
+					username = 'orders@hostel.te.ua',
+					password = 'NgEk775$',
+					use_tls = True)
+				
+				send_mail(_("Order information"), msg_plain, 'orders@hostel.te.ua', [order.person_email], connection = connection)
+				connection.close()
 				return HttpResponseRedirect('/orderinfo/'+ unique_href +'/')
 
-		return Response({'ransaction': 'Validattion'})
+		return HttpResponseRedirect('/error_payment/')
 	
 
 
@@ -185,7 +197,8 @@ class OrderView(viewsets.ModelViewSet):
 
 		return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
-	@list_route(methods=['post'], permission_classes=[AllowAny])
+	
+	@list_route(methods=['post'], permission_classes=[AllowAny, BlackListIp], throttle_classes=[InspectionThrottle])
 	def order_room(self, request):
 		serializer = OrderSerializer(data = request.data)
 		queryset = self.get_queryset()
@@ -195,6 +208,7 @@ class OrderView(viewsets.ModelViewSet):
 				req_room = serializer.data['room']
 				#Give only active room
 				room = HostelRoom.objects.get(pk=req_room, active=True)
+
 				if request.user.is_authenticated():
 					req_user = self.request.user.id
 					user = ExtUser.objects.get(pk = req_user)
@@ -219,7 +233,7 @@ class OrderView(viewsets.ModelViewSet):
 			if free_place > 0:
 				order = Order.objects.create(
 					room = room, user = user, person_email = pe, person_firstname = pf, person_middlename = pm,
-					person_lastname = pl, person_phonenumber = pp, date_in = di, date_out = do, amount = am
+					person_lastname = pl, person_phonenumber = pp, date_in = di, date_out = do, amount = room.price_room
 					)
 				response_serializer = OrderSerializer(order)
 				return Response(response_serializer.data, status=status.HTTP_201_CREATED)
@@ -346,7 +360,7 @@ class ManagerViewSet(viewsets.ReadOnlyModelViewSet):
 			except Order.DoesNotExist:
 				return Response({"error": "OrderDoesNotExist"})
 			transaction = AdditionalPayment.objects.create(
-				amt = amt,
+				amt = order.amount,
 				details = manager.email,
 				pay_way = pay_way,
 				order = order,
@@ -508,19 +522,26 @@ class PasswordResetView(GenericAPIView):
 		# Create a serializer with request.data
 		serializer = self.get_serializer(data=request.data)
 		if serializer.is_valid(raise_exception=True):
+			email = serializer.data['email']
 			try:
-				email = serializer.data['email']
-				ExtUser.objects.get(email = email)
+				is_admin = ExtUser.objects.get(email=email, is_admin=True)
+				return Respose({'error': 'Cannot change password'})
 			except ExtUser.DoesNotExist:
-				return Response(
-					{"error": _("Email does not exist")})
+				try:
+				
+					ExtUser.objects.get(email = email)
+				except ExtUser.DoesNotExist:
+					return Response(
+						{"error": _("Email does not exist")})
 
-			serializer.save()
-			# Return the success message with OK HTTP status
-			return Response(
-				{"success": _("Password reset e-mail has been sent.")},
-				status=status.HTTP_200_OK
-			)
+				serializer.save()
+				# Return the success message with OK HTTP status
+				return Response(
+					{"success": _("Password reset e-mail has been sent.")},
+					status=status.HTTP_200_OK
+				)
+			
+		return Response({'error': 'Parse Error'})
 
 
 class PasswordResetConfirmView(GenericAPIView):
@@ -579,8 +600,9 @@ class VerifyEmailView(APIView, ConfirmEmailView):
 
 class RegisterView(CreateAPIView):
 	serializer_class = RegisterSerializer
-	permission_classes = (AllowAny, )
+	permission_classes = (AllowAny, BlackListIp)
 	token_model = TokenModel
+	throttle_classes = (InspectionThrottle,)
 
 	def get_response_data(self, user):
 		if allauth_settings.EMAIL_VERIFICATION == \

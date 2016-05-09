@@ -1,13 +1,14 @@
         
 
             <!--Card-->
-              <div class="col-xs-11 col-sm-4 col-md-6 col-lg-3" ng-repeat="hostel in hostels">
+            
+              <div class="col-xs-11 col-centered col-sm-4 col-md-6 col-lg-3" ng-repeat="hostel in hostels">
               <div class="wow bounceInUp">
                    <div class="elegant-card z-depth-1 hoverable" >
                      <!-- Image wrapper -->
                        
                      <div class="card-up view overlay hm-white-slight">
-                          <h5 class="card-label"> <img src ="/static/image/img/logo.png" class="img-responsive"></h5>
+                          <h5 class="card-label"></h5>
                           <div ng-repeat= "main_image in hostel.roomimages | filter: { image_main: 'true' }">
                              <a ><img ng-src ="{{main_image.image_medium}}" class="img-responsive"></a>
 
@@ -44,6 +45,7 @@
                 </div>
             </div>
         </div>
+
     
 
 

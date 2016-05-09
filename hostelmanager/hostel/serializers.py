@@ -1,4 +1,5 @@
 import re
+import datetime
 
 from django.contrib.auth import get_user_model, authenticate
 from django.conf import settings
@@ -42,15 +43,15 @@ class RoomImage(serializers.ModelSerializer):
 	def get_image_medium_url(self, obj):
 		#return '%s%s' % (settings.MEDIA_URL, obj.image_original)
 		url = obj.image_medium.url
-		abs_url = url.split('/', 7)[-1] # only folder and name of file
-		static_url = str('/static/pictures/') + abs_url
+		abs_url = url.split('/', 5)[-1] # only folder and name of file
+		static_url = str('/media/') + abs_url
 		return static_url
 
 	def get_image_thumb_url(self, obj):
 		#return '%s%s' % (settings.MEDIA_URL, obj.image_original)
 		url = obj.image_thumb.url
-		abs_url = url.split('/', 7)[-1] # only folder and name of file
-		static_url = str('/static/pictures/') + abs_url
+		abs_url = url.split('/', 5)[-1] # only folder and name of file
+		static_url = str('/media/') + abs_url
 		return static_url
 
 
@@ -67,8 +68,8 @@ class FreeRoomSerializer(serializers.Serializer):
 
 	def get_thumb_image(self, obj):
 		ret_url = obj.roomimages.filter(image_main=True)[0].image_thumb.url
-		abs_url = ret_url.split('/', 7)[-1] # only folder and name of file
-		static_url = str('/static/pictures/') + abs_url
+		abs_url = ret_url.split('/', 5)[-1] # only folder and name of file
+		static_url = str('/media/') + abs_url
 		return static_url
 	
 	
@@ -109,6 +110,30 @@ class OrderSerializer(serializers.ModelSerializer):
 		fields = ('id', 'room','person_email', 'person_firstname','person_middlename', 'person_lastname', 
 		'person_phonenumber', 'date_in', 'date_out', 'payment','order_time_in', 'amount', )
 		write_only_fields = ('room','user', 'person_email', 'person_firstname','person_middlename', 'person_lastname',  'person_phonenumber', 'date_in', 'date_out',)
+		
+	def validate(self, attr):
+		reg = re.compile('^[a-zA-ZА-яЁеЇїҐґЄєІі_-]{2,15}$')
+		reg_p = re.compile('^[0-9]{12,12}$')
+		
+		if reg.match(attr['person_firstname']) is None:
+			raise ValidationError({'first_name': ['Invalid value']})
+
+		if reg.match(attr['person_middlename']) is None:
+			raise ValidationError({'middlename': ['Invalid value']})
+
+		if reg.match(attr['person_lastname']) is None:
+			raise ValidationError({'lastname': ['Invalid value']})
+		      
+		if reg_p.match(attr['person_phonenumber']) is None:
+			raise ValidationError({'phonenumber': ['Invalid value']})
+		      
+		if attr['date_in'] < datetime.datetime.now().date():
+			raise ValidationError({'date': 'Date incorrect'})
+		      
+		if attr['date_out'] <= datetime.datetime.now().date():
+			raise ValidationError({'date': 'Date incorrect'})
+		
+		return attr
 
 
 class DeselectPaymentSerializer(serializers.Serializer):
@@ -176,7 +201,8 @@ class OrderInfoSerializer(serializers.ModelSerializer):
 		fields = ('id', 'room', 'room_name', 'room_address', 'user', 'person_email', 'person_firstname', 'unique_href',
 		'person_middlename', 'person_lastname',  'person_phonenumber', 'date_in', 'date_out', 'payment', 'order_date', 'amount',)
 	
-
+	
+	
 	def get_room_name(self, obj):
 		room_name = obj.room.name_room
 		return room_name

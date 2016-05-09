@@ -6,6 +6,13 @@ body {
 body > [uib-modal-window]:not([modal-render]) {
     display: none;
 }
+@media(max-width: 800px){ 
+body.modal-open {
+    overflow: hidden !important;
+    position:relative;
+    width: 100%;
+    }
+}
 
 .privat-img {
     width: 9.7em;
@@ -31,23 +38,84 @@ height: 50%;
     height: 100%;
 }
 
+
+
+@media only screen and (min-width:1075px){
+    .item:nth-child(1) {
+        background-image: url(/static/image/img/background.jpg);
+        background-repeat: no-repeat;
+        background-size: cover;
+       
+    }
+    .carousel {
+     height: 60%;
+     margin-top: -20px;
+    }
+    .item:nth-child(2) {
+        background-image: url(/static/image/img/background2.jpg);
+        background-repeat: no-repeat;
+        background-size: cover;
+    }
+}
+@media only screen and (min-width:768px) and (max-width:1075px){
 .item:nth-child(1) {
-    background-image: url(/static/image/img/background.jpg);
+    background-image: url(/static/image/img/background_min.jpg);
     background-repeat: no-repeat;
     background-size: cover;
+       
+}
+
+.carousel {
+    height: 30%;
+    margin-top: -20px;
 }
 
 .item:nth-child(2) {
-    background-image: url(/static/image//img/background2.jpg);
+    background-image: url(/static/image/img/background2_min.jpg);
     background-repeat: no-repeat;
     background-size: cover;
+}    
+
+
+}
+@media only screen and (max-width:767px){
+.item:nth-child(1) {
+    background-image: url(/static/image/img/background_min.jpg);
+    background-repeat: no-repeat;
+    background-size: cover;
+       
 }
 
-.item:nth-child(3) {
-    background-image: url(/static/image//img/background3.jpg);
+.carousel {
+    height: 20%;
+    margin-top: -20px;
+}
+
+.item:nth-child(2) {
+    background-image: url(/static/image/img/background2_min.jpg);
     background-repeat: no-repeat;
     background-size: cover;
+    }    
 }
+
+@media (min-width:567px) and (max-width: 1024px) and (orientation: landscape){
+    .carousel {
+    height: 50%;
+    margin-top: -20px;
+}
+.item:nth-child(1) {
+        background-image: url(/static/image/img/background.jpg);
+        background-repeat: no-repeat;
+        background-size: cover;
+       
+    }
+.item:nth-child(2) {
+        background-image: url(/static/image/img/background2.jpg);
+        background-repeat: no-repeat;
+        background-size: cover;
+    }
+}
+
 
 .page-content {
     margin-top: 40px;
@@ -298,14 +366,141 @@ h6 span { background:#fff; padding:0 10px; }
 .calenendar-manager .quickdate-popup{
     position: absolute;
 }
-@media(max-width: 400px){ 
+@media(max-width: 399px){ 
 .container, .container-fluid {
-    margin-right: -1em;
-    margin-left: 1em;
+    margin-left: 2em;
     padding-left: 15px;
     padding-right: 15px;
     align-items: center;
     }
+}
+
+@media(max-width: 399px){ 
+.container-footer, .container-fluid {
+   
+    padding-left: 15px;
+    padding-right: 15px;
+    align-items: center;
+    }
+}
+
+@media only screen and (min-width:400px) and (max-width:497px){
+.elegant-card {
+    margin-right: auto;
+    margin-left: auto;
+    position: relative;
+    perspective: 300px;
+    border-radius: 2px;
+    max-width: 300px;
+    }
+.col-lg-1, .col-lg-10, .col-lg-11,
+ .col-lg-12, .col-lg-2, .col-lg-3,
+  .col-lg-4, .col-lg-5, .col-lg-6,
+   .col-lg-7, .col-lg-8, .col-lg-9, 
+    .col-md-1, .col-md-10, .col-md-11,
+     .col-md-12, .col-md-2, .col-md-3, 
+    .col-md-4, .col-md-5, .col-md-6,
+      .col-md-7, .col-md-8, .col-md-9, 
+      .col-sm-1, .col-sm-10, .col-sm-11, 
+      .col-sm-12, .col-sm-2, .col-sm-3, .col-sm-4,
+       .col-sm-5, .col-sm-6, .col-sm-7, .col-sm-8, .col-sm-9, .col-xs-1, .col-xs-10,
+        .col-xs-11, .col-xs-12, .col-xs-2, .col-xs-3, .col-xs-4, .col-xs-5, .col-xs-6,
+         .col-xs-7, .col-xs-8, .col-xs-9 {
+    position: relative;
+    min-height: 1px;
+    margin-right: auto;
+    margin-left: auto;
+    padding-left: 15px;
+    padding-right: 15px;
+}
+.btn-group>.btn-group, .btn-toolbar .btn, .btn-toolbar .btn-group,
+ .btn-toolbar .input-group, .col-xs-1, .col-xs-10, .col-xs-11, .col-xs-12,
+  .col-xs-2, .col-xs-3, .col-xs-4, .col-xs-5, .col-xs-6, .col-xs-7, .col-xs-8, .col-xs-9, .dropdown-menu {
+    float: none;
+    }
+.col-xs-4{
+    width: 25%;
+    }
+
+}
+@media only screen and (min-width:498px) and (max-width:647px){
+    .col-xs-11{
+        width: 50%;
+    }
+
+}
+
+@media only screen and (min-width:648px) and (max-width:722px){
+    .col-xs-11{
+        width: 50%;
+    }
+    .elegant-card {
+        margin: .5rem 0 1rem;
+        position: relative;
+        max-width: 300px;
+        perspective: 800px;
+        border-radius: 2px;
+    }
+}
+@media only screen and (min-width:623px) and (max-width:765px){
+    .col-xs-11{
+        width: 50%;
+    }
+    .elegant-card {
+        margin: .5rem 0 1rem;
+        position: relative;
+        max-width: 300px;
+        perspective: 800px;
+        border-radius: 2px;
+    }
+}
+
+@media (max-width:667px) and (orientation: landscape){
+    .col-xs-11{
+        width: 50%;
+    }
+    .col-xs-8 {
+        width: 50%;
+    }
+    .col-xs-4 {
+        width: 16.66666667%;
+    }
+    .elegant-card {
+        margin: .5rem 0 1rem;
+        position: relative;
+        max-width: 300px;
+        perspective: 800px;
+        border-radius: 2px;
+    }
+
+}
+
+@media (min-width:668px) and (max-width: 768px) and (orientation: landscape){
+    .col-xs-11{
+        width: 33.33333333%;
+    }
+    .col-xs-12{
+        width: 50%;
+    }
+    
+}
+
+@media (min-width:991px) and (max-width: 1199px) and (orientation: landscape){
+    .col-md-6{
+        width: 33.33333333%;
+    }
+   
+
+}
+@media (min-width:1024px) and (max-width: 1199px) and (orientation: landscape){
+    .col-sm-6{
+        width: 41.66666667%;
+    }
+    .col-sm-12{
+        width: 58.33333333%;
+    }
+    
+
 }
 
 @media(max-width: 800px){ 
@@ -313,11 +508,11 @@ h6 span { background:#fff; padding:0 10px; }
     padding: 1em;
     color: #666;
     background-color: #fff;
-    min-height: 12em;
-    max-height: 12em;
+    min-height: 13.1em;
+    max-height: 13.1em;
     }
 }
-@media(max-width: 400px){ 
+@media(max-width: 567px){ 
 .elegant-card .card-up {
     max-height: 60em;
 }
@@ -350,4 +545,20 @@ h6 span { background:#fff; padding:0 10px; }
         display: none !important;
     }
 }
+@media(min-width:1024px){
+.welcome-text {
+        font-size: 3.05em;
+        font-family: Cookie;
+        font-weight: 400;
+        font-style: normal;
+        color: rgb(165, 239, 227);
+    }
+}
+.container-footer, .container-fluid {
+   
+    padding-left: 15px;
+    padding-right: 15px;
+    align-items: center;
+    }
+
 
